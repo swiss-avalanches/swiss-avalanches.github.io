@@ -1,7 +1,3 @@
-Skeleton repo for projects
-
-Please fill the following for milestone 1:
-
 # Title
 
 # Abstract

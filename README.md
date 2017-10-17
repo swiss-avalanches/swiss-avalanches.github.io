@@ -1,20 +1,17 @@
-# project
 Skeleton repo for projects
 
 Please fill the following for milestone 1:
 
 # Title
 
-# Group members
-
 # Abstract
-A 150 word description of the project idea, goals, dataset used. What story you would like to tell and why?
+A 150 word description of the project idea, goals, dataset used. What story you would like to tell and why? What's the motivation behind your project?
 
-# Questions
-A list of questions you would like to address during the project. 
+# Research questions
+A list of research questions you would like to address during the project. 
 
 # Dataset
-Details on the dataset you want to use, and how do you expect to get, manage, process and enrich it.
+List the dataset(s) you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.
 
 # A list of internal milestones up until project milestone 2
 Add here a sketch of your planning for the next project milestone.

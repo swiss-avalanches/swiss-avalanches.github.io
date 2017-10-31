@@ -16,6 +16,7 @@
 - How can we evaluate individuals' decisions when exposed to snow and avalanche risk report but still want to ride?
 - What is the best way to visualize the 10 days of snow/weather conditions before an avalanche case? 
 - Is there any unexpected correlation that current statistical models do not capture?
+- TODO est ce que les avalanches niveau 5 sont plus meurtriere que avalanche niveau 3 ? ou juste plus frequente ? Survival bias ?
 
 # Dataset
 *List the dataset(s) you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.*
@@ -24,7 +25,20 @@
 - The *Institute for Snow and Avalanche Research* provides [snow maps](https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/archive.html?tx_wslavalanches_archiv%5Bpath%5D=%2Fuser_upload%2Fimport%2Flwdarchiv%2Fpublic%2F&tx_wslavalanches_archiv%5Baction%5D=showArchiv&tx_wslavalanches_archiv%5Bcontroller%5D=Avalanche&cHash=c71751a643ec4629e21b0306033ccd59) of the last 20 years that we could gather.
 
 
-- if Swiss avalanches data has bad temporal/spatial resolution to see patterns we might pivot to the United States. The [Colorado Avalanche Center](http://avalanche.state.co.us/accidents/us/) has detailed reports of every avalanche casualties in the last 8 years.
+
+*RISK ASSESSMENT OF OUR DATASET TODO. If Swiss avalanches data has bad temporal/spatial resolution to see patterns we might pivot to the United States. The [Colorado Avalanche Center](http://avalanche.state.co.us/accidents/us/) has detailed reports of every avalanche casualties in the last 8 years.*
+
+
+
+TODO Arnaud:
+
+- Investigate Swiss data portal [meteo suisse](http://www.meteoschweiz.admin.ch/home/wetter/messwerte/messwerte-an-stationen.html?param=temperature) est ce qu'on a ca archivé ?
+
+
+
+2 types de dataset: meteo / avalanches
+
+[envidat](**http://www.envidat.ch/dataset?q=snow**)
 
 # A list of internal milestones up until project milestone 2
 Add here a sketch of your planning for the next project milestone.
@@ -33,4 +47,6 @@ Add here a sketch of your planning for the next project milestone.
 - ​
 
 # Questions for TAa
-Add here some questions you have for us, in general or project-specific.
+*Add here some questions you have for us, in general or project-specific.*
+
+TODO risky to be out of TA dataset but we are risk aware (you say it's risky, there we go !)

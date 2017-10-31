@@ -16,25 +16,30 @@
 - How can we evaluate individuals' decisions when exposed to snow and avalanche risk report but still want to ride?
 - What is the best way to visualize the 10 days of snow/weather conditions before an avalanche case? 
 - Is there any unexpected correlation that current statistical models do not capture?
-- TODO est ce que les avalanches niveau 5 sont plus meurtriere que avalanche niveau 3 ? ou juste plus frequente ? Survival bias ?
+- Are avalanche accidents more lethal with a risk level of 3 than with a risk level of 5 ? Or just more frequent? Is there a survival bias?
 
 # Dataset
 *List the dataset(s) you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.*
 
-- [data-avalanche.org](http://www.data-avalanche.org/listAvalanche/) **Alps (not only Switzerland)** get snow maps for France as well
-- The *Institute for Snow and Avalanche Research* provides [snow maps](https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/archive.html?tx_wslavalanches_archiv%5Bpath%5D=%2Fuser_upload%2Fimport%2Flwdarchiv%2Fpublic%2F&tx_wslavalanches_archiv%5Baction%5D=showArchiv&tx_wslavalanches_archiv%5Bcontroller%5D=Avalanche&cHash=c71751a643ec4629e21b0306033ccd59) of the last 20 years that we could gather.
+Two types of datasets will be necessary:
 
+*Avalanche dataset:*
 
+- [data-avalanche.org](http://www.data-avalanche.org/listAvalanche/) **Alps (not only Switzerland)** is a dataset gathering avalanches information such as the location, the characteristic, the date, the type of snow and the danger of avalanches recorded in both France and Switzerland. Snow maps are available as well.
+- The *Institute for Snow and Avalanche Research* ([slf](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html)) provides tables and maps of the fatal avalanche accidents of the past 20 years in Switzerland.
 
-*RISK ASSESSMENT OF OUR DATASET TODO. If Swiss avalanches data has bad temporal/spatial resolution to see patterns we might pivot to the United States. The [Colorado Avalanche Center](http://avalanche.state.co.us/accidents/us/) has detailed reports of every avalanche casualties in the last 8 years.*
+*RISK ASSESSMENT OF OUR DATASET: In case Swiss avalanches data has a low temporal/spatial resolution to visualize patterns, we might pivot to the United States data. The [Colorado Avalanche Center](http://avalanche.state.co.us/accidents/us/) has detailed reports of every avalanche casualties in the last 8 years.*
 
+*Meteorological dataset*
 
+- Swiss data portal [meteo suisse](http://www.meteoschweiz.admin.ch/home/wetter/messwerte/messwerte-an-stationen.html?param=temperature) gathers meteorological and environmental data: weather condition, precipitations, snowpack, wind, temperatures in Switzerland.
+- [historic meteo](http://www.historique-meteo.net/europe/suisse/)
+
+[envidat](**http://www.envidat.ch/dataset?q=snow**)
 
 TODO Arnaud:
 
 - Investigate Swiss data portal [meteo suisse](http://www.meteoschweiz.admin.ch/home/wetter/messwerte/messwerte-an-stationen.html?param=temperature) est ce qu'on a ca archivé ?
-
-
 
 2 types de dataset: meteo / avalanches
 
@@ -48,5 +53,7 @@ Add here a sketch of your planning for the next project milestone.
 
 # Questions for TAa
 *Add here some questions you have for us, in general or project-specific.*
+
+We are aware that using external datasets is risky. But we are very motivated to achieve this analysis. We think that the plan we propose is feasible and fits well the project theme: "data science for social good". 
 
 TODO risky to be out of TA dataset but we are risk aware (you say it's risky, there we go !)

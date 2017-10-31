@@ -6,9 +6,7 @@
 
 ## Abstract
 
-Risk zero does not exist in alpinism. Statistical models have been developed to assess this risk but they do not prevent tragedies. We do not claim that we can do better, but given that most of the accidents are due to bad people decisions, we are convinced that raising concern about the past mountaineering accidents can strongly improve alpinists' judgement in the future. The aim of this project is to gather meteorological and environmental data (weather condition, precipitations, snowpack, wind, temperatures, slopes, exposures, time of day…) along with avalanche cases and casualties. By leveraging interactive visualization means, we will provide the skiers ways to understand the conditions of previous cases and maybe hints that could have changed the outcome. Our observational study will focus on the Swiss and French Alps.
-
-
+Risk zero does not exist in alpinism. Statistical models have been developed to assess this risk but they do not prevent tragedies. We do not claim that we can do better, but given that most of the accidents are due to bad people decisions, we are convinced that raising concern about the past mountaineering accidents can strongly improve alpinists' judgement in the future. The aim of this project is to gather meteorological and environmental data (weather condition, precipitations, snowpack, wind, temperatures, slopes, exposures, time of day…) along with avalanche cases and casualties. By leveraging interactive visualization means, we will provide the skiers ways to understand the conditions of previous cases and maybe hints that could have changed the outcome. Our observational study will focus on the Swiss Alps.
 
 ## Research questions
 
@@ -18,9 +16,9 @@ Risk zero does not exist in alpinism. Statistical models have been developed to 
 - Is there any unexpected correlation that current statistical models do not capture?
 - Are avalanche accidents more fatal with a risk level of 3 than with a risk level of 5? Or just more frequent?
 
-
-
 ## Datasets
+
+Note that we looked for datasets for both France and Switzerland, we present the whole result of our exploration but we will focus on Switzerland due to lack of public information on the French side.
 
 To conduct our studies we need to cross two types of datasets:
 
@@ -28,22 +26,18 @@ To conduct our studies we need to cross two types of datasets:
 
 - The [*Institute for Snow and Avalanche Research* (SLF)](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) provides tables and maps of the fatal avalanche accidents (>300 with casualties) of the past 20 years in **Switzerland**. It includes precise geolocation, date, slope orientation, elevation and number of casualties/death.
 - The [Restauration des Terrains en Montagne (RTM)](http://rtm-onf.ifn.fr/query/show-query-form/SCHEMA/RAW_DATA#consultation_panel) database provides around 10'000 cases of avalanches in **France**. Approximately one third of them are in the Alps and in the time span that we will focus on (after 2000).
-- The [data-avalanche.org](http://www.data-avalanche.org/list) website has a dataset gathering avalanches information in the **Alps** containing the location, the characteristic, the date, the type of snow and the danger of avalanches recorded in both France and Switzerland.
+- The [data-avalanche.org](http://www.data-avalanche.org/list) website has a dataset gathering avalanches information in the **Alps** containing the location, the characteristic, the date, the type of snow and the danger of avalanches recorded in both France and Switzerland. The majority have no victim which is interesting for our observational study to have "negative" samples (e.g. people did not ride in this dangerous area).
+- [Avalanche casualties](https://public.opendatasoft.com/explore/dataset/accidents-avalanche-2014-2017/) in France since 2014 with date and approximate location
 
 #### Snow/meteorological dataset
 
 - The [SLF archives](https://www.slf.ch/fr/bulletin-davalanches-et-situation-nivologique/archives.html?tx_wslavalanches_archiv%5Bpath%5D=%2Fuser_upload%2Fimport%2Flwdarchiv%2Fpublic%2F&tx_wslavalanches_archiv%5Baction%5D=showArchiv&tx_wslavalanches_archiv%5Bcontroller%5D=Avalanche&cHash=c71751a643ec4629e21b0306033ccd59) contains daily maps for the last 15 years of [avalanche risk](https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/2014/gk/fr/pdf/201312310800_gk_c_fr_map.pdf), [snow level](https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/2014/hstop/fr/gif/201401230800_hstop_fr_c.gif), [fresh snow](https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/2014/hn1/fr/gif/20131115_hn1_fr_c.gif), [avalanche bulletin](https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/2014/sw/en/pdf/201312011700_snow_weather_en.pdf) (structured text)
-- Swiss Open Data unfortunately does not have daily weather data archive, we only found [last 10 minute weather situation](https://opendata.swiss/en/dataset/messdaten-smn-swissmetnet) in all Switzerland (same as [meteo suisse](http://www.meteoschweiz.admin.ch/home/wetter/messwerte/messwerte-an-stationen.html?param=temperature)) or [monthly aggregates](https://opendata.swiss/en/dataset/klimanormwerte). Please tell us if we missed a link.
-- weather (T) Suisse - worst case bulletin
-- weather (T) France
-- risque avalanche en France / bulletin archive
+- Swiss Open Data unfortunately does not have daily weather data archive, we only found [last 10 minute weather situation](https://opendata.swiss/en/dataset/messdaten-smn-swissmetnet) in all Switzerland (same as [meteo suisse](http://www.meteoschweiz.admin.ch/home/wetter/messwerte/messwerte-an-stationen.html?param=temperature)) or [monthly aggregates](https://opendata.swiss/en/dataset/klimanormwerte). It is not usable for our purpose as historical data is missing
 
 
 #### Comments
 
-TODO give the plan ?
-
-We are aware that using external datasets is risky but we are very motivated by this topic.  It is difficult to estimate the size and exploitability of our datasets as we have not been through an in-depth analysis for now but we think that the plan that we propose is managable.
+We are aware that using external datasets is risky but we are very motivated by this topic. It is difficult to estimate the size and exploitability of our datasets as we have not been through an in-depth analysis for now but we think that the plan below is managable.
 
 We might also use *news articles* to extract data stories and outline interesting avalanche cases with details, engaging more the reader. These articles would be hand picked, that is why we do not consider this as a core dataset.
 
@@ -63,10 +57,7 @@ We might also use *news articles* to extract data stories and outline interestin
 
 ## Questions for TAs
 
+- Do you have other tracks to get historical meteorogical data in Switzerland/France? We thought of weather channel twitter feeds (after ~2005), otherwise we will parse the snow reports which is more challenging. 
 - Are we allowed to add a dataset after milestone 2 if we find interesting data that could extend our area of research or improve our visualization?
-
 - Do we have to specifically solve a problem for social good?
-
 - Does working on both France and Switzerland adds value to the analysis or should we focus on one country?
-
-  ​

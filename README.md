@@ -5,7 +5,7 @@
 # Abstract
 *A 150 word description of the project idea, goals, dataset used. What story you would like to tell and why? What's the motivation behind your project?*
 
-**Risk 0 does not exist in alpinism and risk assessment remains an open question.** Statistical models have been developed to try to understand the risk. We do not claim that we can do better, but given that most of the accidents are due to bad people decisions, we are convinced that raising concern about the past mountaineering accidents can strongly improve alpinists' judgement in the future. The aim of this project is to gather meteorological and environmental data (weather condition, precipitations, snowpack, wind, temperatures, slopes, exposures, time of day…) along with avalanche cases and casualties. By leveraging interactive visualization means, we will provide the skiers ways to understand the conditions of previous cases and maybe hints that could have changed the outcome. We will focus on the Swiss and French Alps.
+Risk zero does not exist in alpinism. Statistical models have been developed to assess this risk but they do not prevent tragedies. We do not claim that we can do better, but given that most of the accidents are due to bad people decisions, we are convinced that raising concern about the past mountaineering accidents can strongly improve alpinists' judgement in the future. The aim of this project is to gather meteorological and environmental data (weather condition, precipitations, snowpack, wind, temperatures, slopes, exposures, time of day…) along with avalanche cases and casualties. By leveraging interactive visualization means, we will provide the skiers ways to understand the conditions of previous cases and maybe hints that could have changed the outcome. We will focus on the Swiss and French Alps.
 
 
 
@@ -21,16 +21,16 @@
 # Dataset
 *List the dataset(s) you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.*
 
-Two (three) types of datasets will be necessary as we would like to enlighten the existing correlation between them:
+To conduct out studies we will need to cross two type of datasets:
 
-*Avalanche dataset:*
 
-- [data-avalanche.org](http://www.data-avalanche.org/listAvalanche/) **Alps (not only Switzerland)** is a dataset gathering avalanches information such as the location, the characteristic, the date, the type of snow and the danger of avalanches recorded in both France and Switzerland. Snow maps are available as well.
-- The *Institute for Snow and Avalanche Research* ([slf](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html)) provides tables and maps of the fatal avalanche accidents of the past 20 years in Switzerland.
 
-*RISK ASSESSMENT OF OUR DATASET: In case Swiss avalanches data has a low temporal/spatial resolution to visualize patterns, we might pivot to the United States data. The [Colorado Avalanche Center](http://avalanche.state.co.us/accidents/us/) has detailed reports of every avalanche casualties in the last 8 years.*
+#### Avalanche report datasets
 
-*Meteorological dataset*:
+- [data-avalanche.org](http://www.data-avalanche.org/list) **Alps (not only Switzerland)** is a dataset gathering avalanches information such as the location, the characteristic, the date, the type of snow and the danger of avalanches recorded in both France and Switzerland. Snow maps are available as well.
+- The [*Institute for Snow and Avalanche Research* (SLF)](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) provides tables and maps of the fatal avalanche accidents of the past 20 years in Switzerland. It includes geolocation, 
+
+#### Meteorological dataset
 
 - Swiss data portal [meteo suisse](http://www.meteoschweiz.admin.ch/home/wetter/messwerte/messwerte-an-stationen.html?param=temperature) gathers meteorological and environmental data: weather condition, precipitations, snowpack, wind, temperatures in Switzerland.
 - [historic meteo](http://www.historique-meteo.net/europe/suisse/)
@@ -38,7 +38,7 @@ Two (three) types of datasets will be necessary as we would like to enlighten th
 
 - ​
 
-[envidat](**http://www.envidat.ch/dataset?q=snow**) pb pcq est en maintenance
+[envidat](http://www.envidat.ch/dataset?q=snow) pb pcq est en maintenance
 
 *News-related dataset*:
 
@@ -57,6 +57,10 @@ We think that building our own dataset will help us getting familiar with our en
 The main challenge of that project will be to collect all of the necessary information so as to avoid bias in our obtained results. 
 
 It is indeed difficult for now to annouce the size of our data set as we will cross information while collecting it. 
+
+#### Risk assesment of our datasets
+
+In case Swiss avalanches data has a low temporal/spatial resolution to visualize patterns, we might pivot to the United States data. The [Colorado Avalanche Center](http://avalanche.state.co.us/accidents/us/) has detailed reports of every avalanche casualties in the last 8 years.*
 
 
 

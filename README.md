@@ -37,7 +37,7 @@ To conduct our studies we need to cross two types of datasets:
 
 #### Comments
 
-We are aware that using external datasets is risky but we are very motivated by this topic. It is difficult to estimate the size and exploitability of our datasets as we have not been throw an in-depth analysis for now but we think that the plan in the next section is managable.
+We are aware that using external datasets is risky but we are very motivated by this topic. It is difficult to estimate the size and exploitability of our datasets as we have not been through an in-depth analysis for now but we think that the plan in the next section is managable.
 
 We might also use *news articles* to extract data stories and outline interesting avalanche cases with details, engaging more the reader. These articles would be hand picked, that is why we do not consider this as a core dataset.
 
@@ -57,7 +57,7 @@ We might also use *news articles* to extract data stories and outline interestin
 
 ## Questions for TAs
 
-- Do you have other tracks to get historical meteorogical data in Switzerland/France? We thought of weather channels' twitter feed (after ~2005), otherwise we will parse the snow reports which is more challenging. 
+- Do you have other tracks to get historical meteorogical data in Switzerland/France? We thought of weather channels' twitter feeds (after ~2005), otherwise we will parse the snow reports which is more challenging. 
 - Are we allowed to add a dataset after milestone 2 if we find interesting data that could extend our area of research or improve our visualization?
 - Do we have to specifically solve a problem for social good?
 - Does working on both France and Switzerland adds value to the analysis or should we focus on one country?

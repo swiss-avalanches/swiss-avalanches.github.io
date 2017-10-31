@@ -2,84 +2,71 @@
 
 ![avalanche](images/avalanche2.gif)
 
-# Abstract
-*A 150 word description of the project idea, goals, dataset used. What story you would like to tell and why? What's the motivation behind your project?*
-
-Risk zero does not exist in alpinism. Statistical models have been developed to assess this risk but they do not prevent tragedies. We do not claim that we can do better, but given that most of the accidents are due to bad people decisions, we are convinced that raising concern about the past mountaineering accidents can strongly improve alpinists' judgement in the future. The aim of this project is to gather meteorological and environmental data (weather condition, precipitations, snowpack, wind, temperatures, slopes, exposures, time of day…) along with avalanche cases and casualties. By leveraging interactive visualization means, we will provide the skiers ways to understand the conditions of previous cases and maybe hints that could have changed the outcome. We will focus on the Swiss and French Alps.
 
 
+## Abstract
 
-# Research questions
-*A list of research questions you would like to address during the project.*
+Risk zero does not exist in alpinism. Statistical models have been developed to assess this risk but they do not prevent tragedies. We do not claim that we can do better, but given that most of the accidents are due to bad people decisions, we are convinced that raising concern about the past mountaineering accidents can strongly improve alpinists' judgement in the future. The aim of this project is to gather meteorological and environmental data (weather condition, precipitations, snowpack, wind, temperatures, slopes, exposures, time of day…) along with avalanche cases and casualties. By leveraging interactive visualization means, we will provide the skiers ways to understand the conditions of previous cases and maybe hints that could have changed the outcome. Our observational study will focus on the Swiss and French Alps.
+
+
+
+## Research questions
 
 - What is the influence of weather conditions on past avalanche cases?
-- How can we evaluate individuals' decisions when exposed to snow and avalanche risk report but still want to ride?
-- What is the best way to visualize the 10 days of snow/weather conditions before an avalanche case? 
+- Can we evaluate individuals' decisions when informed of snowpack quality and avalanche risk report? Are they less likely to ride in dangerous areas?
+- What is the best way to visualize the 10 days of snow, weather conditions, slopes, orientation, avalanche risk before an avalanche case?
 - Is there any unexpected correlation that current statistical models do not capture?
-- Are avalanche accidents more fatal with a risk level of 3 than with a risk level of 5? Or just more frequent? Is there a survival bias?
-
-# Dataset
-*List the dataset(s) you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.*
-
-To conduct out studies we will need to cross two type of datasets:
+- Are avalanche accidents more fatal with a risk level of 3 than with a risk level of 5? Or just more frequent?
 
 
+
+## Datasets
+
+To conduct our studies we need to cross two types of datasets:
 
 #### Avalanche report datasets
 
-- [data-avalanche.org](http://www.data-avalanche.org/list) **Alps (not only Switzerland)** is a dataset gathering avalanches information such as the location, the characteristic, the date, the type of snow and the danger of avalanches recorded in both France and Switzerland. Snow maps are available as well.
-- The [*Institute for Snow and Avalanche Research* (SLF)](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) provides tables and maps of the fatal avalanche accidents of the past 20 years in Switzerland. It includes geolocation, 
+- The [*Institute for Snow and Avalanche Research* (SLF)](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) provides tables and maps of the fatal avalanche accidents (>300 with casualties) of the past 20 years in **Switzerland**. It includes precise geolocation, date, slope orientation, elevation and number of casualties/death.
+- The [Restauration des Terrains en Montagne (RTM)](http://rtm-onf.ifn.fr/query/show-query-form/SCHEMA/RAW_DATA#consultation_panel) database provides around 10'000 cases of avalanches in **France**. Approximately one third of them are in the Alps and in the time span that we will focus on (after 2000).
+- The [data-avalanche.org](http://www.data-avalanche.org/list) website has a dataset gathering avalanches information in the **Alps** containing the location, the characteristic, the date, the type of snow and the danger of avalanches recorded in both France and Switzerland.
 
-#### Meteorological dataset
+#### Snow/meteorological dataset
 
-- Swiss data portal [meteo suisse](http://www.meteoschweiz.admin.ch/home/wetter/messwerte/messwerte-an-stationen.html?param=temperature) gathers meteorological and environmental data: weather condition, precipitations, snowpack, wind, temperatures in Switzerland.
-- [historic meteo](http://www.historique-meteo.net/europe/suisse/)
-
-
-- ​
-
-[envidat](http://www.envidat.ch/dataset?q=snow) pb pcq est en maintenance
-
-*News-related dataset*:
-
-Avalanches being frequently deadly, newspapers release articles regarding them indicating their location, their strength and wether or not people were injured. These data can be set aside to the avalanche related information and used as collateral information to enrich our dataset. For that purpose, some datasets you provided can be useful:
-
-- [Swiss Open Data](https://opendata.swiss/en/)
-- [200 years news (Le Temps)](http://www.letempsarchives.ch/) along with [News On the Web](https://www.corpusdata.org/intro.asp)
+- The [SLF archives](https://www.slf.ch/fr/bulletin-davalanches-et-situation-nivologique/archives.html?tx_wslavalanches_archiv%5Bpath%5D=%2Fuser_upload%2Fimport%2Flwdarchiv%2Fpublic%2F&tx_wslavalanches_archiv%5Baction%5D=showArchiv&tx_wslavalanches_archiv%5Bcontroller%5D=Avalanche&cHash=c71751a643ec4629e21b0306033ccd59) contains daily maps for the last 15 years of [avalanche risk](https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/2014/gk/fr/pdf/201312310800_gk_c_fr_map.pdf), [snow level](https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/2014/hstop/fr/gif/201401230800_hstop_fr_c.gif), [fresh snow](https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/2014/hn1/fr/gif/20131115_hn1_fr_c.gif), [avalanche bulletin](https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/2014/sw/en/pdf/201312011700_snow_weather_en.pdf) (structured text)
+- Swiss Open Data unfortunately does not have daily weather data archive, we only found [last 10 minute weather situation](https://opendata.swiss/en/dataset/messdaten-smn-swissmetnet) in all Switzerland (same as [meteo suisse](http://www.meteoschweiz.admin.ch/home/wetter/messwerte/messwerte-an-stationen.html?param=temperature)) or [monthly aggregates](https://opendata.swiss/en/dataset/klimanormwerte). Please tell us if we missed a link.
+- weather (T) Suisse - worst case bulletin
+- weather (T) France
+- risque avalanche en France / bulletin archive
 
 
-- Swiss tweets dataset (if some of them contain information about either the weather or avalanches declared, the time range will be a key aspect as most of the news collected from twitter will be recent)
+#### Comments
 
-We are aware that using external datasets is risky. But we are very motivated to achieve this analysis. We think that the plan we propose is feasible and fits well the project theme: "data science for social good". 
+TODO give the plan ?
 
-We think that building our own dataset will help us getting familiar with our environment of study. Crossing information coming from more than one website will improve the accuracy of the statements made in the end. 
+We are aware that using external datasets is risky but we are very motivated by this topic.  It is difficult to estimate the size and exploitability of our datasets as we have not been through an in-depth analysis for now but we think that the plan that we propose is managable.
 
-The main challenge of that project will be to collect all of the necessary information so as to avoid bias in our obtained results. 
+We might also use *news articles* to extract data stories and outline interesting avalanche cases with details, engaging more the reader. These articles would be hand picked, that is why we do not consider this as a core dataset.
 
-It is indeed difficult for now to annouce the size of our data set as we will cross information while collecting it. 
+## Milestones for deadline 2
 
-#### Risk assesment of our datasets
+- **Fetch the data.** We need to download and parse all the snow/meteorological data and the avalanches report
 
-In case Swiss avalanches data has a low temporal/spatial resolution to visualize patterns, we might pivot to the United States data. The [Colorado Avalanche Center](http://avalanche.state.co.us/accidents/us/) has detailed reports of every avalanche casualties in the last 8 years.*
+  - For the maps, we will clear the background and run KNN to get regions of avalanche hazard, snow height,
+  - Parse textual reports to extract temperature and wind information,
+  - Data cleaning on the avalanche report tables.
 
+- **Join information.** Build clean dataframes with meteorological/environmental data for each avalanche. Be able to explore 10 days of past data in the region for a given event.
 
+- **Look at patterns.** Get a better understanding of risk and casualties correlation (positive/negative).
 
-# A list of internal milestones up until project milestone 2
-Add here a sketch of your planning for the next project milestone.
+  ​
 
-- Data fetching: meteorological data, news parsing for past avalanche cases, investigate Rega or PGHM database (if public).
-- Extend dataset if some information results in being too poorly helpful.
-- Build clean dataframes from collected data.
+## Questions for TAs
 
-# Questions for TAs
-*Add here some questions you have for us, in general or project-specific.*
+- Are we allowed to add a dataset after milestone 2 if we find interesting data that could extend our area of research or improve our visualization?
 
-- Do we have to answer to a specific problematic during this project and solve a problem?
+- Do we have to specifically solve a problem for social good?
 
-- Are we allowed to add some more datasets if we find anything interesting in the following two months that could extend our area of research and improve our results?
-
-- If some datasets announced earlier seem to be irrelevant in the future, will we be allowed to drop them?
-
-- ​
+- Does working on both France and Switzerland adds value to the analysis or should we focus on one country?
 
   ​

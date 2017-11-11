@@ -30,7 +30,7 @@ def download(url, dest, prefix):
     return path
 
 def dl(u):
-  return download(u, args.destination, args.prefix)
+    return download(u, args.destination, args.prefix)
 
 if __name__ == "__main__":
     with open(args.urls, 'r') as urls_file:

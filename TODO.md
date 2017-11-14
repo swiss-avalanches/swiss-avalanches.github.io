@@ -23,6 +23,15 @@
 
 
 
+Data on [S3 bucket](https://s3.console.aws.amazon.com/s3/buckets/ada-avalanches/?region=us-east-1)
+
+```bash
+pip3 install aws-cli
+aws-cli s3 cp s3://ada-avalanches/ ./slf-data/ --recursive
+```
+
+
+
 
 
 **Brune**

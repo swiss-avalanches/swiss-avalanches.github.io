@@ -55,6 +55,22 @@ def keep_colors(img, colors, replace_with=white):
     new_img[~keep] = replace_with
     return new_img
 
+def remove_colors(img, colors, replace_with=white):
+    """return a new image without the `colors` selected which will be replaced by `replace_with`"""
+    keep = np.zeros(img.shape[:2], dtype=bool)
+    for c in colors:
+        keep = keep | (c == img).all(axis=-1)
+    new_img = img.copy()
+    new_img[keep] = replace_with
+    return new_img
+
+def replace_color(img, color_map=color_map):
+    """return a new image replacing the image colors which will be mapped to their corresponding colors in `color_map`"""
+    new_img = img.copy()
+    for _, (source, target) in color_map.iterrows():
+        new_img[(img == source).all(axis=-1)] = target
+    return new_img
+
 def numpify(o):
     if not isinstance(o, np.ndarray):
         o = np.array(o)

@@ -2,5 +2,6 @@
 .ipynb_checkpoints/
 data/
 json-maps/
+json-snowmaps/
 __pycache__/
 

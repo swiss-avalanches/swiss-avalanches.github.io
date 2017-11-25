@@ -4,6 +4,12 @@ import flask
 import glob
 import os
 
+"""
+Install Flask and flask-cors with pip3
+Run with `FLASK_APP=server.py flask run`
+Open index.html
+"""
+
 app = Flask(__name__)
 CORS(app)
 

@@ -64,7 +64,7 @@ def remove_colors(img, colors, replace_with=white):
     new_img[keep] = replace_with
     return new_img
 
-def replace_color(img, color_map=color_map):
+def replace_color(img, color_map):
     """return a new image replacing the image colors which will be mapped to their corresponding colors in `color_map`"""
     new_img = img.copy()
     for _, (source, target) in color_map.iterrows():
@@ -107,7 +107,7 @@ def color_contours(img, color):
     monocholor = img.copy()
     monocholor[~mask] = 255
     contours = measure.find_contours(mask, 0.5)
-    
+
     # heuristic filter for contours
     filter_contours = []
     for c in contours:
@@ -118,13 +118,13 @@ def color_contours(img, color):
         if white_ratio <= WHITE_RATIO_THRESHOLD:
             filter_contours.append(c)
     return filter_contours
-    
+
 def main(args):
 
     for file_map in glob.glob(os.path.join(args.maps_directory, "*.gif")):
         filename = '{}.json'.format(os.path.splitext(os.path.basename(file_map))[0])
         destination = os.path.join(args.out_path, filename)
-        
+
         if Path(destination).exists() and not args.f:
             print('Skip {} because {} already exists'.format(file_map, destination))
             continue
@@ -191,7 +191,7 @@ def main(args):
             print('{} -> {}'.format(file_map, destination))
             json.dump(geo_json, f)
 
-            
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract danger map to JSON.')
     parser.add_argument('maps_directory', type=str, help='directory of GIF file of the map')

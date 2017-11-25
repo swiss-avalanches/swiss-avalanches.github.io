@@ -2,4 +2,5 @@
 .ipynb_checkpoints/
 data/
 json-maps/
+__pycache__/
 

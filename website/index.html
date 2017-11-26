@@ -18,12 +18,13 @@
 
 <div id="mapid" style="height: 600px;"></div>
 <div id="theform">
-  <input type="text" name="regex" placeholder="regex" style="width: 100%;"><br>
+  <input type="text" name="regex" value=".*" placeholder="regex" style="width: 100%;" id="regexField"><br>
   <input type="range" min="0" max="100" value="50" class="slider" id="dateRange" style="width: 100%">
 </div>
 <p id="filename"></p>
 
 <script>
+  var regex = ".*"
 
   var mymap = L.map('mapid').setView([46.875893, 8.289321], 8);
 
@@ -37,6 +38,7 @@
 
   all_files = {}
   all_names = []
+  filtered_names = []
   download_remaining = 999
 
   function download_file(f) {
@@ -47,6 +49,7 @@
         if (download_remaining == 0) {
           console.log('download done', all_files)
           all_names.sort()
+          filtered_names = all_names
         }
       });
   }
@@ -60,18 +63,31 @@
     }
   }
 
+  function update_slider() {
+    reg = new RegExp(regex)
+    filtered_names = all_names.filter(function(item) {
+      return reg.test(item)
+    })
+    $('#dateRange').attr('max', filtered_names.length - 1);
+  }
+
   $.getJSON('http://localhost:5000/').done(download_list)
 
   geojsonLayer = L.geoJSON()
 
   $("#dateRange").on('input', function() {
     index = $(this).val()
-    filename = all_names[index]
+    filename = filtered_names[index]
     geojsonFeature = all_files[filename]
     geojsonLayer.clearLayers();
     geojsonLayer.addData(geojsonFeature)
     geojsonLayer.addTo(mymap);
     $('#filename').text(filename)
+  })
+
+  $("#regexField").on('input', function() {
+    regex = $("#regexField").val()
+    update_slider()
   })
 
 </script>

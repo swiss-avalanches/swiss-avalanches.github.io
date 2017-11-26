@@ -73,16 +73,35 @@
 
   $.getJSON('http://localhost:5000/').done(download_list)
 
+
+  function color_style(feature) {
+    console.log(feature, feature['properties'], feature['properties']['danger_level'])
+    if (feature['properties'] && feature['properties']['danger_level']) {
+        switch (feature['properties']['danger_level']) {
+            case 1: return {color: "#ccff66"};
+            case 2:   return {color: "#ffff00"};
+            case 3:   return {color: "#ff9900"};
+            case 4:   return {color: "#ff0000"};
+            case 5:   return {color: "#9102ff"};  // TODO
+        }
+    } else {
+        return {color: "blue"}
+    }
+  }
+
   geojsonLayer = L.geoJSON()
 
   $("#dateRange").on('input', function() {
     index = $(this).val()
     filename = filtered_names[index]
-    geojsonFeature = all_files[filename]
-    geojsonLayer.clearLayers();
-    geojsonLayer.addData(geojsonFeature)
-    geojsonLayer.addTo(mymap);
     $('#filename').text(filename)
+    geojsonFeature = all_files[filename]
+
+    if (geojsonLayer)
+        mymap.removeLayer(geojsonLayer)
+
+    geojsonLayer = L.geoJSON(geojsonFeature, {style: color_style})
+    geojsonLayer.addTo(mymap);
   })
 
   $("#regexField").on('input', function() {

@@ -11,6 +11,9 @@ import visvalingamwyatt as vw
 import glob
 import sys
 from pathlib import Path
+import pandas as pd
+from scipy.spatial import distance
+from scipy.misc import imsave
 
 # colors definitions RGB alpha
 black = np.array([0, 0, 0])
@@ -20,6 +23,8 @@ green = np.array([204, 255, 102])
 yellow = np.array([255, 255, 0])
 orange = np.array([255, 153, 0])
 red = np.array([255, 0, 0])
+
+color_scale = [green, yellow, orange, red]
 
 raw_red = np.array([255, 0, 0])
 raw_green = np.array([0, 255, 0])
@@ -43,7 +48,10 @@ landmarks_colors = {
     east_end: raw_yellow,
 }
 
+# remove contours areas that have more than 30% of white
+WHITE_RATIO_THRESHOLD = .6
 
+GRAY_STD_THRESHOLD = 10
 SMOOTHING_THRESHOLD = 0.0001
 
 def keep_colors(img, colors, replace_with=white):
@@ -76,6 +84,11 @@ def numpify(o):
         o = np.array(o)
     return o
 
+def remove_grey(img):
+    mask = np.std(img, axis=-1) < GRAY_STD_THRESHOLD
+    new_img = img.copy()
+    new_img[mask] = 255
+    return new_img
 
 def coord_color(img, color):
     return np.array(list(zip(*(img == color).all(-1).nonzero())))
@@ -97,8 +110,33 @@ def open_mask(height, width):
     binary_mask = (mask != 255).any(-1)  # different of white
     return binary_mask, landmarks_pix
 
-# remove contours areas that have more than 30% of white
-WHITE_RATIO_THRESHOLD = .3
+def replace_color(img, color_map):
+    """return a new image replacing the image colors which will be mapped to their corresponding colors in `color_map` (df)"""
+    new_img = img.copy()
+    for _, (source, target) in color_map.iterrows():
+        new_img[(img == source).all(axis=-1)] = target
+    return new_img
+
+def build_color_map(img_arr, image_shades):
+    """return colormap as dataframe"""
+    im_df = pd.DataFrame([img_arr[i,j,:] for i,j in np.ndindex(img_arr.shape[0],img_arr.shape[1])])
+    im_df = im_df.drop_duplicates()
+    image_colors = im_df.as_matrix()
+
+    colors = np.zeros(image_colors.shape)
+    dist = distance.cdist(image_colors, image_shades, 'sqeuclidean')
+
+    for j in range(dist.shape[0]):
+        distances = dist[j,:]
+        colors[j, :] = image_shades[distances.argmin()]
+
+    color_map = pd.DataFrame(
+        {'source': image_colors.tolist(),
+         'target': colors.tolist()
+        })
+
+    return color_map
+
 
 def color_contours(img, color):
     img = numpify(img)
@@ -133,6 +171,11 @@ def main(args):
         img = img.convert('RGB')
         img_arr = np.array(img)
 
+        img_no_gray = remove_grey(img_arr)
+        color_map = build_color_map(img_no_gray, [white] + color_scale)
+        img_projected = replace_color(img_no_gray, color_map)
+        imsave("img_projected.gif", img_projected)
+
         # load mask of this size
         try:
             binary_mask, landmarks_pix = open_mask(*img_arr.shape[:2])
@@ -141,12 +184,14 @@ def main(args):
             continue
 
         # keep useful colors
-        regions_only = keep_colors(img_arr, [green, yellow, orange, red])
+        regions_only = keep_colors(img_projected, color_scale)
+        imsave("regions_only.gif", regions_only)
 
         # clip the binary mask to remove color key
         regions_only[~binary_mask] = 255
         regions_only = Image.fromarray(regions_only).convert('RGB')
         smoothed = regions_only.filter(ImageFilter.MedianFilter(7))
+        imsave("smoothed.gif", smoothed)
 
         pix = np.array(list(map(numpify, landmarks_pix.values())))
         coord = np.array(list(map(numpify, landmarks_pix.keys())))

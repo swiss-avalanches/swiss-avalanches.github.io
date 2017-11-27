@@ -1,5 +1,9 @@
 # They say it's risky, should I go?
 
+# To obtain our results and explanations for milestone 2, please check milestone2.md
+
+
+
 ![avalanche](images/avalanche2.gif)
 
 

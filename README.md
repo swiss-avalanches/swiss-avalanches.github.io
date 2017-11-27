@@ -61,7 +61,4 @@ We might also use *news articles* to extract data stories and outline interestin
 - **Join information.** Build clean dataframes with meteorological/environmental data for each avalanche. Be able to explore 10 days of past data in the region for a given event.
 - **Look at patterns.** Get a better understanding of risk and casualties correlation (positive/negative).
 
-
-
-
 ​

@@ -24,4 +24,11 @@ You can find our work in `notebooks/map-extraction`. We had to develop a handful
 
 #### 4. Text scraping
 
-SLF archives text scraping: we used daily avalanche reports to extract temperature and wind observations per day. We extracted the text from PDF files, filtered meaningful sentences by keyword and extracted the figures. You can find this process described in depth in `notebooks/text-extraction.ipynb`.
+SLF archives text scraping: we used daily avalanche reports to extract temperature and wind observations per day. You can find this process described in depth in `notebooks/text-extraction.ipynb`.
+
+- *PDF to text*: we first extracted the text from PDF files, in order to be able to process  the text.
+- *Avalanche reports investigation*: these reports were analysed to understand the way the reports were done and find the best solution to extract the data we want in a repeatable way. The difficulty was that, depending on the year and month selected, the reports were organized differently.
+- *Paragraph selection*: in the algorithm, the first step consisted in selecting the paragraph in which temperature and wind (of the day) is found. This step was necessary to prevent unwanted matching (for example prevision temperatures)
+- *Regex filtering*: meaningful patterns were filtered by keywords to get substrings containing the main information. (for example ['plus 6 degre'] or ['moins 8 degre'])
+- *Location matching*: temperatures were associated with their respective location, which could correspond to north, south, east or west.
+- *DataFrame creation*: Wind and Temperature data were extracted and loaded into DataFrames. In order to assess the quality of our extraction, we selected a sample and checked by hand the results.

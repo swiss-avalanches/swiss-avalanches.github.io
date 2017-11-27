@@ -87,7 +87,7 @@ def replace_color(img, color_map):
         new_img[(img == source).all(axis=-1)] = target
     return new_img
 
-def build_color_map(img_arr, images_shades= image_shades):
+def build_color_map(img_arr, image_shades = image_shades):
     """return colormap as dataframe"""
     im_df = pd.DataFrame([img_arr[i,j,:] for i,j in np.ndindex(img_arr.shape[0],img_arr.shape[1])])
     im_df = im_df.drop_duplicates()
@@ -227,7 +227,7 @@ def main(args):
                     "type": "Feature",
                     "properties": {
                         "date": "TODO",
-                        "danger_level": snow_level + 1
+                        "snow_level": snow_level + 1
                     },
                     "geometry": {
                         "type": "Polygon",

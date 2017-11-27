@@ -13,7 +13,7 @@ Open index.html
 app = Flask(__name__)
 CORS(app)
 
-dir_to_serve = "../json-maps"
+dir_to_serve = "../json-snowmaps"
 
 @app.route("/")
 def ls():

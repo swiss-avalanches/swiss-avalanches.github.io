@@ -1,6 +1,6 @@
 ## Deliverables for milestones 2
 
-We produced 4 notebooks for this milestone. You can browse through them in `notebooks/`. Our project involves a lot of data scraping, data massage and computer vision.
+We produced 4 notebooks for this milestone. You can browse through them in `notebooks/`. Our project involves a lot of data scraping, data massage and computer vision. TODO see s3 bucket
 
 #### 1. Data scraping
 
@@ -8,7 +8,15 @@ We produced 4 notebooks for this milestone. You can browse through them in `note
 
 #### 2. Map extraction
 
-You can find our work in `notebooks/map-extraction`. We had to develop a handful of methods to extracts the snow/danger region 
+You can find our work in `notebooks/map-extraction`. We had to develop a handful of methods to extracts the snow/danger regions from the color maps. We applied these methods to danger maps and all kind of snow maps.
+
+- *grey removal:* looking at standard deviation of color channels for each pixel, we could threshold the greys and remove them from the original image,
+- *color projection*: due to the noise in the image or minor differences in the color tones, we had to project each pixel's color to the closest color in the reference key (with euclidean distance).
+- *mask clipping*: each image having different size or how the country is centered, we had to create binary masks to remove the legend, the title and sometimes extra logos or noise.
+- *smoothing*: to remove small imperfections or noisy color projections, we used a median filter in order to get smoother regions and ease the task of contour detection.
+- *region detection*: using color detection we extracted the contour of each region.
+- *pixel to geo location projection*: once we had contours of the regions in the image (by pixels) we had to transform those into geolocated regions. To do so, we learned a mapping from pixel to geolocations. We took 6 points of references on the image and on Google maps. Note that 3 would have been enough to constraint the problem, but with least square solver we could average out our small mistakes at picking pixel location of the landmarks.
+- *GeoJSON creation and website:* to visualize the regions, we transformed them into GeoJSON, smoothed these polygons and displayed them in a really basic HTML interface to check the consistency.
 
 #### 3. Avalanches accidents
 

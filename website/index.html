@@ -109,7 +109,7 @@
     if (geojsonLayer)
         mymap.removeLayer(geojsonLayer)
 
-    geojsonLayer = L.geoJSON(geojsonFeature, {style: color_style})
+    geojsonLayer = L.geoJSON(geojsonFeature)//TODO, {style: color_style})
     geojsonLayer.addTo(mymap);
   })
 

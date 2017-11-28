@@ -76,6 +76,7 @@
 
   function color_style(feature) {
     // console.log(feature, feature['properties'], feature['properties']['danger_level'], feature['properties']['snow_level'])
+    console.log("bl0", feature['properties'])
     if (feature['properties'] && feature['properties']['danger_level']) {
         switch (feature['properties']['danger_level']) {
             case 1: return {color: "#ccff66"};
@@ -85,7 +86,8 @@
             case 5:   return {color: "#9102ff"};  
         }
     } else if (feature['properties'] && feature['properties']['snow_level']){
-        switch (feaure['properties']['snow_level']){
+        console.log("bla", feature['properties'])
+        switch (feature['properties']['snow_level']){
           case 1: return {color: "#d5fcfc"}
           case 2: return {color: "#a8d9f1"}
           case 3: return {color: "#79a1e5"}
@@ -109,7 +111,7 @@
     if (geojsonLayer)
         mymap.removeLayer(geojsonLayer)
 
-    geojsonLayer = L.geoJSON(geojsonFeature)//TODO, {style: color_style})
+    geojsonLayer = L.geoJSON(geojsonFeature, {style: color_style})
     geojsonLayer.addTo(mymap);
   })
 

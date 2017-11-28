@@ -158,7 +158,7 @@ def color_contours(img, color):
     
 def main(args):
 
-    for file_map in glob.glob(os.path.join(args.maps_directory, "*.gif")):
+    for file_map in glob.glob(os.path.join(args.maps_directory, "*.png")):
         filename = '{}.json'.format(os.path.splitext(os.path.basename(file_map))[0])
         destination = os.path.join(args.out_path, filename)
         

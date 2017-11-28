@@ -76,17 +76,15 @@
 
   function color_style(feature) {
     // console.log(feature, feature['properties'], feature['properties']['danger_level'], feature['properties']['snow_level'])
-    console.log("bl0", feature['properties'])
     if (feature['properties'] && feature['properties']['danger_level']) {
         switch (feature['properties']['danger_level']) {
             case 1: return {color: "#ccff66"};
             case 2:   return {color: "#ffff00"};
             case 3:   return {color: "#ff9900"};
             case 4:   return {color: "#ff0000"};
-            case 5:   return {color: "#9102ff"};  
+            case 5:   return {color: "#9102ff"};
         }
     } else if (feature['properties'] && feature['properties']['snow_level']){
-        console.log("bla", feature['properties'])
         switch (feature['properties']['snow_level']){
           case 1: return {color: "#d5fcfc"}
           case 2: return {color: "#a8d9f1"}

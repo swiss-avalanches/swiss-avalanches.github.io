@@ -174,7 +174,6 @@ def main(args):
         img_no_gray = remove_grey(img_arr)
         color_map = build_color_map(img_no_gray, [white] + color_scale)
         img_projected = replace_color(img_no_gray, color_map)
-        imsave("img_projected.gif", img_projected)
 
         # load mask of this size
         try:
@@ -185,13 +184,11 @@ def main(args):
 
         # keep useful colors
         regions_only = keep_colors(img_projected, color_scale)
-        imsave("regions_only.gif", regions_only)
 
         # clip the binary mask to remove color key
         regions_only[~binary_mask] = 255
         regions_only = Image.fromarray(regions_only).convert('RGB')
         smoothed = regions_only.filter(ImageFilter.MedianFilter(7))
-        imsave("smoothed.gif", smoothed)
 
         pix = np.array(list(map(numpify, landmarks_pix.values())))
         coord = np.array(list(map(numpify, landmarks_pix.keys())))

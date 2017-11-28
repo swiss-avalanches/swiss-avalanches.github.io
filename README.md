@@ -1,6 +1,4 @@
-
-
-# To obtain our results and explanations for milestone 2, please check milestone2.md
+For milestone 2 evaluation, please check out [milestone2.ipynb on nbviewer.ipynb](https://nbviewer.jupyter.org/github/jbcdnr/ada-project/blob/master/milestone2.ipynb).
 
 # They say it's risky, should I go?
 

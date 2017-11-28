@@ -1,6 +1,8 @@
 ## Deliverables for milestones 2
 
-We produced 4 notebooks for this milestone. You can browse through them in `notebooks/`. Our project involves a lot of data scraping, data massage and computer vision. TODO see s3 bucket
+For this milestone we combined the different steps taken and explained them all a notebook which you can find under  `milestone2.ipynb/`.  Our project involves a lot of data scraping, data massage and computer vision. 
+
+TODO see s3 bucket
 
 #### 1. Data scraping
 
@@ -8,7 +10,7 @@ We produced 4 notebooks for this milestone. You can browse through them in `note
 
 #### 2. Map extraction
 
-You can find our work in `notebooks/map-extraction`. We had to develop a handful of methods to extracts the snow/danger regions from the color maps. We applied these methods to danger maps and all kind of snow maps.
+You can find our work in the first part of`milestone2.ipynb`. We had to develop a handful of methods to extracts the snow/danger regions from the color maps. We applied these methods to danger maps and all kind of snow maps.
 
 - *grey removal:* looking at standard deviation of color channels for each pixel, we could threshold the greys and remove them from the original image,
 - *color projection*: due to the noise in the image or minor differences in the color tones, we had to project each pixel's color to the closest color in the reference key (with euclidean distance).

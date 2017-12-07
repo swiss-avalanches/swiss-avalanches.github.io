@@ -3,23 +3,34 @@ from flask_cors import CORS
 import flask
 import glob
 import os
+import pandas as pd
+import sys
+import webbrowser
 
-"""
-Install Flask and flask-cors with pip3
-Run with `FLASK_APP=server.py flask run`
-Open index.html
-"""
-
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # TODO remove in prod
 CORS(app)
 
-dir_to_serve = "../json-snowmaps"
+project_dir = os.path.abspath(os.path.join(app.root_path, '..'))
 
-@app.route("/")
-def ls():
-    files = [os.path.split(path)[1] for path in glob.glob(os.path.join(dir_to_serve, "*"))]
-    return flask.jsonify(files)
+"""
+Load accident data and make it ready to be served
+"""
+accidents_file = os.path.join(project_dir, "data/accidents/accidents.csv")
+accidents_data = pd.read_csv(accidents_file)
+accidents_json = accidents_data.to_json(orient='index')
 
-@app.route('/<path:path>')
-def send_file(path):
-    return flask.send_from_directory(dir_to_serve, path)
+@app.route('/')
+def root():
+    return app.send_static_file('index.html')
+
+@app.route('/accidents')
+def accident_data():
+    response = app.response_class(
+        response=accidents_json,
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+webbrowser.open('http://localhost:5000/')

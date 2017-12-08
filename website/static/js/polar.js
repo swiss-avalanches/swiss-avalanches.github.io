@@ -17,7 +17,7 @@ function createPolar() {
       return r(d[1]);
     })
     .angle(function(d) {
-      return -d[0] + Math.PI / 2;
+      return d[0] - Math.PI ;
     });
 
   var svg = d3.select("#polar").append("svg")
@@ -35,8 +35,8 @@ function createPolar() {
   gr.append("circle")
     .attr("r", r)
     .attr("fill", "none")
-    .attr("stroke", "black")
-    .attr("stroke-width", "2px");
+    .attr("stroke", "grey")
+    .attr("stroke-width", "1px");
 
   var ga = svg.append("g")
     .attr("class", "a axis")
@@ -57,7 +57,7 @@ function createPolar() {
       return r(d[1]);
     })
     .angle(function(d) {
-      return -d[0] + Math.PI / 2;
+      return d[0];
     });
 
   svg.selectAll("point")
@@ -71,7 +71,11 @@ function createPolar() {
       var coors = line([[angle, elevation]]).slice(1).slice(0, -1);
       return "translate(" + coors + ")"
     })
-    .attr("r", 5)
+    .attr("r", function(d) {
+      var killed = d['killed']
+      return 3+4*killed
+    })
+    .attr("stroke", "white")
     .attr("fill", function(d){
       return dangerColor(d['Danger level']);
     })

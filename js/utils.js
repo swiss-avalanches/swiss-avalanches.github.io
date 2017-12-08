@@ -111,9 +111,6 @@ function aspectRangeAngle(fromAngle, toAngle) {
     toAngle = (toAngle + (2 * Math.PI)) % (2 * Math.PI)
 
     var crossOrigin = fromAngle > toAngle
-    console.log(fromAngle, toAngle)
-
-
     var selectedAspects = []
     var currentAngle = 0
     for (var i = 0; i < aspects.length; i++) {

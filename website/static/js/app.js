@@ -18,20 +18,29 @@ $.getJSON('/accidents', function (data) {
 
 var globalFilters = []
 
-function addFilter(name, lambda) {
-    globalFilters.push({'name': name, 'lambda': lambda, 'activated': true})
+function addFilter(name, lambda, removeMe) {
+    globalFilters.push({'name': name, 'lambda': lambda, 'activated': true, 'remove': removeMe})
     updateComponents(filterData(accidentsData))
     updateFilterList()
 }
 
 function removeFilter(name) {
-    globalFilters = globalFilters.filter(function (aFilter) { return aFilter.name != name })
+    var newGlobalFilters = []
+    for (var i = 0; i < globalFilters.length; i++) {
+        var element = globalFilters[i];
+        if (element.name != name) {
+            newGlobalFilters.push(element)
+        } else {
+            element.remove();
+        }
+    }
+    globalFilters = newGlobalFilters
+
     updateComponents(filterData(accidentsData))
     updateFilterList()
 }
 
 function updateFilterList() {
-    console.log('list', globalFilters)
     var filterList = d3.select('#filters dl').selectAll("dd").data(globalFilters, function(x) {return x.name});
     filterList.enter().insert("dd")
         .text(function (a) {return a.name})
@@ -45,7 +54,6 @@ function filterData(data) {
     var filtered = data;
     globalFilters.forEach(function (aFilter) {
         filtered = filtered.filter(aFilter.lambda)
-        console.log(aFilter.name, 'applied', filtered.length, 'remaining')
     });
     return filtered;
 }

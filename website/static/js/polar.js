@@ -39,6 +39,17 @@ function createPolar(accidentsData, addFilter, removeFilter) {
     .on("drag", dragged)
     .on("start", startDrag)
     .on("end", endDrag)
+  
+
+  var removeCurrentFilter = function() {
+    if (propertiesPolar.filterName) {
+      // avoids infinite calls
+      var toRemove = propertiesPolar.filterName
+      propertiesPolar.filterName = undefined;
+      removeFilter(toRemove)
+    }
+    propertiesPolar.svg.selectAll(".selection").selectAll("*").remove();
+  }
 
   function startDrag() {
     var x = d3.event.x,
@@ -47,23 +58,13 @@ function createPolar(accidentsData, addFilter, removeFilter) {
     dragStartAngle = angle;
     dragEndAngle = angle
 
-    if (propertiesPolar.filterName) {
-      removeFilter(propertiesPolar.filterName)
-      propertiesPolar.filterName = undefined;
-      d3.selectAll(".selection path").remove();
-    }
+    removeCurrentFilter();
 
     if (d3.selectAll(".selection path").size() == 0) {
       d3.selectAll(".selection").append("path")
         .attr("opacity", 0.5)
         .attr("fill", "#3498db")
-        .on("click", function(){
-          if (propertiesPolar.filterName) {
-            removeFilter(propertiesPolar.filterName)
-            propertiesPolar.filterName = undefined;
-          }
-          propertiesPolar.svg.selectAll(".selection").selectAll("*").remove();
-        });
+        .on("click", removeCurrentFilter);
     }
 
     d3.selectAll(".selection path")
@@ -89,7 +90,6 @@ function createPolar(accidentsData, addFilter, removeFilter) {
   }
 
   function endDrag() {
-    // TODO call addFilter
     var selectedAspects = aspectRangeAngle(dragStartAngle, dragEndAngle)
     console.log()
     if (selectedAspects.length == 0) {
@@ -106,7 +106,7 @@ function createPolar(accidentsData, addFilter, removeFilter) {
     }
     
     propertiesPolar.filterName = filterName
-    addFilter(filterName, filterFunction)
+    addFilter(filterName, filterFunction, removeCurrentFilter)
 
     dragStartAngle = undefined;
     dragEndAngle = undefined;

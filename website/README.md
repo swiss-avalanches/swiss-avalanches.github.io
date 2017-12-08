@@ -10,4 +10,4 @@ All front end files are in `website/static` and are served at the root url by th
 ### Back end
 
 Install `Flask` and `flask-cors` with pip3
-Run from project root with `FLASK_APP=website/server/server.py flask run`
+Run from project root with `FLASK_APP=website/server.py flask run`

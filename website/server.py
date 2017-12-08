@@ -14,11 +14,15 @@ CORS(app)
 project_dir = os.path.abspath(os.path.join(app.root_path, '..'))
 
 """
-Load accident data and make it ready to be served
+DATA LOADING
 """
 accidents_file = os.path.join(project_dir, "data/accidents/accidents.csv")
 accidents_data = pd.read_csv(accidents_file)
 accidents_json = accidents_data.to_json(orient='index')
+
+"""
+ROUTING
+"""
 
 @app.route('/')
 def root():

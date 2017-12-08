@@ -1,10 +1,15 @@
+// TODO change sense of rotation
+// better lines (with label)
+// should add overlay
+// how do we do selection ?
+
 function createPolar() {
   var width = 960,
     height = 500,
     radius = Math.min(width, height) / 2 - 30;
 
   var r = d3.scaleLinear()
-    .domain([5000, 0])
+    .domain([4500, 1000])
     .range([0, radius]);
 
   var line = d3.radialLine()
@@ -24,7 +29,7 @@ function createPolar() {
   var gr = svg.append("g")
     .attr("class", "r axis")
     .selectAll("g")
-    .data(r.ticks(3).slice(1))
+    .data(r.ticks(4).slice(1))
     .enter().append("g");
 
   gr.append("circle")
@@ -55,22 +60,6 @@ function createPolar() {
       return -d[0] + Math.PI / 2;
     });
 
-  var data = [
-    [Math.PI / 3, Math.random()],
-    [Math.PI / 6, Math.random()],
-    [0 * Math.PI, Math.random()],
-    [(11 * Math.PI) / 6, Math.random()],
-    [(5 * Math.PI / 3), Math.random()],
-    [(3 * Math.PI) / 2, Math.random()],
-    [(4 * Math.PI / 3), Math.random()],
-    [(7 * Math.PI) / 6, Math.random()],
-    [Math.PI, Math.random()],
-    [(5 * Math.PI) / 6, Math.random()],
-    [(2 * Math.PI) / 3, Math.random()],
-    [Math.PI / 2, Math.random()]
-  ]
-  console.log(accidentsData);
-
   svg.selectAll("point")
     .data(accidentsData)
     .enter()
@@ -78,13 +67,15 @@ function createPolar() {
     .attr("class", "point")
     .attr("transform", function(d) {
       var angle = aspect(d['Aspect'], 'angle');
-      var altitude = Math.random() * 4000
-      console.log(angle, altitude);
-      var coors = line([[angle, altitude]]).slice(1).slice(0, -1);
+      var elevation = d['Elevation'];
+      var coors = line([[angle, elevation]]).slice(1).slice(0, -1);
       return "translate(" + coors + ")"
     })
     .attr("r", 5)
     .attr("fill", function(d){
       return dangerColor(d['Danger level']);
+    })
+    .on('click', function (d) {
+      console.log(d);
     });
 }

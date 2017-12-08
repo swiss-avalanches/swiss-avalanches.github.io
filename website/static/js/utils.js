@@ -90,6 +90,7 @@ function dangerColor(dangerLevel) {
         case 5: 
         case "5": 
             return "#9102ff";
-        default: return "#95a5a6";
+        default: 
+            return "#95a5a6";
     }
 }

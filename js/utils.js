@@ -129,5 +129,18 @@ function aspectRangeAngle(fromAngle, toAngle) {
         currentAngle += Math.PI / 8
     }
 
+    if(crossOrigin) {
+        breakIndex = 0
+        while (true) {
+            if (aspect(selectedAspects[breakIndex], 'categorical') + 1 != aspect(selectedAspects[breakIndex + 1], 'categorical')) {
+                break;
+            }
+            breakIndex += 1;
+        }
+        left = selectedAspects.slice(breakIndex + 1, selectedAspects.length)
+        right = selectedAspects.slice(0, breakIndex + 1)
+        selectedAspects = left.concat(right)
+    }
+
     return selectedAspects;
 }

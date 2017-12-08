@@ -94,3 +94,40 @@ function dangerColor(dangerLevel) {
             return "#95a5a6";
     }
 }
+
+function aspectRangeAngle(fromAngle, toAngle) {
+    var aspects = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+    if (Math.abs(fromAngle - toAngle) >= 2 * Math.PI){
+        return aspects
+    }
+
+    if (fromAngle > toAngle) {
+        var temp = fromAngle
+        fromAngle = toAngle
+        toAngle = temp
+    }
+    
+    fromAngle = (fromAngle + (2 * Math.PI)) % (2 * Math.PI)
+    toAngle = (toAngle + (2 * Math.PI)) % (2 * Math.PI)
+
+    var crossOrigin = fromAngle > toAngle
+    console.log(fromAngle, toAngle)
+
+
+    var selectedAspects = []
+    var currentAngle = 0
+    for (var i = 0; i < aspects.length; i++) {
+        if (!crossOrigin) {
+            if (currentAngle >= fromAngle && currentAngle <= toAngle) {
+                selectedAspects.push(aspects[i])
+            }
+        } else {
+            if (! (currentAngle >= toAngle && currentAngle <= fromAngle)) {
+                selectedAspects.push(aspects[i])
+            }
+        }
+        currentAngle += Math.PI / 8
+    }
+
+    return selectedAspects;
+}

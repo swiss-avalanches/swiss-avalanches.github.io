@@ -4,7 +4,7 @@
 
 var propertiesPolar = {}
 
-function createPolar(accidentsData, addFilter) {
+function createPolar(accidentsData, addFilter, removeFilter) {
   propertiesPolar.maxAltitude = 4500;
   propertiesPolar.minAltitude = 1000;
   propertiesPolar.width = 960
@@ -47,11 +47,21 @@ function createPolar(accidentsData, addFilter) {
     dragStartAngle = angle;
     dragEndAngle = angle
 
+    if (propertiesPolar.filterName) {
+      removeFilter(propertiesPolar.filterName)
+      propertiesPolar.filterName = undefined;
+      d3.selectAll(".selection path").remove();
+    }
+
     if (d3.selectAll(".selection path").size() == 0) {
       d3.selectAll(".selection").append("path")
         .attr("opacity", 0.5)
         .attr("fill", "#3498db")
         .on("click", function(){
+          if (propertiesPolar.filterName) {
+            removeFilter(propertiesPolar.filterName)
+            propertiesPolar.filterName = undefined;
+          }
           propertiesPolar.svg.selectAll(".selection").selectAll("*").remove();
         });
     }
@@ -80,22 +90,24 @@ function createPolar(accidentsData, addFilter) {
 
   function endDrag() {
     // TODO call addFilter
-    // TODO disable if no aspect selected
-    console.log(dragStartAngle, dragEndAngle, )
     var selectedAspects = aspectRangeAngle(dragStartAngle, dragEndAngle)
+    console.log()
     if (selectedAspects.length == 0) {
-      // reject
+      d3.selectAll(".selection path").remove()
+      return;
     } if (selectedAspects.length == 1) {
-      filterName = "Aspect {}".format(selectedAspects[0])
+      filterName = "Aspect " + selectedAspects[0]
     } else {
-      filterName = "Aspect {}-{}".format(selectedAspects[0], selectedAspects[selectedAspects.length - 1])
+      filterName = "Aspect " + selectedAspects[0] + "-" + selectedAspects[selectedAspects.length - 1]
     }
+
     var filterFunction = function(d) {
       return selectedAspects.includes(d['Aspect'])
     }
-    console.log(filterName)
     
-    
+    propertiesPolar.filterName = filterName
+    addFilter(filterName, filterFunction)
+
     dragStartAngle = undefined;
     dragEndAngle = undefined;
   }
@@ -148,11 +160,11 @@ function createPolar(accidentsData, addFilter) {
   propertiesPolar.svg.append("g")
     .attr("class", "selection")
 
-  updatePolar(accidentsData, addFilter)
+  updatePolar(accidentsData, addFilter, removeFilter)
 }
 
 
-function updatePolar(data, addFilter) {
+function updatePolar(data, addFilter, removeFilter) {
   var line = d3.radialLine()
     .radius(function(d) {
       return propertiesPolar.r(d[1]);
@@ -163,7 +175,6 @@ function updatePolar(data, addFilter) {
 
   var points = propertiesPolar.svg.selectAll(".point")
     .data(data, function(d) {
-      console.log(d.Date + d.Latitude + d.Longitude)
       return d.Date + ", " + d.Latitude + ", " + d.Longitude;
     });
 

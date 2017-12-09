@@ -68,36 +68,36 @@ function aspect(aspectString, output) {
 
 function object2array(obj) {
     // {1: elem1, 2: elem2, ...} -> [elem1, elem2, ...]
-    return $.map(obj, function(value, index) {
+    return $.map(obj, function (value, index) {
         return [value];
     });
 }
 
 function dangerColor(dangerLevel) {
     switch (dangerLevel) {
-        case 1: 
+        case 1:
         case "1":
             return "#ccff66";
-        case 2: 
-        case "2": 
+        case 2:
+        case "2":
             return "#ffff00";
-        case 3: 
-        case "3": 
+        case 3:
+        case "3":
             return "#ff9900";
-        case 4: 
-        case "4": 
+        case 4:
+        case "4":
             return "#ff0000";
-        case 5: 
-        case "5": 
+        case 5:
+        case "5":
             return "#9102ff";
-        default: 
+        default:
             return "#95a5a6";
     }
 }
 
 function aspectRangeAngle(fromAngle, toAngle) {
     var aspects = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
-    if (Math.abs(fromAngle - toAngle) >= 2 * Math.PI){
+    if (Math.abs(fromAngle - toAngle) >= 2 * Math.PI) {
         return aspects
     }
 
@@ -106,7 +106,7 @@ function aspectRangeAngle(fromAngle, toAngle) {
         fromAngle = toAngle
         toAngle = temp
     }
-    
+
     fromAngle = (fromAngle + (2 * Math.PI)) % (2 * Math.PI)
     toAngle = (toAngle + (2 * Math.PI)) % (2 * Math.PI)
 
@@ -119,14 +119,14 @@ function aspectRangeAngle(fromAngle, toAngle) {
                 selectedAspects.push(aspects[i])
             }
         } else {
-            if (! (currentAngle >= toAngle && currentAngle <= fromAngle)) {
+            if (!(currentAngle >= toAngle && currentAngle <= fromAngle)) {
                 selectedAspects.push(aspects[i])
             }
         }
         currentAngle += Math.PI / 8
     }
 
-    if(crossOrigin) {
+    if (crossOrigin) {
         breakIndex = 0
         while (true) {
             if (aspect(selectedAspects[breakIndex], 'categorical') + 1 != aspect(selectedAspects[breakIndex + 1], 'categorical')) {

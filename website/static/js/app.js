@@ -6,9 +6,14 @@ var accidentsData = null;
 
 $.getJSON('/accidents', function (data) {
     accidentsData = object2array(data);
+    for (var i = 0; i < accidentsData.length; i++) {
+        accidentsData[i].id = accidentDatumId(accidentsData[i]);
+    }
+    
     console.log(accidentsData)
     d3.select('#filters').append("dl")
-    createComponents(accidentsData);
+    createComponents();
+    updateComponents();
 });
 
 /*
@@ -24,12 +29,12 @@ function addFilter(name, lambda, removeMe) {
         'activated': true,
         'remove': removeMe
     })
-    updateComponents(filterData(accidentsData))
+    updateComponents()
     updateFilterList()
 }
 
 function removeFilter(name) {
-    var newGlobalFilters = []
+    var newGlobalFilters = [];
     for (var i = 0; i < globalFilters.length; i++) {
         var element = globalFilters[i];
         if (element.name != name) {
@@ -40,7 +45,7 @@ function removeFilter(name) {
     }
     globalFilters = newGlobalFilters
 
-    updateComponents(filterData(accidentsData))
+    updateComponents()
     updateFilterList()
 }
 
@@ -67,13 +72,51 @@ function filterData(data) {
 }
 
 /*
+ * POINT SELECTION
+ */
+
+var selectedPoint = null;
+
+function selectPoint(id) {
+    if (selectedPoint != id) {
+        selectedPoint = id;
+    } else {
+        selectedPoint = null;
+    }
+    updateComponents();
+}
+
+function applyPointSelection(data) {
+    if (!selectedPoint) {
+        return data;
+    }
+
+    var newData = [];
+    for (var i = 0; i < data.length; i++) {
+        var element = data[i];
+        if (data[i].id === selectedPoint) {
+            newDatum = $.extend(true, {}, element);
+            newDatum.selected = true;
+            newData.push(newDatum);
+        } else {
+            newData.push(element);
+        }
+    }
+    return newData;
+}
+
+/*
  * COMPONENT INITIALISATION
  */
 
-function createComponents(data) {
-    createPolar(data, addFilter, removeFilter);
+function createComponents() {
+    data = filterData(accidentsData);
+    data = applyPointSelection(data);
+    createPolar(data, addFilter, removeFilter, selectPoint);
 }
 
-function updateComponents(data) {
-    updatePolar(data, addFilter, removeFilter);
+function updateComponents() {
+    data = filterData(accidentsData);
+    data = applyPointSelection(data);
+    updatePolar(data, addFilter, removeFilter, selectPoint);
 }

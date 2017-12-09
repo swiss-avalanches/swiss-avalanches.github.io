@@ -1,7 +1,6 @@
-
 /*
  * DATA LOADING
-*/
+ */
 
 var accidentsData = null;
 
@@ -10,16 +9,21 @@ $.getJSON('/accidents', function (data) {
     console.log(accidentsData)
     d3.select('#filters').append("dl")
     createComponents(accidentsData);
-})
+});
 
 /*
  * FILTERS SET UP
  */
 
-var globalFilters = []
+var globalFilters = [];
 
 function addFilter(name, lambda, removeMe) {
-    globalFilters.push({'name': name, 'lambda': lambda, 'activated': true, 'remove': removeMe})
+    globalFilters.push({
+        'name': name,
+        'lambda': lambda,
+        'activated': true,
+        'remove': removeMe
+    })
     updateComponents(filterData(accidentsData))
     updateFilterList()
 }
@@ -41,13 +45,17 @@ function removeFilter(name) {
 }
 
 function updateFilterList() {
-    var filterList = d3.select('#filters dl').selectAll("dd").data(globalFilters, function(x) {return x.name});
+    var filterList = d3.select('#filters dl').selectAll("dd").data(globalFilters, function (x) {
+        return x.name
+    });
     filterList.enter().insert("dd")
-        .text(function (a) {return a.name})
+        .text(function (a) {
+            return a.name
+        })
         .on('click', function (a) {
             removeFilter(a.name);
         });
-    filterList.exit().remove();  // TODO buggy
+    filterList.exit().remove();
 }
 
 function filterData(data) {
@@ -60,7 +68,7 @@ function filterData(data) {
 
 /*
  * COMPONENT INITIALISATION
-*/
+ */
 
 function createComponents(data) {
     createPolar(data, addFilter, removeFilter);

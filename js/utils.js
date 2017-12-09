@@ -101,14 +101,20 @@ function aspectRangeAngle(fromAngle, toAngle) {
         return aspects
     }
 
+    console.log(fromAngle, toAngle)
+
     if (fromAngle > toAngle) {
         var temp = fromAngle
         fromAngle = toAngle
         toAngle = temp
     }
 
-    fromAngle = (fromAngle + (2 * Math.PI)) % (2 * Math.PI)
-    toAngle = (toAngle + (2 * Math.PI)) % (2 * Math.PI)
+    console.log(fromAngle, toAngle)
+
+    fromAngle = (fromAngle + (10 * 2 * Math.PI)) % (2 * Math.PI)
+    toAngle = (toAngle + (10 * 2 * Math.PI)) % (2 * Math.PI)
+
+    console.log(fromAngle, toAngle)
 
     var crossOrigin = fromAngle > toAngle
     var selectedAspects = []
@@ -140,4 +146,8 @@ function aspectRangeAngle(fromAngle, toAngle) {
     }
 
     return selectedAspects;
+}
+
+function accidentDatumId(datum) {
+    return datum.Date + "-" + datum.Latitude + "-" + datum.Longitude;
 }

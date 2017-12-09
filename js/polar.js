@@ -4,7 +4,7 @@
 
 var propertiesPolar = {}
 
-function createPolar(accidentsData, addFilter, removeFilter) {
+function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
   propertiesPolar.maxAltitude = 4500;
   propertiesPolar.minAltitude = 1000;
   propertiesPolar.width = 960;
@@ -167,12 +167,10 @@ function createPolar(accidentsData, addFilter, removeFilter) {
 
   propertiesPolar.svg.append("g")
     .attr("class", "selection");
-
-  updatePolar(accidentsData, addFilter, removeFilter)
 }
 
 
-function updatePolar(data, addFilter, removeFilter) {
+function updatePolar(data, addFilter, removeFilter, selectPoint) {
   var line = d3.radialLine()
     .radius(function (d) {
       return propertiesPolar.r(d[1]);
@@ -189,26 +187,38 @@ function updatePolar(data, addFilter, removeFilter) {
   var pointsEnter = points.enter()
 
   pointsEnter.append("circle")
-    .attr("class", "point")
-    .attr("stroke", "white")
-    .on('click', function (d) {
-      console.log(d);
-    })
-    .attr("transform", function (d) {
-      var angle = aspect(d['Aspect'], 'angle');
-      var elevation = d['Elevation'];
-      var coors = line([
-        [angle, elevation]
-      ]).slice(1).slice(0, -1);
-      return "translate(" + coors + ")"
-    })
-    .attr("r", function (d) {
-      var killed = d['killed']
-      return 3 + 4 * killed
-    })
-    .attr("fill", function (d) {
-      return dangerColor(d['Danger level']);
-    })
+      .attr("class", "point")
+      .on('click', function (d) {
+        selectPoint(d.id);
+      })
+      .attr("transform", function (d) {
+        var angle = aspect(d['Aspect'], 'angle');
+        var elevation = d['Elevation'];
+        var coors = line([
+          [angle, elevation]
+        ]).slice(1).slice(0, -1);
+        return "translate(" + coors + ")";
+      })
+      .attr("r", function (d) {
+        var killed = d['killed']
+        return 3 + 4 * killed
+      })
+      .attr("fill", function (d) {
+        return dangerColor(d['Danger level']);
+      })
+    .merge(points)
+      .attr("opacity", function (d) {return d.selected ? 1 : 0.7; })
+      .attr("stroke", function (d) { return d.selected ? '#2c3e50' : 'white'; })
+      .attr("stroke-width", '1px')
+      .sort(function (a, b) {
+        if (a.selected == b.selected) {
+          return 0;
+        } else if (a.selected) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
 
   points.exit().remove();
 

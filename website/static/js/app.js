@@ -109,7 +109,6 @@ function applyPointSelection(data) {
  * COMPONENT INITIALISATION
  */
 
-
 function createComponents() {
     data = filterData(accidentsData);
     data = applyPointSelection(data);
@@ -121,6 +120,6 @@ function updateComponents() {
     data = filterData(accidentsData);
     data = applyPointSelection(data);
     updatePolar(data, addFilter, removeFilter, selectPoint);
-    updateElevation(data, addFilter, removeFilter, selectPoint);
+    //updateElevation(data, addFilter, removeFilter, selectPoint);
 
 }

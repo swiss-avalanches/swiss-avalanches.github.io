@@ -13,8 +13,9 @@ function bucketifyElevation(data){
 
 function createElevation(accidentsData, addFilter, removeFilter) {
     //propertiesElevation.rangeAltitudes = d3.range(7).map(function(i){return 1000+i*500;});
-    var data = d3.range(1000).map(d3.randomBates(10));
-    
+    //var data = d3.range(9).map(function(d){return bucketifyElevation(accidentsData);});
+    //var data = bucketifyElevation(accidentsData);
+
     var formatCount = d3.format(",.0f");
     
     var svg = d3.select("svg"),
@@ -58,48 +59,6 @@ function createElevation(accidentsData, addFilter, removeFilter) {
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
     
-}
-function originalcreateElevation(){
-    var data = bucketifyElevation(accidentsData);
-
-    var width = 960,
-    height = 500;
-
-    var x = d3.scaleBand().range([0, width], .1);
-
-    var y = d3.scaleLinear().range([height, 0]);
-
-    var chart = d3.select(".chart")
-        .selectAll("div")
-        .data(data)
-        .enter().append("div")
-        .attr("width", width)
-        .attr("height", height);
-
-    
-    x.domain([0, d3.max(data)]);
-    y.domain([0, d3.max(elevations)]);
-
-    var bar = chart.selectAll("g")
-        .data(data)
-        .enter().append("g")
-        .attr("transform", function(d) { return "translate(" + x(d.value) + ",0)"; });
-
-    bar.append("rect")
-        .attr("y", function(d) { return y(d); })
-        .attr("height", function(d) { return height - y(d.value); })
-        .attr("width", x.bandwidth());
-
-    //bar.append("text")
-    //    .attr("x", x.bandwidth() / 2)
-    //    .attr("y", function(d) { return y(d.value) + 3; })
-    //    .attr("dy", ".75em")
-    //    .text(function(d) { return d.value; });
-
-    function type(d) {
-        d.value = +d.value; // coerce to number
-    return d.value;
-    }
     updateElevation(data, addFilter, removeFilter)
 }
 

@@ -50,15 +50,15 @@ function createElevation(accidentsData, addFilter, removeFilter) {
     var y = d3.scaleLinear()
             .range([height, 0]);
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#elevation").append("svg") // TODO check "body" "#elevation"
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", 
                   "translate(" + margin.left + "," + margin.top + ")");
 
-    x.domain(data.map(function(d) { return d.elevation; }));
-    y.domain([0, d3.max(data, function(d) { return d.killed; })]);
+    x.domain(newData.map(function(d) { return d.elevation; }));
+    y.domain([0, d3.max(newData, function(d) { return d.killed; })]);
 
 
     // append the rectangles for the bar chart
@@ -80,7 +80,7 @@ function createElevation(accidentsData, addFilter, removeFilter) {
     svg.append("g")
         .call(d3.axisLeft(y));
     
-    updateElevation(data, addFilter, removeFilter) 
+    updateElevation(newData, addFilter, removeFilter) 
 }
 
 function updateElevation(accidentsData, addFilter, removeFilter) {

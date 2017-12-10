@@ -120,6 +120,6 @@ function updateComponents() {
     data = filterData(accidentsData);
     data = applyPointSelection(data);
     updatePolar(data, addFilter, removeFilter, selectPoint);
-    //updateElevation(data, addFilter, removeFilter, selectPoint);
+    updateElevation(data, addFilter, removeFilter, selectPoint);
 
 }

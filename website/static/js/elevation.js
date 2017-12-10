@@ -37,7 +37,7 @@ function createElevation(accidentsData, addFilter, removeFilter) {
         });
     }
 
-    console.log(newData);
+    //console.log(newData);
 
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = 960 - margin.left - margin.right,
@@ -50,7 +50,7 @@ function createElevation(accidentsData, addFilter, removeFilter) {
     var y = d3.scaleLinear()
             .range([height, 0]);
 
-    var svg = d3.select("#elevation").append("svg") // TODO check "body" "#elevation"
+    var svg = d3.select("#elevation").append("svg") 
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
@@ -69,8 +69,9 @@ function createElevation(accidentsData, addFilter, removeFilter) {
         .attr("x", function(d) { return x(d.elevation); })
         .attr("width", x.bandwidth())
         .attr("y", function(d) { return y(d.killed); })
-        .attr("height", function(d) { return height - y(d.killed); });
-
+        .attr("height", function(d) { return height - y(d.killed); })
+        .attr("fill", function(d, i) { return "#1144FF" });
+    
     // add the x Axis
      svg.append("g")
         .attr("transform", "translate(0," + height + ")")

@@ -133,6 +133,8 @@ function updateSelectionCard() {
             selection.append('dd').text(selectedDatum.caught);
             selection.append('dk').text("Killed")
             selection.append('dd').text(selectedDatum.killed);
+            selection.append('dk').text("Activity")
+            selection.append('dd').text(Activity(selectedDatum.Activity));
         }
     }
 

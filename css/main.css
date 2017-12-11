@@ -16,3 +16,7 @@ body {
 dk {
     font-weight: bold;
 }
+
+.histogram-label {
+    font-size: .8em;
+}

@@ -23,6 +23,10 @@ function devel(data) {
 }
 
 function createElevation(accidentsData, addFilter, removeFilter) {
+    var parent = document.getElementById("polar");
+    containerWidth = parent.clientWidth;
+    containerHeight = 400;
+
     var histData = devel(accidentsData);
     
     var elevations = Object.keys(histData);
@@ -39,8 +43,8 @@ function createElevation(accidentsData, addFilter, removeFilter) {
 
 
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        width = containerWidth - margin.left - margin.right,
+        height = containerHeight - margin.top - margin.bottom;
 
     var x = d3.scaleBand()
             .range([0, width])

@@ -1,3 +1,5 @@
 var constants = {
-  killedRadius: function (d) { return 3 + 4 * d.killed; },
+  killedRadius: function (d) {
+    return 3 + 4 * d.killed;
+  },
 };

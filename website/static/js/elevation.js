@@ -69,7 +69,7 @@ function createElevation(accidentsData, addFilter, removeFilter) {
         .attr("width", x.bandwidth())
         .attr("y", function(d) { return y(d.killed); })
         .attr("height", function(d) { return height - y(d.killed); })
-        .attr("fill", function(d, i) { return "#3498db" });
+        .attr("fill", function(d, i) { return "#2c3e50" });
     
     // add the x Axis
      svg.append("g")

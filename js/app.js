@@ -154,6 +154,7 @@ function createComponents() {
     createElevation(data, addFilter, removeFilter, selectPoint);
     createMonth(data, addFilter, removeFilter, selectPoint);
     createMap(data, addFilter, removeFilter, selectPoint);
+    createDangers(data, addFilter, removeFilter, selectPoint);
 }
 
 function updateComponents() {
@@ -163,4 +164,5 @@ function updateComponents() {
     updateElevation(data, addFilter, removeFilter, selectPoint);
     updateMonth(data, addFilter, removeFilter, selectPoint);
     updateMap(data, addFilter, removeFilter, selectPoint);
+    updateDangers(data, addFilter, removeFilter, selectPoint);
 }

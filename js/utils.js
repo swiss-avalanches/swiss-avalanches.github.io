@@ -73,6 +73,35 @@ function object2array(obj) {
     });
 }
 
+function Activity(activity) {
+    switch(activity){
+        case 1:
+        case "1":
+            return "Backcountry touring";
+            break;
+        case 2:
+        case "2":
+            return "Off-piste skiing";
+            break;
+        case 3:
+        case "3":
+            return "Transportation";
+            break;
+        case 4:
+        case "4":
+            return "Transportation corridors";
+            break;
+        case 5:
+        case "5":
+            return "Buildings";
+            break;
+        default: 
+            return "-";
+            break;
+    }
+
+}
+
 function dangerColor(dangerLevel) {
     switch (dangerLevel) {
         case 1:

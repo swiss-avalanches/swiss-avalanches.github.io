@@ -1,8 +1,4 @@
-// better lines (with label)
-// should add overlay
-// how do we do selection ?
-
-var propertiesPolar = {}
+var propertiesPolar = {};
 
 function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
   propertiesPolar.maxAltitude = 4500;
@@ -199,10 +195,7 @@ function updatePolar(data, addFilter, removeFilter, selectPoint) {
         ]).slice(1).slice(0, -1);
         return "translate(" + coors + ")";
       })
-      .attr("r", function (d) {
-        var killed = d['killed']
-        return 3 + 4 * killed
-      })
+      .attr("r", constants.killedRadius)
       .attr("fill", function (d) {
         return dangerColor(d['Danger level']);
       })

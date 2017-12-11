@@ -115,6 +115,7 @@ function createComponents() {
     createPolar(data, addFilter, removeFilter, selectPoint);
     createElevation(data, addFilter, removeFilter, selectPoint);
     createMonth(data, addFilter, removeFilter, selectPoint);
+    createMap(data, addFilter, removeFilter, selectPoint);
 }
 
 function updateComponents() {
@@ -123,4 +124,5 @@ function updateComponents() {
     updatePolar(data, addFilter, removeFilter, selectPoint);
     updateElevation(data, addFilter, removeFilter, selectPoint);
     updateMonth(data, addFilter, removeFilter, selectPoint);
+    updateMap(data, addFilter, removeFilter, selectPoint);
 }

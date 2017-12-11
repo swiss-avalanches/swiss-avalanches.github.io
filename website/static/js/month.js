@@ -78,6 +78,21 @@ function createMonth(accidentsData, addFilter, removeFilter) {
   svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
+  
+  // y axis label
+  svg.append("text")
+    .attr("text-anchor", "middle")
+    .attr("class", "histogram-label")
+    .attr("transform", "translate("+ -30 +","+(height/2)+")rotate(-90)")
+    .text("accidents");
+
+  
+    // x axis label
+  svg.append("text")
+    .attr("text-anchor", "middle")
+    .attr("class", "histogram-label")
+    .attr("transform", "translate("+ (width/2) +","+(height + 30)+")")
+    .text("month");
 
   propertiesMonth.x = x;
   propertiesMonth.svg = svg;
@@ -155,12 +170,6 @@ function updateMonth(accidentsData, addFilter, removeFilter) {
       });
 
   svg.select('.y-axis').remove();
-
-  svg.append("text")
-    .attr("text-anchor", "middle")
-    .attr("class", "histogram-label")
-    .attr("transform", "translate("+ -30 +","+(height/2)+")rotate(-90)")
-    .text("accidents");
 
   // add the y Axis
   svg.append("g")

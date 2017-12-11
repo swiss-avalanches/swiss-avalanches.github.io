@@ -69,18 +69,18 @@ function updateMonth(accidentsData, addFilter, removeFilter) {
     var valueMonths = Object.values(dictMonth);
  
     var newData = []
-    
-    for(var i = 0; i < dictMonth.length; ++i) {
-        var monthAccident = keyMonths[i]; 
+
+    for(var i = 0; i < months.length; ++i) { //dictMonth.length
+        /*var monthAccident = keyMonths[i]; 
         console.log(monthAccident)
         var numAccident = 0;
         if (months.prototype.includes(valueMonths[i])){
             numAccident = accidents[months.indexOf(valueMonths[i])];
             console.log(numAccident)
-        }
+        }*/
         newData.push({
-            month: monthAccident,
-            accident: numAccident
+            month: months[i],//month: monthAccident,
+            accident: accidents[i]//accident: numAccident
         });
    }
 

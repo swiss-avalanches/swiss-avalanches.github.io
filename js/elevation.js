@@ -37,7 +37,6 @@ function createElevation(accidentsData, addFilter, removeFilter) {
         });
     }
 
-    //console.log(newData);
 
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = 960 - margin.left - margin.right,
@@ -70,7 +69,7 @@ function createElevation(accidentsData, addFilter, removeFilter) {
         .attr("width", x.bandwidth())
         .attr("y", function(d) { return y(d.killed); })
         .attr("height", function(d) { return height - y(d.killed); })
-        .attr("fill", function(d, i) { return "#1144FF" });
+        .attr("fill", function(d, i) { return "#3498db" });
     
     // add the x Axis
      svg.append("g")

@@ -1,5 +1,6 @@
-var propertiesElevation = {}
-var elevations = [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500]; //TODO linspace si existe?
+var propertiesElevation = {
+    elevations: [1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500]
+};
 
 function devel(data) {
     function filter(x) {
@@ -27,6 +28,55 @@ function createElevation(accidentsData, addFilter, removeFilter) {
     containerWidth = parent.clientWidth;
     containerHeight = constants.componentHeight;
 
+    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+        width = containerWidth - margin.left - margin.right,
+        height = containerHeight - margin.top - margin.bottom;
+
+    var x = d3.scaleBand()
+            .range([0, width])
+            .padding(0.1);
+    
+    x.domain(propertiesElevation.elevations);
+
+    var svg = d3.select("#elevation").append("svg") 
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", 
+            "translate(" + margin.left + "," + margin.top + ")");
+
+    // add the x Axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+    
+    // y axis label
+    svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("class", "histogram-label")
+        .attr("transform", "translate("+ -30 +","+(height/2)+")rotate(-90)")
+        .text("deaths");
+    
+    // x axis label
+    svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("class", "histogram-label")
+        .attr("transform", "translate("+ (width/2) +","+(height + 30)+")")
+        .text("elevation (m)");
+
+    propertiesElevation.svg = svg;
+    propertiesElevation.height = height;
+    propertiesElevation.width = width;
+    propertiesElevation.x = x;
+}
+
+function updateElevation(accidentsData, addFilter, removeFilter) {
+    var svg = propertiesElevation.svg;
+    var height = propertiesElevation.height;
+    var width = propertiesElevation.width;
+    var x = propertiesElevation.x;
+
     var histData = devel(accidentsData);
     
     var elevations = Object.keys(histData);
@@ -41,52 +91,34 @@ function createElevation(accidentsData, addFilter, removeFilter) {
         });
     }
 
-
-    var margin = {top: 20, right: 20, bottom: 30, left: 40},
-        width = containerWidth - margin.left - margin.right,
-        height = containerHeight - margin.top - margin.bottom;
-
-    var x = d3.scaleBand()
-            .range([0, width])
-            .padding(0.1);
-
     var y = d3.scaleLinear()
-            .range([height, 0]);
+    .range([height, 0]);
 
-    var svg = d3.select("#elevation").append("svg") 
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", 
-                  "translate(" + margin.left + "," + margin.top + ")");
-
-    x.domain(newData.map(function(d) { return d.elevation; }));
     y.domain([0, d3.max(newData, function(d) { return d.killed; })]);
 
 
     // append the rectangles for the bar chart
-    svg.selectAll(".bar")
-        .data(newData)
-        .enter().append("rect")
+    var bars = svg.selectAll(".bar")
+      .data(newData, function (d) {return d.elevation;});
+    
+
+    bars.enter()
+        .append("rect")
+        .attr("fill", function(d, i) { return "#2c3e50"; })
         .attr("class", "bar")
         .attr("x", function(d) { return x(d.elevation); })
         .attr("width", x.bandwidth())
         .attr("y", function(d) { return y(d.killed); })
         .attr("height", function(d) { return height - y(d.killed); })
-        .attr("fill", function(d, i) { return "#2c3e50" });
-    
-    // add the x Axis
-     svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
+    .merge(bars)
+        .transition().duration(500)
+        .attr("y", function(d) { return y(d.killed); })
+        .attr("height", function(d) { return height - y(d.killed); });
+
+    svg.select(".y-axis").remove();
 
     // add the y Axis
     svg.append("g")
-        .call(d3.axisLeft(y));
-    
-    updateElevation(newData, addFilter, removeFilter) 
-}
-
-function updateElevation(accidentsData, addFilter, removeFilter) {
-
+        .call(d3.axisLeft(y))
+        .attr("class", "y-axis");
 }

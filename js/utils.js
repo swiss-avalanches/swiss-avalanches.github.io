@@ -130,20 +130,14 @@ function aspectRangeAngle(fromAngle, toAngle) {
         return aspects
     }
 
-    console.log(fromAngle, toAngle)
-
     if (fromAngle > toAngle) {
         var temp = fromAngle
         fromAngle = toAngle
         toAngle = temp
     }
 
-    console.log(fromAngle, toAngle)
-
     fromAngle = (fromAngle + (10 * 2 * Math.PI)) % (2 * Math.PI)
     toAngle = (toAngle + (10 * 2 * Math.PI)) % (2 * Math.PI)
-
-    console.log(fromAngle, toAngle)
 
     var crossOrigin = fromAngle > toAngle
     var selectedAspects = []
@@ -170,8 +164,8 @@ function aspectRangeAngle(fromAngle, toAngle) {
             breakIndex += 1;
         }
         left = selectedAspects.slice(breakIndex + 1, selectedAspects.length)
-        right = selectedAspects.slice(0, breakIndex + 1)
-        selectedAspects = left.concat(right)
+        right = selectedAspects.slice(0, breakIndex + 1);
+        selectedAspects = left.concat(right);
     }
 
     return selectedAspects;

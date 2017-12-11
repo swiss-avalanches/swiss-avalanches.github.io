@@ -219,7 +219,7 @@ function updatePolar(data, addFilter, removeFilter, selectPoint) {
         return -1;
       }
     });
-
+  
   points.exit().remove();
 
 }

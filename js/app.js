@@ -114,6 +114,7 @@ function createComponents() {
     data = applyPointSelection(data);
     createPolar(data, addFilter, removeFilter, selectPoint);
     createElevation(data, addFilter, removeFilter, selectPoint);
+    createElevation(data, addFilter, removeFilter);
 }
 
 function updateComponents() {
@@ -121,5 +122,5 @@ function updateComponents() {
     data = applyPointSelection(data);
     updatePolar(data, addFilter, removeFilter, selectPoint);
     updateElevation(data, addFilter, removeFilter, selectPoint);
-
+    updateElevation(data, addFilter, removeFilter);
 }

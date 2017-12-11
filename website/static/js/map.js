@@ -1,7 +1,7 @@
 var propertiesMap = {};
 
 function createMap(accidentsData, addFilter, removeFilter, selectPoint) {
-  map = L.map('map').setView([46.875893, 8.289321], 8);
+  map = L.map('map').setView([46.875893, 8.289321], 7);
 
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'

@@ -10,7 +10,7 @@ body {
 
 #map {
     width: 100%;
-    height: 600px;
+    height: 400px;
 }
 
 dk {
@@ -19,4 +19,8 @@ dk {
 
 .histogram-label {
     font-size: .8em;
+}
+
+.pass-through {
+    pointer-events:none;
 }

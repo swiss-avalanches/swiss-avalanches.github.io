@@ -1,31 +1,7 @@
-var propertiesMonth = {};
-var dictMonth = {
-  "SEP": "09",
-  "OCT": "10",
-  "NOV": "11",
-  "DEC": "12",
-  "JAN": "01",
-  "FEB": "02",
-  "MAR": "03",
-  "APR": "04",
-  "MAY": "05",
-  "JUN": "06",
-  "JUL": "07",
-  "AUG": "08"
+var propertiesMonth = {
+  months: ["09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08"],
+  monthsName: ["Sept", "Oct", "Nov", "Dec", "Jan", "Feb", "March", "Apr", "May", "June", "July", "Aug"],
 };
-
-/*[{"09": "SEP"},
-    {"10": "OCT"}, 
-    {"11": "NOV"},
-    {"12": "DEC"}, 
-    {"01": "JAN"}, 
-    {"02": "FEB"},
-    {"03": "MAR"},
-    {"04": "APR"}, 
-    {"05": "MAY"},
-    {"06": "JUN"},
-    {"07": "JUL"}, 
-    {"08": "AUG"}];*/
 
 function removeUndef(data) {
   return _.omit(data, _.filter(_.keys(data), function (key) {
@@ -60,19 +36,92 @@ function createMonth(accidentsData, addFilter, removeFilter) {
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
 
+    var startDragX = null,
+      endDragX = null,
+      fromIdx = null,
+      toIdx = null;
+  
+    var drag = d3.drag()
+      .on("drag", dragged)
+      .on("start", startDrag)
+      .on("end", endDrag);
+  
+    var removeCurrentFilter = function () {
+      if (propertiesMonth.filterName) {
+        // avoids infinite calls
+        var toRemove = propertiesMonth.filterName;
+        propertiesMonth.filterName = undefined;
+        removeFilter(toRemove);
+      }
+      svg.selectAll(".bar").attr("opacity", 1);
+    };
+  
+    function startDrag() {
+      startDragX = d3.event.x;
+      removeCurrentFilter();
+      svg.selectAll(".bar").attr("opacity", 0.5);
+    }
+  
+    function dragged(d) {
+      var endDragX = d3.event.x;
 
-  var svg = d3.select("#month").append("svg")
+      var from = startDragX,
+        to = endDragX;
+      
+      if (from > to) {
+        var temp = from;
+        from = to;
+        to = temp;
+      }
+
+      fromIdx = Math.floor((from / x.step()));
+      toIdx = Math.ceil((to / x.step()));
+
+      svg.selectAll('.bar').attr('opacity', function (d) {
+        var idx = propertiesMonth.months.findIndex(function (x) { return x == d.month; });
+        return idx >= fromIdx && idx < toIdx ? 1 : 0.5;
+      });
+    }
+  
+    function endDrag() {
+      // filter name
+      if (fromIdx + 1 == toIdx) {
+        filterName = "Month " + propertiesMonth.monthsName[Math.min(0, fromIdx)];
+      } else {
+        filterName = "Months " + propertiesMonth.monthsName[Math.max(0, fromIdx)] + "-" + propertiesMonth.monthsName[Math.min(propertiesMonth.monthsName.length, toIdx) - 1];
+      }
+  
+      var filterFunction = function (d) {
+        var monthIdx = propertiesMonth.months.findIndex(function (x) {return x == d.Date.slice(3,5); });
+        return monthIdx >= fromIdx && monthIdx < toIdx;
+      };
+  
+      propertiesMonth.filterName = filterName;
+      addFilter(filterName, filterFunction, removeCurrentFilter);
+    }
+
+    var svg = d3.select("#month").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform",
-      "translate(" + margin.left + "," + margin.top + ")");
+      "translate(" + margin.left + "," + margin.top + ")")
+
+    
+  // full clickable rect
+    svg.append("g")
+      .append("rect")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("fill", "white")
+      .on("click", removeCurrentFilter)
+      .call(drag);
 
   var x = d3.scaleBand()
     .range([0, width])
     .padding(0.1);
   
-  x.domain(["09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08"]);
+  x.domain(propertiesMonth.months);
   
   // add the x Axis
   svg.append("g")
@@ -85,7 +134,6 @@ function createMonth(accidentsData, addFilter, removeFilter) {
     .attr("class", "histogram-label")
     .attr("transform", "translate("+ -30 +","+(height/2)+")rotate(-90)")
     .text("accidents");
-
   
     // x axis label
   svg.append("text")
@@ -111,19 +159,10 @@ function updateMonth(accidentsData, addFilter, removeFilter) {
   var months = Object.keys(data);
   var accidents = Object.values(data);
 
-  var keyMonths = Object.keys(dictMonth);
-  var valueMonths = Object.values(dictMonth);
 
   var newData = []
 
-  for (var i = 0; i < months.length; ++i) { //dictMonth.length
-    /*var monthAccident = keyMonths[i]; 
-    console.log(monthAccident)
-    var numAccident = 0;
-    if (months.prototype.includes(valueMonths[i])){
-        numAccident = accidents[months.indexOf(valueMonths[i])];
-        console.log(numAccident)
-    }*/
+  for (var i = 0; i < months.length; ++i) {
     newData.push({
       month: months[i], //month: monthAccident,
       accident: accidents[i] //accident: numAccident
@@ -146,10 +185,8 @@ function updateMonth(accidentsData, addFilter, removeFilter) {
     });
 
   enterData.enter().append("rect")
-      .attr("class", "bar")
-      .attr("fill", function (d, i) {
-        return "#c0392b";
-      })
+      .attr("class", "bar pass-through")
+      .attr("fill", "#c0392b")
       .attr("width", x.bandwidth())
       .attr("x", function (d) {
         return x(d.month);
@@ -168,6 +205,8 @@ function updateMonth(accidentsData, addFilter, removeFilter) {
       .attr("height", function (d) {
         return height - y(d.accident);
       });
+
+  enterData.exit().remove();
 
   svg.select('.y-axis').remove();
 

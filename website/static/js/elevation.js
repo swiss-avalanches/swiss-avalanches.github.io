@@ -24,7 +24,7 @@ function devel(data) {
 
 function createElevation(accidentsData, addFilter, removeFilter) {
     var histData = devel(accidentsData);
-
+    
     var elevations = Object.keys(histData);
     var kills = Object.values(histData);
 

@@ -1,4 +1,19 @@
 var propertiesMonth = {};
+var dictMonth = { "SEP": "09", "OCT": "10", "NOV": "11", "DEC": "12", "JAN": "01", "FEB": "02", "MAR": "03", 
+                "APR": "04", "MAY": "05", "JUN": "06", "JUL": "07", "AUG": "08"};
+
+            /*[{"09": "SEP"},
+                {"10": "OCT"}, 
+                {"11": "NOV"},
+                {"12": "DEC"}, 
+                {"01": "JAN"}, 
+                {"02": "FEB"},
+                {"03": "MAR"},
+                {"04": "APR"}, 
+                {"05": "MAY"},
+                {"06": "JUN"},
+                {"07": "JUL"}, 
+                {"08": "AUG"}];*/
 
 // We will compute in this histogram the number of accidents per month
 function removeUndef(data) {
@@ -50,13 +65,23 @@ function updateMonth(accidentsData, addFilter, removeFilter) {
     var months = Object.keys(data);
     var accidents = Object.values(data);
 
+    var keyMonths = Object.keys(dictMonth);
+    var valueMonths = Object.values(dictMonth);
+ 
     var newData = []
-
-    for(var i = 0; i < elevations.length; ++i) {
+    
+    for(var i = 0; i < dictMonth.length; ++i) {
+        var monthAccident = keyMonths[i]; 
+        console.log(monthAccident)
+        var numAccident = 0;
+        if (months.prototype.includes(valueMonths[i])){
+            numAccident = accidents[months.indexOf(valueMonths[i])];
+            console.log(numAccident)
+        }
         newData.push({
-           month: months[i],
-           accident: accidents[i]
-       });
+            month: monthAccident,
+            accident: numAccident
+        });
    }
 
     var x = d3.scaleBand()
@@ -92,9 +117,5 @@ function updateMonth(accidentsData, addFilter, removeFilter) {
     // add the y Axis
     svg.append("g")
       .call(d3.axisLeft(y));
-
-
-
-
 
 }

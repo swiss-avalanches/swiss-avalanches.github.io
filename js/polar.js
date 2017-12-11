@@ -4,8 +4,8 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
   var parent = document.getElementById("polar");
 
   propertiesPolar.width = parent.clientWidth;
-  propertiesPolar.height = 400;
-  console.log(parent.clientWidth, parent.clientHeight)
+  propertiesPolar.height = constants.componentHeight;
+
   propertiesPolar.radius = Math.min(propertiesPolar.width, propertiesPolar.height) / 2 - 30;
   propertiesPolar.maxAltitude = 4500;
   propertiesPolar.minAltitude = 1000;
@@ -198,7 +198,7 @@ function updatePolar(data, addFilter, removeFilter, selectPoint) {
       ]).slice(1).slice(0, -1);
       return "translate(" + coors + ")";
     })
-    .attr("r", constants.killedRadius)
+    .attr("r", function(x) { return constants.killedRadius(x) * 0.7; })
     .attr("fill", function (d) {
       return dangerColor(d['Danger level']);
     })

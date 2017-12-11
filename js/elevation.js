@@ -25,7 +25,7 @@ function devel(data) {
 function createElevation(accidentsData, addFilter, removeFilter) {
     var parent = document.getElementById("polar");
     containerWidth = parent.clientWidth;
-    containerHeight = 400;
+    containerHeight = constants.componentHeight;
 
     var histData = devel(accidentsData);
     

@@ -1,11 +1,14 @@
 var propertiesPolar = {};
 
 function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
+  var parent = document.getElementById("polar");
+
+  propertiesPolar.width = parent.clientWidth;
+  propertiesPolar.height = 400;
+  console.log(parent.clientWidth, parent.clientHeight)
+  propertiesPolar.radius = Math.min(propertiesPolar.width, propertiesPolar.height) / 2 - 30;
   propertiesPolar.maxAltitude = 4500;
   propertiesPolar.minAltitude = 1000;
-  propertiesPolar.width = 960;
-  propertiesPolar.height = 500;
-  propertiesPolar.radius = Math.min(propertiesPolar.width, propertiesPolar.height) / 2 - 30;
 
   propertiesPolar.r = d3.scaleLinear()
     .domain([propertiesPolar.maxAltitude, propertiesPolar.minAltitude])
@@ -183,35 +186,39 @@ function updatePolar(data, addFilter, removeFilter, selectPoint) {
   var pointsEnter = points.enter()
 
   pointsEnter.append("circle")
-      .attr("class", "point")
-      .on('click', function (d) {
-        selectPoint(d.id);
-      })
-      .attr("transform", function (d) {
-        var angle = aspect(d['Aspect'], 'angle');
-        var elevation = d['Elevation'];
-        var coors = line([
-          [angle, elevation]
-        ]).slice(1).slice(0, -1);
-        return "translate(" + coors + ")";
-      })
-      .attr("r", constants.killedRadius)
-      .attr("fill", function (d) {
-        return dangerColor(d['Danger level']);
-      })
+    .attr("class", "point")
+    .on('click', function (d) {
+      selectPoint(d.id);
+    })
+    .attr("transform", function (d) {
+      var angle = aspect(d['Aspect'], 'angle');
+      var elevation = d['Elevation'];
+      var coors = line([
+        [angle, elevation]
+      ]).slice(1).slice(0, -1);
+      return "translate(" + coors + ")";
+    })
+    .attr("r", constants.killedRadius)
+    .attr("fill", function (d) {
+      return dangerColor(d['Danger level']);
+    })
     .merge(points)
-      .attr("opacity", function (d) {return d.selected ? 1 : 0.7; })
-      .attr("stroke", function (d) { return d.selected ? '#2c3e50' : 'white'; })
-      .attr("stroke-width", '1px')
-      .sort(function (a, b) {
-        if (a.selected == b.selected) {
-          return 0;
-        } else if (a.selected) {
-          return 1;
-        } else {
-          return -1;
-        }
-      });
+    .attr("opacity", function (d) {
+      return d.selected ? 1 : 0.7;
+    })
+    .attr("stroke", function (d) {
+      return d.selected ? '#2c3e50' : 'white';
+    })
+    .attr("stroke-width", '1px')
+    .sort(function (a, b) {
+      if (a.selected == b.selected) {
+        return 0;
+      } else if (a.selected) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
 
   points.exit().remove();
 

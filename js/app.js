@@ -9,11 +9,13 @@ $.getJSON('/accidents', function (data) {
     for (var i = 0; i < accidentsData.length; i++) {
         accidentsData[i].id = accidentDatumId(accidentsData[i]);
     }
-    
+
     console.log(accidentsData)
     d3.select('#filters').append("dl")
     createComponents();
     updateComponents();
+    updateFilterList();
+    updateSelectionCard();
 });
 
 /*
@@ -50,7 +52,10 @@ function removeFilter(name) {
 }
 
 function updateFilterList() {
-    var filterList = d3.select('#filters dl').selectAll("dd").data(globalFilters, function (x) {
+    fs = globalFilters.length > 0 ? globalFilters : [{
+        name: "None"
+    }];
+    var filterList = d3.select('#filters dl').selectAll("dd").data(fs, function (x) {
         return x.name
     });
     filterList.enter().insert("dd")
@@ -58,7 +63,9 @@ function updateFilterList() {
             return a.name
         })
         .on('click', function (a) {
-            removeFilter(a.name);
+            if (a.name != 'None') {
+                removeFilter(a.name);
+            }
         });
     filterList.exit().remove();
 }
@@ -84,6 +91,7 @@ function selectPoint(id) {
         selectedPoint = null;
     }
     updateComponents();
+    updateSelectionCard();
 }
 
 function applyPointSelection(data) {
@@ -103,6 +111,34 @@ function applyPointSelection(data) {
         }
     }
     return newData;
+}
+
+function updateSelectionCard() {
+    function card(selection) {
+        if (!selectedPoint) {
+            selection.append('dd').text('None');
+        } else {
+            selectedDatum = accidentsData.find(function (x) {
+                return x.id == selectedPoint;
+            });
+            selection.append('dk').text("Date")
+            selection.append('dd').text(selectedDatum.Date);
+            selection.append('dk').text("Elevation")
+            selection.append('dd').text("" + selectedDatum.Elevation + "m");
+            selection.append('dk').text("Aspect")
+            selection.append('dd').text(selectedDatum.Aspect);
+            selection.append('dk').text("Danger Level")
+            selection.append('dd').text(selectedDatum['Danger level']);
+            selection.append('dk').text("Caught")
+            selection.append('dd').text(selectedDatum.caught);
+            selection.append('dk').text("Killed")
+            selection.append('dd').text(selectedDatum.killed);
+        }
+    }
+
+    d3.select('#selection dl').selectAll('*').remove();
+
+    var filterList = d3.select('#selection dl').call(card);
 }
 
 /*

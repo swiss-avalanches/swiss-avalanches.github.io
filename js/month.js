@@ -20,13 +20,12 @@ function groupByMonth(data) {
     }
 
 
-    return ;
+    return data;
 }
 
 function createMonth(accidentsData, addFilter, removeFilter) {
     //console.log(groupByMonth(accidentsData))
-    if (!){} 
-    console.log(accidentsData[0].Date)
+    
 }
 
 function updateMonth(accidentsData, addFilter, removeFilter) {

@@ -30,9 +30,9 @@ function addFilter(name, lambda, removeMe) {
         'lambda': lambda,
         'activated': true,
         'remove': removeMe
-    })
-    updateComponents()
-    updateFilterList()
+    });
+    updateComponents();
+    updateFilterList();
 }
 
 function removeFilter(name) {
@@ -40,15 +40,15 @@ function removeFilter(name) {
     for (var i = 0; i < globalFilters.length; i++) {
         var element = globalFilters[i];
         if (element.name != name) {
-            newGlobalFilters.push(element)
+            newGlobalFilters.push(element);
         } else {
             element.remove();
         }
     }
-    globalFilters = newGlobalFilters
+    globalFilters = newGlobalFilters;
 
-    updateComponents()
-    updateFilterList()
+    updateComponents();
+    updateFilterList();
 }
 
 function updateFilterList() {
@@ -56,11 +56,11 @@ function updateFilterList() {
         name: "None"
     }];
     var filterList = d3.select('#filters dl').selectAll("dd").data(fs, function (x) {
-        return x.name
+        return x.name;
     });
     filterList.enter().insert("dd")
         .text(function (a) {
-            return a.name
+            return a.name;
         })
         .on('click', function (a) {
             if (a.name != 'None') {

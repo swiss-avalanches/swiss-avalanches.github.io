@@ -38,9 +38,13 @@ function groupByMonth(data) {
 
 
 function createMonth(accidentsData, addFilter, removeFilter) {
+    var parent = document.getElementById("month");
+    containerWidth = parent.clientWidth;
+    containerHeight = constants.componentHeight;
+
    var margin = {top: 20, right: 20, bottom: 30, left: 40},
-     width = 960 - margin.left - margin.right,
-     height = 500 - margin.top - margin.bottom
+     width = containerWidth - margin.left - margin.right,
+     height = containerHeight - margin.top - margin.bottom;
 
 
    var svg = d3.select("#month").append("svg") 

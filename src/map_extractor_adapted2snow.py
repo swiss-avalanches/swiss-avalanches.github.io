@@ -20,15 +20,21 @@ from scipy.spatial import distance
 black = np.array([0, 0, 0])
 white = np.array([255, 255, 255])
 
-light_blue = np.array([213, 252, 252])
-light_medium_blue = np.array([168, 217, 241])
-medium_blue = np.array([121, 161, 229])
-dark_medium_blue = np.array([68, 89, 215]) #68 88 215
-dark_blue = np.array([47, 36, 162])
-purple = np.array([91, 32, 196])
+light_blue = np.array([213, 252, 252]) #5-20
+light_medium_blue = np.array([168, 217, 241])#20-50
+medium_blue = np.array([121, 161, 229])#50-80
+dark_medium_blue = np.array([68, 89, 215])  #80-120
+dark_blue = np.array([47, 36, 162]) #120-200
+purple = np.array([91, 32, 196]) #200-300
+dark_purple = np.array([89, 16, 50]) #300-400
+very_dark_purple = np.array([70, 8, 17]) #>400
 
 color_code = ['#d5fcfc', '#a8d9f1', '#79a1e5', 
-              '#4459d7', '#2f24a2', '#5b20c4']
+              '#4459d7', '#2f24a2', '#5b20c4', 
+              '#591032', '#460811']
+
+snow_level_legend = ["5-20 cm", "20-50 cm", "50-80 cm", "80-120 cm", "120-200 cm", "200-300 cm","300-400 cm", "> 400 cm"]
+
 
 raw_red = np.array([255, 0, 0])
 raw_green = np.array([0, 255, 0])
@@ -38,11 +44,11 @@ raw_pink = np.array([255, 0, 255])
 raw_cyan = np.array([0, 255, 255])
 raw_yellow = np.array([255, 255, 0])
 
-shades_blue = [light_blue, light_medium_blue, medium_blue, dark_medium_blue, dark_blue, purple]
+shades_blue = [light_blue, light_medium_blue, medium_blue, dark_medium_blue, dark_blue, purple, dark_purple, very_dark_purple]
 
 shades_grey = [np.array([c,c,c]) for c in range(255)]
 
-image_shades = [light_blue, light_medium_blue, medium_blue, dark_medium_blue, dark_blue, purple, white]
+image_shades = [light_blue, light_medium_blue, medium_blue, dark_medium_blue, dark_blue, purple, dark_purple, very_dark_purple, white]
 
 leman_west = (6.148131, 46.206042)
 quatre_canton_north = (8.435177, 47.082150)
@@ -158,87 +164,105 @@ def color_contours(img, color):
     
 def main(args):
 
-    for file_map in glob.glob(os.path.join(args.maps_directory, "*.png")):
-        filename = '{}.json'.format(os.path.splitext(os.path.basename(file_map))[0])
-        destination = os.path.join(args.out_path, filename)
-        
-        if Path(destination).exists() and not args.f:
-            print('Skip {} because {} already exists'.format(file_map, destination))
-            continue
+    years = [str(i) for i in range(2002, 2018)]
+    extensions = ['hn1', 'hn3', 'hsr2000', 'hsr2500', 'hsrel', 'hstop']
+    language = ['de', 'en']
+    file_type = ['gif', 'png']
+    origin_paths = []
+    i=0
+    for y in years:
+        for ext in extensions:
+            for lan in language:
+                for f_type in file_type:
+                        origin = os.path.join(*[args.maps_directory,y, ext, lan, f_type])#,"*."+f_type])
+                        if(Path(origin).exists()):
+                            origin_paths.append(os.path.join(*[origin, "*."+f_type]))
+                            
+    
+    for origin in origin_paths:
+        for file_map in glob.glob(origin):
+            basename = os.path.basename(file_map)
+            filename = '{}.json'.format(os.path.splitext(basename)[0])
+            destination = os.path.join(args.out_path, filename)
+            
+            if Path(destination).exists() and not args.f:
+                print('Skip {} because {} already exists'.format(file_map, destination))
+                continue
 
-        img = Image.open(file_map)
-        img = img.convert('RGB')
-        img_arr = np.array(img)
+            img = Image.open(file_map)
+            img = img.convert('RGB')
+            img_arr = np.array(img)
 
-        # load mask of this size
-        try:
-            binary_mask, landmarks_pix = open_mask(*img_arr.shape[:2])
-        except FileNotFoundError:
-            print('Missing mask "{}x{}.gif" for file "{}"'.format(*img_arr.shape[:2], file_map), file=sys.stderr)
-            continue
+            # load mask of this size
+            try:
+                binary_mask, landmarks_pix = open_mask(*img_arr.shape[:2])
+            except FileNotFoundError:
+                print('Missing mask "{}x{}.gif" for file "{}"'.format(*img_arr.shape[:2], file_map), file=sys.stderr)
+                continue
 
-        #remove grey colors
-        nogrey_img_arr = remove_colors(img_arr, shades_grey)
-        
-        #build colormap
-        color_map = build_color_map(nogrey_img_arr)
-        
-        #map image colors to registered shades 
-        new_img_arr = replace_color(nogrey_img_arr, color_map=color_map)
-        
-        # keep useful colors
-        regions_only = keep_colors(new_img_arr, shades_blue)
+            #remove grey colors
+            nogrey_img_arr = remove_colors(img_arr, shades_grey)
+            
+            #build colormap
+            color_map = build_color_map(nogrey_img_arr)
+            
+            #map image colors to registered shades 
+            new_img_arr = replace_color(nogrey_img_arr, color_map=color_map)
+            
+            # keep useful colors
+            regions_only = keep_colors(new_img_arr, shades_blue)
 
-        # clip the binary mask to remove color key
-        regions_only[~binary_mask] = 255
-        regions_only = Image.fromarray(regions_only).convert('RGB')
-        smoothed = regions_only.filter(ImageFilter.MedianFilter(7))
+            # clip the binary mask to remove color key
+            regions_only[~binary_mask] = 255
+            regions_only = Image.fromarray(regions_only).convert('RGB')
+            smoothed = regions_only.filter(ImageFilter.MedianFilter(7))
 
-        pix = np.array(list(map(numpify, landmarks_pix.values())))
-        coord = np.array(list(map(numpify, landmarks_pix.keys())))
+            pix = np.array(list(map(numpify, landmarks_pix.values())))
+            coord = np.array(list(map(numpify, landmarks_pix.keys())))
 
-        # add 1 bias raw
-        pix_ext = np.vstack([np.ones((1,pix.shape[0])), pix.T])
-        coord_ext = np.vstack([np.ones((1,pix.shape[0])), coord.T])
+            # add 1 bias raw
+            pix_ext = np.vstack([np.ones((1,pix.shape[0])), pix.T])
+            coord_ext = np.vstack([np.ones((1,pix.shape[0])), coord.T])
 
-        T = np.linalg.lstsq(pix_ext.T, coord_ext.T)[0]
+            T = np.linalg.lstsq(pix_ext.T, coord_ext.T)[0]
 
-        def transform_pix2map(points):
-            """n x 2 array"""
-            points_ext = np.hstack([np.ones((points.shape[0], 1)), points])
-            points_map = points_ext.dot(T)
-            return points_map[:, 1:]
+            def transform_pix2map(points):
+                """n x 2 array"""
+                points_ext = np.hstack([np.ones((points.shape[0], 1)), points])
+                points_map = points_ext.dot(T)
+                return points_map[:, 1:]
 
-        geo_json = {
-          "type": "FeatureCollection",
-          "features": []
-        }
+            geo_json = {
+            "type": "FeatureCollection",
+            "features": []
+            }
 
-        
-        for snow_level, color in enumerate(shades_blue):
-            for contour in color_contours(smoothed, color):
-                contour_right = contour.copy()
-                contour_right[:,0] = contour[:,1]
-                contour_right[:,1] = contour[:,0]
-                contour_right = transform_pix2map(contour_right)
-                simplifier = vw.Simplifier(contour_right)
-                contour_right = simplifier.simplify(threshold=SMOOTHING_THRESHOLD)
-                geo_json['features'].append({
-                    "type": "Feature",
-                    "properties": {
-                        "date": "TODO",
-                        "snow_level": snow_level + 1
-                    },
-                    "geometry": {
-                        "type": "Polygon",
-                        "coordinates": [ list(reversed(contour_right.tolist())) ]
-                    }
-                })
+            
+            for snow_level, color in enumerate(shades_blue):
+                for contour in color_contours(smoothed, color):
+                    contour_right = contour.copy()
+                    contour_right[:,0] = contour[:,1]
+                    contour_right[:,1] = contour[:,0]
+                    contour_right = transform_pix2map(contour_right)
+                    simplifier = vw.Simplifier(contour_right)
+                    contour_right = simplifier.simplify(threshold=SMOOTHING_THRESHOLD)
+                    geo_json['features'].append({
+                        "type": "Feature",
+                        "properties": {
+                            "date": ",".join([basename[6:8], basename[4:6], basename[0:4]]),
+                            "snow_level": snow_level_legend[int(snow_level)],
+                            "url": "TODO"
+                        },
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [ list(reversed(contour_right.tolist())) ]
+                        }
+                    })
 
-        with open(destination, 'w') as f:
-            print('{} -> {}'.format(file_map, destination))
-            json.dump(geo_json, f)
-
+            with open(destination, 'w') as f:
+                print('{} -> {}'.format(file_map, destination))
+                json.dump(geo_json, f)
+    
             
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract snow map to JSON.')

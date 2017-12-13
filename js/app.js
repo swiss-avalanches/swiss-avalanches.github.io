@@ -155,6 +155,8 @@ function createComponents() {
     createMonth(data, addFilter, removeFilter, selectPoint);
     createMap(data, addFilter, removeFilter, selectPoint);
     createDangers(data, addFilter, removeFilter, selectPoint);
+    createActivities(data, addFilter, removeFilter, selectPoint); 
+    createTextual(data, addFilter, removeFilter, selectPoint);
 }
 
 function updateComponents() {
@@ -165,4 +167,6 @@ function updateComponents() {
     updateMonth(data, addFilter, removeFilter, selectPoint);
     updateMap(data, addFilter, removeFilter, selectPoint);
     updateDangers(data, addFilter, removeFilter, selectPoint);
+    updateActivities(data, addFilter, removeFilter, selectPoint);   
+    updateTextual(data, addFilter, removeFilter, selectPoint);
 }

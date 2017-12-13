@@ -6,7 +6,8 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
   propertiesPolar.width = parent.clientWidth;
   propertiesPolar.height = constants.componentHeight;
 
-  propertiesPolar.radius = Math.min(propertiesPolar.width, propertiesPolar.height) / 2 - 30;
+  propertiesPolar.margin = 30;
+  propertiesPolar.radius = Math.min(propertiesPolar.width, propertiesPolar.height) / 2 - propertiesPolar.margin;
   propertiesPolar.maxAltitude = 4500;
   propertiesPolar.minAltitude = 1000;
 
@@ -143,7 +144,8 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
   var gr = propertiesPolar.svg.append("g")
     .attr("class", "r axis")
     .selectAll("g")
-    .data(propertiesPolar.r.ticks(4).slice(1))
+    // .data(propertiesPolar.r.ticks(4).slice(1))
+    .data([1000, 2000, 3000, 4000])
     .enter().append("g");
 
   gr.append("circle")
@@ -151,25 +153,28 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
     .attr("fill", "none")
     .attr("stroke", "grey")
     .attr("stroke-width", "1px");
+    
+  var labelBackgroundWidth = 24,
+    labelBackgroundHeight = 12;
 
-  var ga = propertiesPolar.svg.append("g")
-    .attr("class", "a axis")
-    .selectAll("g")
-    .data(d3.range(0, 360, 30))
-    .enter().append("g")
+  gr.append("rect")
     .attr("transform", function (d) {
-      return "rotate(" + -d + ")";
-    });
+      return "translate(0," + (-propertiesPolar.r(d)) + ")"
+    })
+    .attr("x", - labelBackgroundWidth / 2)
+    .attr("y", - labelBackgroundHeight / 2)
+    .attr("width", labelBackgroundWidth)
+    .attr("height", labelBackgroundHeight)
+    .style("fill", "white");
 
-  ga.append("line")
-    .attr("x2", propertiesPolar.radius);
+  gr.append("text").text(function (d) {return d})
+    .attr("transform", function (d) {
+      return "translate(0," + (-propertiesPolar.r(d) + 4) + ")"
+    })
+    .attr("text-anchor", "middle")
+    .style("fill", "grey")
+    .style("font-size", ".7em");
 
-  propertiesPolar.svg.append("g")
-    .attr("class", "selection");
-}
-
-
-function updatePolar(data, addFilter, removeFilter, selectPoint) {
   var line = d3.radialLine()
     .radius(function (d) {
       return propertiesPolar.r(d[1]);
@@ -177,6 +182,34 @@ function updatePolar(data, addFilter, removeFilter, selectPoint) {
     .angle(function (d) {
       return d[0];
     });
+  propertiesPolar.line = line
+
+  var ascpectLetters = propertiesPolar.svg.selectAll('.cardinals').data(['N', 'E', 'S', 'W'])
+    .enter()
+    .append("text")
+    .attr("class", "cardinals")
+    .attr("transform", function (d, i) {
+      var coors = line([[i * Math.PI / 2, propertiesPolar.minAltitude - 200]]).slice(1).slice(0, -1);
+      return "translate(" + coors + ")" + ((d == "S") ? "translate(0,12)" : "");
+    })
+    .attr("text-anchor", function (d) {
+      switch (d) {
+        case 'N': return 'middle';
+        case 'E': return 'start';
+        case 'S': return 'middle';
+        case 'W': return 'end';
+      }
+    })
+    .text(function (d) {return d;})
+
+
+  propertiesPolar.svg.append("g")
+    .attr("class", "selection");
+}
+
+
+function updatePolar(data, addFilter, removeFilter, selectPoint) {
+  var line = propertiesPolar.line
 
   var points = propertiesPolar.svg.selectAll(".point")
     .data(data, function (d) {

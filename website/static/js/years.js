@@ -103,34 +103,49 @@ function updateYears(accidentsData, addFilter, removeFilter) {
     .curve(d3.curveBasis)
     .x(function(d) { return x(d.year); })
     .y(function(d) { return y(d.caught); });
-    
-  svg.append("path")
-    .data([aggregationPerYear])
-    .attr("class", "line")
-    .attr('fill', 'none')
-    .attr('stroke', constants.deathColor)
-    .attr("d", lineKilled);
-
-  svg.append("path")
-      .data([aggregationPerYear])
-      .attr("class", "line")
-      .style("stroke", constants.buriedColor)
-      .attr('fill', 'none')
-      .attr("d", lineBuried);
   
-  svg.append("path")
-      .data([aggregationPerYear])
-      .attr("class", "line")
-      .style("stroke", constants.accidentColor)
+  svg.selectAll(".dataLine").remove()
+
+  var enterKilled = svg.selectAll(".killedLine").data([aggregationPerYear])
+  
+  enterKilled.enter().append("path")
+      .attr("class", "dataLine killedLine")
       .attr('fill', 'none')
-      .attr("d", lineAccidents);
-      
-  svg.append("path")
-      .data([aggregationPerYear])
-      .attr("class", "line")
-      .style("stroke", constants.caughtColor)
-      .attr('fill', 'none')
-      .attr("d", lineCaught);
+      .attr('stroke', constants.deathColor)
+    .merge(enterKilled)
+      .attr("d", lineKilled);
+
+  enterKilled.exit().remove()
+  
+  var enterBuried = svg.selectAll(".buriedLine").data([aggregationPerYear])
+  enterBuried.enter().append("path")
+    .attr("class", "dataLine buriedLine")
+    .attr('fill', 'none')
+    .attr('stroke', constants.buriedColor)
+  .merge(enterBuried)
+    .attr("d", lineBuried);
+  
+  enterBuried.exit().remove()
+
+  var enterAccident = svg.selectAll(".accidentLine").data([aggregationPerYear])
+  enterAccident.enter().append("path")
+    .attr("class", "dataLine accidentLine")
+    .attr('fill', 'none')
+    .attr('stroke', constants.accidentColor)
+  .merge(enterAccident)
+    .attr("d", lineAccidents);
+    
+    enterAccident.exit().remove()
+
+  var enterCaught = svg.selectAll(".caughtLine").data([aggregationPerYear])
+  enterCaught.enter().append("path")
+    .attr("class", "dataLine caughtLine")
+    .attr('fill', 'none')
+    .attr('stroke', constants.caughtColor)
+  .merge(enterCaught)
+    .attr("d", lineCaught);
+  
+    enterCaught.exit().remove()
 
 
 }

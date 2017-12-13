@@ -24,3 +24,16 @@ dk {
 .pass-through {
     pointer-events:none;
 }
+
+#textual {
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
+
+#textual h5 {
+    text-align:center;
+}
+
+h1 {
+    text-align:center;
+}

@@ -1,36 +1,42 @@
-var propertiesDangers = {
-  dangers: ["5", "4", "3", "2", "1"],
+
+var propertiesActivities = {
+  activities: [1, 2, 3].map(Activity),
 };
 
-function groupByDangers(data) {
+function groupByActivities(data) {
 
   var preprocessedData = data.map(function(d) {
-    var danger = d['Danger level'];
-    return [danger ? danger[danger.length - 1] : danger, d.killed];
+    return [Activity(d['Activity']), d['Activity'], d.killed];
   }).filter(function (d) {
-    return propertiesDangers.dangers.includes(d[0]);
+    return propertiesActivities.activities.includes(d[0]);
   });
 
   var result = _.groupBy(preprocessedData, function (d) {
     return d[0]; 
   });
+  console.log(result)
   result = _.map(result, function (d) {
-    return {'danger': d[0][0], 'deaths': _.sum(_.map(d, function (x) {return x[1];}))};
+    return {
+      'activity': d[0][0], 
+      'deaths': _.sum(_.map(d, function (x) {return x[2];})),
+      'index': d[0][1],
+    };
   });
+
   return result;
 }
 
 
-function createDangers(accidentsData, addFilter, removeFilter) {
+function createActivities(accidentsData, addFilter, removeFilter) {
   var parent = document.getElementById("dangers");
   containerWidth = parent.clientWidth;
   containerHeight = constants.componentHeight * 0.7;
 
   var margin = {
-      top: 20,
+      top: 40,
       right: 30,
-      bottom: 30,
-      left: 40
+      bottom: 50,
+      left: 100
     },
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
@@ -46,10 +52,10 @@ function createDangers(accidentsData, addFilter, removeFilter) {
       .on("end", endDrag);
   
     var removeCurrentFilter = function () {
-      if (propertiesDangers.filterName) {
+      if (propertiesActivities.filterName) {
         // avoids infinite calls
-        var toRemove = propertiesDangers.filterName;
-        propertiesDangers.filterName = undefined;
+        var toRemove = propertiesActivities.filterName;
+        propertiesActivities.filterName = undefined;
         removeFilter(toRemove);
       }
       svg.selectAll(".bar").attr("opacity", 1);
@@ -73,45 +79,40 @@ function createDangers(accidentsData, addFilter, removeFilter) {
         top = temp;
       }
 
-      fromIdx = Math.floor(((height - bottom) / y.step())) + 1;
-      toIdx = Math.ceil(((height - top) / y.step())) + 1;
+      fromIdx = Math.floor((top / y.step())) + 1;
+      toIdx = Math.ceil((bottom / y.step())) + 1;
 
       fromIdx = Math.max(0, fromIdx);
-      toIdx = Math.min(toIdx, propertiesDangers.dangers.length + 1);
-
+      toIdx = Math.min(toIdx, propertiesActivities.activities.length + 1);
 
       svg.selectAll('.bar').attr('opacity', function (d) {
-        return d.danger >= fromIdx && d.danger < toIdx ? 1 : 0.5;
+        return d.index >= fromIdx && d.index < toIdx ? 1 : 0.5;
       });
     }
   
     function endDrag() {
-      if (fromIdx <= 1 && toIdx >= propertiesDangers.dangers.length + 1) {
+      if (fromIdx <= 1 && toIdx >= propertiesActivities.activities.length + 1) {
         removeCurrentFilter();
         return;
       }
 
       // filter name
       if (fromIdx + 1 == toIdx) {
-        filterName = "Danger " + (fromIdx);
+        filterName = "Activity: " + Activity(fromIdx);
       } else {
-        filterName = "Dangers " + (fromIdx) + "-" + (toIdx - 1);
+        filterName = "Activities: not " + Activity(_.difference([1,2,3], [fromIdx, toIdx - 1])[0]);
       }
+      console.log(filterName);
   
       var filterFunction = function (d) {
-        var danger = d['Danger level'];
-        if (!danger || danger.length != 1) {
-          return false;
-        }
-
-        return danger >= fromIdx && danger < toIdx;
+        return d.Activity >= fromIdx && d.Activity < toIdx;
       };
   
-      propertiesDangers.filterName = filterName;
+      propertiesActivities.filterName = filterName;
       addFilter(filterName, filterFunction, removeCurrentFilter);
     }
 
-    var svg = d3.select("#dangers").append("svg")
+    var svg = d3.select("#activities").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -132,7 +133,7 @@ function createDangers(accidentsData, addFilter, removeFilter) {
     .range([0, height])
     .padding(0.1);
   
-  y.domain(propertiesDangers.dangers);
+  y.domain(propertiesActivities.activities);
   
   // add the x Axis
   // svg.append("g")
@@ -140,11 +141,11 @@ function createDangers(accidentsData, addFilter, removeFilter) {
   //   .call(d3.axisBottom(x));
   
   // y axis label
-  svg.append("text")
-    .attr("text-anchor", "middle")
-    .attr("class", "histogram-label")
-    .attr("transform", "translate("+ -30 +","+(height/2)+")rotate(-90)")
-    .text("danger level");
+  // svg.append("text")
+  //   .attr("text-anchor", "middle")
+  //   .attr("class", "histogram-label")
+  //   .attr("transform", "translate("+ -30 +","+(height/2)+")rotate(-90)")
+  //   .text("activity level");
   
   svg.append("text")
     .attr("text-anchor", "middle")
@@ -157,19 +158,19 @@ function createDangers(accidentsData, addFilter, removeFilter) {
   .call(d3.axisLeft(y))
   .attr('class', 'y-axis');
 
-  propertiesDangers.y = y;
-  propertiesDangers.svg = svg;
-  propertiesDangers.width = width;
-  propertiesDangers.height = height;
+  propertiesActivities.y = y;
+  propertiesActivities.svg = svg;
+  propertiesActivities.width = width;
+  propertiesActivities.height = height;
 }
 
-function updateDangers(accidentsData, addFilter, removeFilter) {
-  var height = propertiesDangers.height;
-  var width = propertiesDangers.width;
-  var svg = propertiesDangers.svg;
-  var y = propertiesDangers.y;
+function updateActivities(accidentsData, addFilter, removeFilter) {
+  var height = propertiesActivities.height;
+  var width = propertiesActivities.width;
+  var svg = propertiesActivities.svg;
+  var y = propertiesActivities.y;
 
-  var data = groupByDangers(accidentsData);
+  var data = groupByActivities(accidentsData);
 
   var x = d3.scaleLinear()
     .range([0, width]);
@@ -182,17 +183,17 @@ function updateDangers(accidentsData, addFilter, removeFilter) {
   // append the rectangles for the bar chart
   var enterData = svg.selectAll(".bar")
     .data(data, function (d) {
-      return d.danger;
+      return d.activity;
     });
 
   enterData.enter().append("rect")
       .attr("class", "bar pass-through")
       .attr("fill", function (d) {
-        return dangerColor(d.danger);
+        return activityColor(d.activity);
       })
       .attr("height", y.bandwidth())
       .attr("y", function (d) {
-        return y(d.danger);
+        return y(d.activity);
       })
       .attr("x", 1)
       .attr("width", function (d) {
@@ -201,7 +202,7 @@ function updateDangers(accidentsData, addFilter, removeFilter) {
     .merge(enterData)
       .transition().duration(500)
       .attr("y", function (d) {
-        return y(d.danger);
+        return y(d.activity);
       })
       .attr("width", function (d) {
         return x(d.deaths);
@@ -211,20 +212,20 @@ function updateDangers(accidentsData, addFilter, removeFilter) {
 
   var deathLabels = svg.selectAll(".label")
     .data(data, function (d) {
-      return d.danger;
+      return d.activity;
     });
 
   deathLabels.enter().append("text")
       .attr("text-anchor", "left")
       .attr("class", "histogram-label label")
       .attr("transform", function (d) {
-        return "translate("+ (x(d.deaths) + 5) +","+(y(d.danger) + y.step() / 2)+")";
+        return "translate("+ (x(d.deaths) + 5) +","+(y(d.activity) + y.step() / 2)+")";
       })
       .text(function (d) {return d.deaths; })
     .merge(deathLabels)
       .transition().duration(500)
       .attr("transform", function (d) {
-        return "translate("+ (x(d.deaths) + 5) +","+(y(d.danger) + y.step() / 2)+")";
+        return "translate("+ (x(d.deaths) + 5) +","+(y(d.activity) + y.step() / 2)+")";
       })
       .text(function (d) {return d.deaths; });
   

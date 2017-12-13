@@ -102,6 +102,29 @@ function Activity(activity) {
 
 }
 
+function activityColor(activity) {
+    switch (activity) {
+        case 1:
+        case Activity(1):
+            return "#2ecc71"; // touring
+        case 2:
+        case Activity(2):
+            return "#9b59b6"; // off piste
+        case 3:
+        case Activity(3):
+            return "#34495e";  //transport
+        case 4:
+        case Activity(4):
+            return "#34495e";
+        case 5:
+        case Activity(5):
+            return "#34495e";
+        default:
+            return "#95a5a6";
+    }
+}
+
+
 function dangerColor(dangerLevel) {
     switch (dangerLevel) {
         case 1:

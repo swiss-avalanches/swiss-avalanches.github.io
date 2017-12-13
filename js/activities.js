@@ -30,12 +30,12 @@ function groupByActivities(data) {
 function createActivities(accidentsData, addFilter, removeFilter) {
   var parent = document.getElementById("dangers");
   containerWidth = parent.clientWidth;
-  containerHeight = constants.componentHeight * 0.7;
+  containerHeight = constants.componentHeight;
 
   var margin = {
-      top: 40,
+      top: 60,
       right: 30,
-      bottom: 50,
+      bottom: 60,
       left: 100
     },
     width = containerWidth - margin.left - margin.right,

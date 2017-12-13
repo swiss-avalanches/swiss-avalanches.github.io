@@ -189,7 +189,7 @@ function updateElevation(accidentsData, addFilter, removeFilter) {
 
     bars.enter()
         .append("rect")
-        .attr("fill", function(d, i) { return "#2c3e50"; })
+        .attr("fill", constants.deathColor)
         .attr("class", "bar pass-through")
         .attr("x", function(d) { return x(d.elevation); })
         .attr("width", x.bandwidth())

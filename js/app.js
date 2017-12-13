@@ -157,6 +157,7 @@ function createComponents() {
     createDangers(data, addFilter, removeFilter, selectPoint);
     createActivities(data, addFilter, removeFilter, selectPoint); 
     createTextual(data, addFilter, removeFilter, selectPoint);
+    createYears(data, addFilter, removeFilter, selectPoint);
 }
 
 function updateComponents() {
@@ -169,4 +170,5 @@ function updateComponents() {
     updateDangers(data, addFilter, removeFilter, selectPoint);
     updateActivities(data, addFilter, removeFilter, selectPoint);   
     updateTextual(data, addFilter, removeFilter, selectPoint);
+    updateYears(data, addFilter, removeFilter, selectPoint);
 }

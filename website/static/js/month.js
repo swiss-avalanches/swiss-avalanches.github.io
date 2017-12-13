@@ -186,7 +186,7 @@ function updateMonth(accidentsData, addFilter, removeFilter) {
 
   enterData.enter().append("rect")
       .attr("class", "bar pass-through")
-      .attr("fill", "#c0392b")
+      .attr("fill", constants.accidentColor)
       .attr("width", x.bandwidth())
       .attr("x", function (d) {
         return x(d.month);

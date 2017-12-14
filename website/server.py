@@ -18,8 +18,19 @@ project_dir = os.path.abspath(os.path.join(app.root_path, '..'))
 """
 DATA LOADING
 """
+def date_format(date):
+    day, month, year = date.split('.')
+    return "{}.{}.{}".format(day, month, "20" + year)
+
+def danger_format(danger):
+    if len(danger) > 1 and danger[0] == '-':
+        danger = danger[1:]
+    return danger
+
 accidents_file = os.path.join(project_dir, "data/accidents/accidents.csv")
 accidents_data = pd.read_csv(accidents_file)
+accidents_data.Date = accidents_data.Date.apply(date_format)
+accidents_data['Danger level'] = accidents_data['Danger level'].apply(danger_format)
 accidents_json = accidents_data.to_json(orient='index')
 
 maps_dirs = [os.path.join(project_dir, dir_) for dir_ in ["json-maps", "json-snowmaps"]]

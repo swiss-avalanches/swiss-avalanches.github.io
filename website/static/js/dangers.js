@@ -100,8 +100,11 @@ function createDangers(accidentsData, addFilter, removeFilter) {
   
       var filterFunction = function (d) {
         var danger = d['Danger level'];
-        if (!danger || danger.length != 1) {
+        if (!danger) {
           return false;
+        }
+        if (danger.length > 1) {
+          danger = danger[danger.length - 1];
         }
 
         return danger >= fromIdx && danger < toIdx;

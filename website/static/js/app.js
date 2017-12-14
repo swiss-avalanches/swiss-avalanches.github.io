@@ -53,7 +53,7 @@ function removeFilter(name) {
 
 function updateFilterList() {
     fs = globalFilters.length > 0 ? globalFilters : [{
-        name: "None"
+        name: "Drag & drop on a component..."
     }];
     var filterList = d3.select('#filters dl').selectAll("dd").data(fs, function (x) {
         return x.name;
@@ -63,7 +63,7 @@ function updateFilterList() {
             return a.name;
         })
         .on('click', function (a) {
-            if (a.name != 'None') {
+            if (a.name != 'Drag & drop on a component...') {
                 removeFilter(a.name);
             }
         });
@@ -116,7 +116,7 @@ function applyPointSelection(data) {
 function updateSelectionCard() {
     function card(selection) {
         if (!selectedPoint) {
-            selection.append('dd').text('None');
+            selection.append('dd').text('Click on a point to select...');
         } else {
             selectedDatum = accidentsData.find(function (x) {
                 return x.id == selectedPoint;

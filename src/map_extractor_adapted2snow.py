@@ -11,7 +11,7 @@ import visvalingamwyatt as vw
 import glob
 import sys
 from pathlib import Path
-
+from pathos.multiprocessing import ProcessingPool as Pool
 
 import pandas as pd
 from scipy.spatial import distance
@@ -164,105 +164,112 @@ def color_contours(img, color):
     
 def main(args):
 
-    years = [str(i) for i in range(2002, 2018)]
-    extensions = ['hn1', 'hn3', 'hsr2000', 'hsr2500', 'hsrel', 'hstop']
-    language = ['de', 'en']
-    file_type = ['gif', 'png']
-    origin_paths = []
-    i=0
-    for y in years:
-        for ext in extensions:
-            for lan in language:
-                for f_type in file_type:
-                        origin = os.path.join(*[args.maps_directory,y, ext, lan, f_type])#,"*."+f_type])
-                        if(Path(origin).exists()):
-                            origin_paths.append(os.path.join(*[origin, "*."+f_type]))
-                            
-    
-    for origin in origin_paths:
-        for file_map in glob.glob(origin):
-            basename = os.path.basename(file_map)
-            filename = '{}.json'.format(os.path.splitext(basename)[0])
-            destination = os.path.join(args.out_path, filename)
-            
-            if Path(destination).exists() and not args.f:
-                print('Skip {} because {} already exists'.format(file_map, destination))
-                continue
+   
+   def function(year, args=args):
+        extensions = ['hn1', 'hn3', 'hsr2000', 'hsr2500', 'hsrel', 'hstop']
+        language = ['de', 'en']
+        file_type = ['gif', 'png']
+        origin_paths = []
+        url = "https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public"
+        urls = []
 
-            img = Image.open(file_map)
-            img = img.convert('RGB')
-            img_arr = np.array(img)
+        for y in years:
+            for ext in extensions:
+                for lan in language:
+                    for f_type in file_type:
+                            origin = os.path.join(*[args.maps_directory,y, ext, lan, f_type])#,"*."+f_type])
+                            if(Path(origin).exists()):
+                                origin_paths.append(os.path.join(*[origin, "*."+f_type]))
+                                urls.append("/".join([url, y, ext, lan, f_type]))
+        
+        for i, origin  in enumerate(origin_paths):
+            for file_map in glob.glob(origin):
+                basename = os.path.basename(file_map)
+                #print("name:  " + basename)
+                filename = '{}.json'.format(os.path.splitext(basename)[0])
+                destination = os.path.join(args.out_path, filename)
+                
+                file_url = urls[i]+"/"+basename
+                #print("url: "+ file_url)
+                if Path(destination).exists() and not args.f:
+                    print('Skip {} because {} already exists'.format(file_map, destination))
+                    continue
 
-            # load mask of this size
-            try:
-                binary_mask, landmarks_pix = open_mask(*img_arr.shape[:2])
-            except FileNotFoundError:
-                print('Missing mask "{}x{}.gif" for file "{}"'.format(*img_arr.shape[:2], file_map), file=sys.stderr)
-                continue
+                img = Image.open(file_map)
+                img = img.convert('RGB')
+                img_arr = np.array(img)
 
-            #remove grey colors
-            nogrey_img_arr = remove_colors(img_arr, shades_grey)
-            
-            #build colormap
-            color_map = build_color_map(nogrey_img_arr)
-            
-            #map image colors to registered shades 
-            new_img_arr = replace_color(nogrey_img_arr, color_map=color_map)
-            
-            # keep useful colors
-            regions_only = keep_colors(new_img_arr, shades_blue)
+                # load mask of this size
+                try:
+                    binary_mask, landmarks_pix = open_mask(*img_arr.shape[:2])
+                except FileNotFoundError:
+                    print('Missing mask "{}x{}.gif" for file "{}"'.format(*img_arr.shape[:2], file_map), file=sys.stderr)
+                    continue
 
-            # clip the binary mask to remove color key
-            regions_only[~binary_mask] = 255
-            regions_only = Image.fromarray(regions_only).convert('RGB')
-            smoothed = regions_only.filter(ImageFilter.MedianFilter(7))
+                #remove grey colors
+                nogrey_img_arr = remove_colors(img_arr, shades_grey)
+                
+                #build colormap
+                color_map = build_color_map(nogrey_img_arr)
+                
+                #map image colors to registered shades 
+                new_img_arr = replace_color(nogrey_img_arr, color_map=color_map)
+                
+                # keep useful colors
+                regions_only = keep_colors(new_img_arr, shades_blue)
 
-            pix = np.array(list(map(numpify, landmarks_pix.values())))
-            coord = np.array(list(map(numpify, landmarks_pix.keys())))
+                # clip the binary mask to remove color key
+                regions_only[~binary_mask] = 255
+                regions_only = Image.fromarray(regions_only).convert('RGB')
+                smoothed = regions_only.filter(ImageFilter.MedianFilter(7))
 
-            # add 1 bias raw
-            pix_ext = np.vstack([np.ones((1,pix.shape[0])), pix.T])
-            coord_ext = np.vstack([np.ones((1,pix.shape[0])), coord.T])
+                pix = np.array(list(map(numpify, landmarks_pix.values())))
+                coord = np.array(list(map(numpify, landmarks_pix.keys())))
 
-            T = np.linalg.lstsq(pix_ext.T, coord_ext.T)[0]
+                # add 1 bias raw
+                pix_ext = np.vstack([np.ones((1,pix.shape[0])), pix.T])
+                coord_ext = np.vstack([np.ones((1,pix.shape[0])), coord.T])
 
-            def transform_pix2map(points):
-                """n x 2 array"""
-                points_ext = np.hstack([np.ones((points.shape[0], 1)), points])
-                points_map = points_ext.dot(T)
-                return points_map[:, 1:]
+                T = np.linalg.lstsq(pix_ext.T, coord_ext.T)[0]
 
-            geo_json = {
-            "type": "FeatureCollection",
-            "features": []
-            }
+                def transform_pix2map(points):
+                    """n x 2 array"""
+                    points_ext = np.hstack([np.ones((points.shape[0], 1)), points])
+                    points_map = points_ext.dot(T)
+                    return points_map[:, 1:]
 
-            
-            for snow_level, color in enumerate(shades_blue):
-                for contour in color_contours(smoothed, color):
-                    contour_right = contour.copy()
-                    contour_right[:,0] = contour[:,1]
-                    contour_right[:,1] = contour[:,0]
-                    contour_right = transform_pix2map(contour_right)
-                    simplifier = vw.Simplifier(contour_right)
-                    contour_right = simplifier.simplify(threshold=SMOOTHING_THRESHOLD)
-                    geo_json['features'].append({
-                        "type": "Feature",
-                        "properties": {
-                            "date": ",".join([basename[6:8], basename[4:6], basename[0:4]]),
-                            "snow_level": snow_level_legend[int(snow_level)],
-                            "url": "TODO"
-                        },
-                        "geometry": {
-                            "type": "Polygon",
-                            "coordinates": [ list(reversed(contour_right.tolist())) ]
-                        }
-                    })
+                geo_json = {
+                "type": "FeatureCollection",
+                "features": []
+                }
 
-            with open(destination, 'w') as f:
-                print('{} -> {}'.format(file_map, destination))
-                json.dump(geo_json, f)
-    
+                
+                for snow_level, color in enumerate(shades_blue):
+                    for contour in color_contours(smoothed, color):
+                        contour_right = contour.copy()
+                        contour_right[:,0] = contour[:,1]
+                        contour_right[:,1] = contour[:,0]
+                        contour_right = transform_pix2map(contour_right)
+                        simplifier = vw.Simplifier(contour_right)
+                        contour_right = simplifier.simplify(threshold=SMOOTHING_THRESHOLD)
+                        geo_json['features'].append({
+                            "type": "Feature",
+                            "properties": {
+                                "date": ".".join([basename[6:8], basename[4:6], basename[0:4]]),
+                                "snow_level": snow_level_legend[int(snow_level)],
+                                "url": file_url
+                            },
+                            "geometry": {
+                                "type": "Polygon",
+                                "coordinates": [ list(reversed(contour_right.tolist())) ]
+                            }
+                        })
+
+                with open(destination, 'w') as f:
+                    print('{} -> {}'.format(file_map, destination))
+                    json.dump(geo_json, f)
+    with Pool(4) as p:
+        p.map(function, [str(i) for i in range(2002, 2018)])
             
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract snow map to JSON.')

@@ -55,12 +55,11 @@ function createElevation(accidentsData, addFilter, removeFilter) {
     
       function startDrag() {
         startDragX = d3.event.x;
-        removeCurrentFilter();
         svg.selectAll(".bar").attr("opacity", 0.5);
       }
     
       function dragged(d) {
-        var endDragX = d3.event.x;
+        endDragX = d3.event.x;
   
         var from = startDragX,
           to = endDragX;
@@ -81,6 +80,31 @@ function createElevation(accidentsData, addFilter, removeFilter) {
       }
     
       function endDrag() {
+        endDragX = d3.event.x;
+        var from = startDragX,
+          to = endDragX;
+        
+        if (from > to) {
+          var temp = from;
+          from = to;
+          to = temp;
+        }
+  
+        fromIdx = Math.floor((from / x.step()));
+        toIdx = Math.ceil((to / x.step()));
+
+        if (propertiesElevation.filterName) {
+            removeCurrentFilter()
+            if (Math.abs(endDragX - startDragX) < 5) {
+                return;
+            }
+        }
+
+        svg.selectAll('.bar').attr('opacity', function (d) {
+            var idx = propertiesElevation.elevations.findIndex(function (a) { return d.elevation == a; });
+            return idx >= fromIdx && idx < toIdx ? 1 : 0.5;
+          });
+
         if (fromIdx <= 0 && toIdx >= propertiesElevation.elevations.length) {
             removeCurrentFilter();
             return;
@@ -126,7 +150,6 @@ function createElevation(accidentsData, addFilter, removeFilter) {
     .attr("width", width)
     .attr("height", height)
     .attr("fill", "white")
-    .on("click", removeCurrentFilter)
     .call(drag);
 
     // add the x Axis

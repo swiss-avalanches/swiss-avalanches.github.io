@@ -10,7 +10,6 @@ $.getJSON('/accidents', function (data) {
         accidentsData[i].id = accidentDatumId(accidentsData[i]);
     }
 
-    console.log(accidentsData)
     d3.select('#filters').append("dl")
     createComponents();
     updateComponents();
@@ -36,16 +35,9 @@ function addFilter(name, lambda, removeMe) {
 }
 
 function removeFilter(name) {
-    var newGlobalFilters = [];
-    for (var i = 0; i < globalFilters.length; i++) {
-        var element = globalFilters[i];
-        if (element.name != name) {
-            newGlobalFilters.push(element);
-        } else {
-            element.remove();
-        }
-    }
-    globalFilters = newGlobalFilters;
+    var removeAndKeep = _.partition(globalFilters, function (d) { return d.name === name})
+    globalFilters = removeAndKeep[1]
+    removeAndKeep[0].forEach(function (d) {d.remove()})
 
     updateComponents();
     updateFilterList();

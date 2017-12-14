@@ -95,7 +95,6 @@ function createElevation(accidentsData, addFilter, removeFilter) {
             filterName = "Elevation " + propertiesElevation.elevations[fromIdx] + "m-" + propertiesElevation.elevations[toIdx] + "m";
         }
     
-        console.log('fromAlt', fromIdx >= 0 ? propertiesElevation.elevations[fromIdx] : 0)
         var filterFunction = function (d) {
           var fromAlt = fromIdx >= 0 ? propertiesElevation.elevations[fromIdx] : 0,
             toAlt = toIdx < propertiesElevation.elevations.length ? propertiesElevation.elevations[toIdx] : 9999999999;

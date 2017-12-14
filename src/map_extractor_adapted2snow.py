@@ -11,10 +11,9 @@ import visvalingamwyatt as vw
 import glob
 import sys
 from pathlib import Path
-from pathos.multiprocessing import ProcessingPool as Pool
-
 import pandas as pd
 from scipy.spatial import distance
+from pathos.multiprocessing import ProcessingPool as Pool
 
 # colors definitions RGB alpha
 black = np.array([0, 0, 0])
@@ -163,9 +162,7 @@ def color_contours(img, color):
     return filter_contours
     
 def main(args):
-
-   
-   def function(year, args=args):
+    def function_(year, args=args):
         extensions = ['hn1', 'hn3', 'hsr2000', 'hsr2500', 'hsrel', 'hstop']
         language = ['de', 'en']
         file_type = ['gif', 'png']
@@ -173,15 +170,15 @@ def main(args):
         url = "https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public"
         urls = []
 
-        for y in years:
-            for ext in extensions:
-                for lan in language:
-                    for f_type in file_type:
-                            origin = os.path.join(*[args.maps_directory,y, ext, lan, f_type])#,"*."+f_type])
-                            if(Path(origin).exists()):
-                                origin_paths.append(os.path.join(*[origin, "*."+f_type]))
-                                urls.append("/".join([url, y, ext, lan, f_type]))
-        
+        y = '2002'
+        for ext in extensions:
+            for lan in language:
+                for f_type in file_type:
+                        origin = os.path.join(*[args.maps_directory,y, ext, lan, f_type])#,"*."+f_type])
+                        if(Path(origin).exists()):
+                            origin_paths.append(os.path.join(*[origin, "*."+f_type]))
+                            urls.append("/".join([url, y, ext, lan, f_type]))
+
         for i, origin  in enumerate(origin_paths):
             for file_map in glob.glob(origin):
                 basename = os.path.basename(file_map)
@@ -269,8 +266,9 @@ def main(args):
                     print('{} -> {}'.format(file_map, destination))
                     json.dump(geo_json, f)
     with Pool(4) as p:
-        p.map(function, [str(i) for i in range(2002, 2018)])
-            
+        p.map(function_, [str(i) for i in range(2002, 2018)])
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract snow map to JSON.')
     parser.add_argument('maps_directory', type=str, help='directory of GIF file of the map')

@@ -3,6 +3,14 @@ var propertiesYears = {
   'lastYear': 2018,
 };
 
+
+function hydrologicalYear(datum) {
+  var date = datum.Date;
+  var month = parseInt(date.slice(3,5));
+  var year = parseInt(date.slice(6,8));
+  return 2000 + (month >= 9 ? year + 1 : year)
+}
+
 function createYears(accidentsData, addFilter, removeFilter) {
   var parent = document.getElementById("years");
   containerWidth = parent.clientWidth;
@@ -14,7 +22,87 @@ function createYears(accidentsData, addFilter, removeFilter) {
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
   
-  var svg = d3.select("#years").append("svg")
+  propertiesYears.margin = margin
+
+  /****** DRAG */
+
+
+var dragStart = null;
+
+var drag = d3.drag()
+  .on("drag", dragged)
+  .on("start", startDrag)
+  .on("end", endDrag)
+
+var removeCurrentFilter = function () {
+  if (propertiesYears.filterName) {
+    // avoids infinite calls
+    var toRemove = propertiesYears.filterName
+    propertiesYears.filterName = undefined;
+    removeFilter(toRemove)
+  }
+  propertiesYears.svg.selectAll("rect").remove();
+}
+
+function startDrag() {
+  dragStart = d3.event.x - propertiesYears.margin.left;
+  removeCurrentFilter();
+
+  propertiesYears.svg.append("rect")
+    .attr("class", "selection")
+    .attr("opacity", 0.5)
+    .attr("fill", "#3498db")
+    .attr("height", 20)
+    .attr("width", 0)
+    .attr("y", height)
+    .attr("x", dragStart)
+    .attr("width", 0)
+    .on("click", removeCurrentFilter);
+}
+
+function dragged(d) {
+  dragEnd = d3.event.x - propertiesYears.margin.left;
+
+  var left = Math.min(dragStart, dragEnd),
+    right = Math.max(dragStart, dragEnd),
+    selectionWidth = right - left;
+
+  propertiesYears.svg.selectAll("rect").attr("x", left).attr("width", selectionWidth)
+}
+
+function endDrag() {
+  var left = Math.min(dragStart, dragEnd),
+    right = Math.max(dragStart, dragEnd);
+  
+  var fromYear = Math.ceil(propertiesYears.x.invert(left)),
+    toYear = Math.floor(propertiesYears.x.invert(right));
+
+  toYear = Math.min(propertiesYears.lastYear, toYear);
+  fromYear = Math.max(propertiesYears.firstYear, fromYear)
+  
+  if (toYear < fromYear) {
+    propertiesYears.svg.selectAll("rect").remove();
+    return;
+  }
+
+  if (fromYear == toYear) {
+    filterName = "Year " + fromYear;
+  } else {
+    filterName = "Years " + fromYear + "-" + toYear;
+  }
+
+  var filterFunction = function (d) {
+    return hydrologicalYear(d) >= fromYear && hydrologicalYear(d) <= toYear;
+  };
+
+  propertiesYears.filterName = filterName;
+  addFilter(filterName, filterFunction, removeCurrentFilter)
+}
+
+  /****** END DRAG */
+
+  var temp =  d3.select("#years").append("svg").call(drag).on('click', removeCurrentFilter);
+  var svg = temp
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -63,15 +151,6 @@ function updateYears(accidentsData, addFilter, removeFilter) {
   var x = propertiesYears.x;
   var y = propertiesYears.y;
 
-  console.log('height', height, 'width', width)
-
-  function hydrologicalYear(datum) {
-    var date = datum.Date;
-    var month = parseInt(date.slice(3,5));
-    var year = parseInt(date.slice(6,8));
-    return 2000 + (month >= 9 ? year + 1 : year)
-  }
-
   var aggregationPerYear = _(accidentsData).groupBy(hydrologicalYear).map(function (objs, key) {
     return {
       'year': +key,
@@ -91,8 +170,8 @@ function updateYears(accidentsData, addFilter, removeFilter) {
   
   var lineBuried = d3.line()
     .curve(d3.curveBasis)
-    .x(function(d) { console.log('x', d.year, x(d.year)); return x(d.year); })
-    .y(function(d) { console.log('y', d.buried, y(d.buried)); return y(d.buried); });
+    .x(function(d) { return x(d.year); })
+    .y(function(d) { return y(d.buried); });
 
   var lineAccidents = d3.line()
     .curve(d3.curveBasis)

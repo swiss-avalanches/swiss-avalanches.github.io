@@ -170,7 +170,7 @@ def main(args):
         url = "https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public"
         urls = []
 
-        y = '2002'
+        y = year
         for ext in extensions:
             for lan in language:
                 for f_type in file_type:

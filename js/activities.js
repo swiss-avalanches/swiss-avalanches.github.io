@@ -62,11 +62,10 @@ function createActivities(accidentsData, addFilter, removeFilter) {
   
     function startDrag() {
       startDragY = d3.event.y;
-      removeCurrentFilter();
       svg.selectAll(".bar").attr("opacity", 0.5);
     }
   
-    function dragged(d) {
+    function dragged() {
       endDragY = d3.event.y;
 
       var top = startDragY,
@@ -90,6 +89,15 @@ function createActivities(accidentsData, addFilter, removeFilter) {
     }
   
     function endDrag() {
+      dragged()
+
+      if (propertiesActivities.filterName) {
+        removeCurrentFilter()
+        if (Math.abs(endDragY - startDragY) < 5) {
+            return;
+        }
+      }
+
       if (fromIdx <= 1 && toIdx >= propertiesActivities.activities.length + 1) {
         removeCurrentFilter();
         return;
@@ -124,7 +132,6 @@ function createActivities(accidentsData, addFilter, removeFilter) {
       .attr("width", width)
       .attr("height", height)
       .attr("fill", "white")
-      .on("click", removeCurrentFilter)
       .call(drag);
 
   var y = d3.scaleBand()

@@ -53,7 +53,7 @@ function removeFilter(name) {
 
 function updateFilterList() {
     fs = globalFilters.length > 0 ? globalFilters : [{
-        name: "Drag & drop on a component..."
+        name: "Drag & drop on any component..."
     }];
     var filterList = d3.select('#filters dl').selectAll("dd").data(fs, function (x) {
         return x.name;
@@ -63,7 +63,7 @@ function updateFilterList() {
             return a.name;
         })
         .on('click', function (a) {
-            if (a.name != 'Drag & drop on a component...') {
+            if (a.name != 'Drag & drop on any component...') {
                 removeFilter(a.name);
             }
         });

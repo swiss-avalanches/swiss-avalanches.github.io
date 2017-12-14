@@ -7,8 +7,8 @@ var propertiesYears = {
 function hydrologicalYear(datum) {
   var date = datum.Date;
   var month = parseInt(date.slice(3,5));
-  var year = parseInt(date.slice(6,8));
-  return 2000 + (month >= 9 ? year + 1 : year)
+  var year = parseInt(date.slice(6,10));
+  return month >= 9 ? year + 1 : year
 }
 
 function createYears(accidentsData, addFilter, removeFilter) {

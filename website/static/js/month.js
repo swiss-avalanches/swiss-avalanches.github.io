@@ -58,12 +58,11 @@ function createMonth(accidentsData, addFilter, removeFilter) {
   
     function startDrag() {
       startDragX = d3.event.x;
-      removeCurrentFilter();
       svg.selectAll(".bar").attr("opacity", 0.5);
     }
   
-    function dragged(d) {
-      var endDragX = d3.event.x;
+    function dragged() {
+      endDragX = d3.event.x;
 
       var from = startDragX,
         to = endDragX;
@@ -84,6 +83,15 @@ function createMonth(accidentsData, addFilter, removeFilter) {
     }
   
     function endDrag() {
+      dragged();
+
+      if (propertiesMonth.filterName) {
+        removeCurrentFilter()
+        if (Math.abs(endDragX - startDragX) < 5) {
+            return;
+        }
+      }
+
       // filter name
       if (fromIdx + 1 == toIdx) {
         filterName = "Month " + propertiesMonth.monthsName[Math.min(0, fromIdx)];
@@ -114,7 +122,6 @@ function createMonth(accidentsData, addFilter, removeFilter) {
       .attr("width", width)
       .attr("height", height)
       .attr("fill", "white")
-      .on("click", removeCurrentFilter)
       .call(drag);
 
   var x = d3.scaleBand()

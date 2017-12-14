@@ -58,7 +58,7 @@ function createElevation(accidentsData, addFilter, removeFilter) {
         svg.selectAll(".bar").attr("opacity", 0.5);
       }
     
-      function dragged(d) {
+      function dragged() {
         endDragX = d3.event.x;
   
         var from = startDragX,
@@ -80,18 +80,7 @@ function createElevation(accidentsData, addFilter, removeFilter) {
       }
     
       function endDrag() {
-        endDragX = d3.event.x;
-        var from = startDragX,
-          to = endDragX;
-        
-        if (from > to) {
-          var temp = from;
-          from = to;
-          to = temp;
-        }
-  
-        fromIdx = Math.floor((from / x.step()));
-        toIdx = Math.ceil((to / x.step()));
+        dragged();
 
         if (propertiesElevation.filterName) {
             removeCurrentFilter()
@@ -99,11 +88,6 @@ function createElevation(accidentsData, addFilter, removeFilter) {
                 return;
             }
         }
-
-        svg.selectAll('.bar').attr('opacity', function (d) {
-            var idx = propertiesElevation.elevations.findIndex(function (a) { return d.elevation == a; });
-            return idx >= fromIdx && idx < toIdx ? 1 : 0.5;
-          });
 
         if (fromIdx <= 0 && toIdx >= propertiesElevation.elevations.length) {
             removeCurrentFilter();

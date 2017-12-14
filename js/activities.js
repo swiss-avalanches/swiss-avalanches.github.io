@@ -98,9 +98,9 @@ function createActivities(accidentsData, addFilter, removeFilter) {
 
       // filter name
       if (fromIdx + 1 == toIdx) {
-        filterName = "Activity: " + Activity(fromIdx);
+        filterName = Activity(fromIdx) + " only";
       } else {
-        filterName = "Activities: not " + Activity(_.difference([1,2,3], [fromIdx, toIdx - 1])[0]);
+        filterName = "Not " + Activity(_.difference([1,2,3], [fromIdx, toIdx - 1])[0]);
       }
       console.log(filterName);
   

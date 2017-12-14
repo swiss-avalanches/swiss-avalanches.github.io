@@ -148,7 +148,7 @@ function dangerColor(dangerLevel) {
 }
 
 function aspectRangeAngle(fromAngle, toAngle) {
-    var aspects = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+    var aspects = constants.aspects;
     if (Math.abs(fromAngle - toAngle) >= 2 * Math.PI) {
         return aspects
     }

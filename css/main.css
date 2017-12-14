@@ -8,6 +8,13 @@ body {
     left: 2em;
 }
 
+#legend-menu {
+    position: fixed;
+    top: 6em;
+    right: 2em;
+    padding-right: 3em; 
+}
+
 #map {
     width: 100%;
     height: 400px;
@@ -26,7 +33,7 @@ dk {
 }
 
 #textual {
-    margin-top: 1em;
+    margin-top: 2em;
     margin-bottom: .5em;
 }
 
@@ -36,4 +43,13 @@ dk {
 
 h1 {
     text-align:center;
+}
+
+.keyPoint {
+    margin-right: 10px;
+}
+
+#legend-menu h5 {
+    margin-top: 1em;
+    margin-bottom: .5em;
 }

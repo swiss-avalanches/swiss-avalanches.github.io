@@ -79,9 +79,6 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
 
   d3.select('.leaflet-pane svg').attr('pointer-events', 'visible');
 
-  // move points to the right positions (continuously)
-  map.on("moveend", update);
-
   function update() {
     featureElement.attr("transform",
       function (d) {
@@ -90,5 +87,7 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
     )
   }
 
-  update();
+  // move points to the right positions (continuously)
+  map.on("moveend", update);
+  map.on("zoomend", update);
 }

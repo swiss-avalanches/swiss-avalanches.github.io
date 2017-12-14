@@ -165,7 +165,7 @@ def main(args):
     def function(year, args=args):
         extensions = ['nbk', 'gk'] 
         language = ['de', 'en', 'fr']
-        file_type = ['gif', 'pdf']
+        file_type = ['gif']
         origin_paths = []
         url = "https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public"
         urls = []

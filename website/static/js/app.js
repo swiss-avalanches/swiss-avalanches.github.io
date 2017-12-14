@@ -50,15 +50,24 @@ function updateFilterList() {
     var filterList = d3.select('#filters dl').selectAll("dd").data(fs, function (x) {
         return x.name;
     });
-    filterList.enter().insert("dd")
-        .text(function (a) {
+
+    var elem = filterList.enter().insert("dd")
+
+    if (globalFilters.length > 0) {
+        elem.insert('text').text('X\xa0\xa0\xa0\xa0')
+            .attr('class', 'deleteFilterMark')
+            .on('click', function (a) {
+                if (a.name != 'Drag & drop on any component...') {
+                    removeFilter(a.name);
+                }
+            })
+    }
+
+    
+    elem.insert('text').text(function (a) {
             return a.name;
-        })
-        .on('click', function (a) {
-            if (a.name != 'Drag & drop on any component...') {
-                removeFilter(a.name);
-            }
         });
+    
     filterList.exit().remove();
 }
 

@@ -211,6 +211,8 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
 function updatePolar(data, addFilter, removeFilter, selectPoint) {
   var line = propertiesPolar.line
 
+  data = data.filter(function (d) { return constants.aspects.includes(d.Aspect) })
+
   var points = propertiesPolar.svg.selectAll(".point")
     .data(data, function (d) {
       return d.Date + ", " + d.Latitude + ", " + d.Longitude;

@@ -14,7 +14,6 @@ function groupByActivities(data) {
   var result = _.groupBy(preprocessedData, function (d) {
     return d[0]; 
   });
-  console.log(result)
   result = _.map(result, function (d) {
     return {
       'activity': d[0][0], 
@@ -102,7 +101,6 @@ function createActivities(accidentsData, addFilter, removeFilter) {
       } else {
         filterName = "Not " + Activity(_.difference([1,2,3], [fromIdx, toIdx - 1])[0]);
       }
-      console.log(filterName);
   
       var filterFunction = function (d) {
         return d.Activity >= fromIdx && d.Activity < toIdx;

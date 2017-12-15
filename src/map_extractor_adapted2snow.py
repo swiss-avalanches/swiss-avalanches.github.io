@@ -265,7 +265,7 @@ def main(args):
                 with open(destination, 'w') as f:
                     print('{} -> {}'.format(file_map, destination))
                     json.dump(geo_json, f)
-    with Pool(4) as p:
+    with Pool(8) as p:
         p.map(function_, [str(i) for i in range(2002, 2018)])
 
 

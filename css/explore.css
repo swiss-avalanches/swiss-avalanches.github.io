@@ -6,16 +6,17 @@ body {
 }
 
 #filter-selection-menu {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 7em;
+    /* position: -webkit-sticky;
+    position: sticky; */
+    position: fixed;
+    top: 5em;
     padding-left: 1em;
-    padding-bottom: 13em
+    padding-bottom: 13em;
 }
 
 #legend-menu {
     position: absolute;
-    top: 3.5em;
+    top: 1em;
     right: 2em;
 }
 

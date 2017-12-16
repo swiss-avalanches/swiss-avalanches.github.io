@@ -28,7 +28,7 @@ function updateTextual(accidentsData, addFilter, removeFilter, selectPoint) {
     .data(data, function (d) {return d.name})
   
   textuals.enter()
-      .append("div").attr("class", "one-third column").append("h5").attr("class", "textual-class")
+      .append("div").attr("class", "one-third column").append("h4").attr("class", "textual-class")
     .merge(textuals)
       .text(textualDescription)
 }

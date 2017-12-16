@@ -1,21 +1,22 @@
 body {
     margin: auto;
     margin-top: 80px;
-    width: 1680px;
-    position:relative; 
+    width: 1442px;
+    /* position:relative;  */
 }
 
 #filter-selection-menu {
-    position: absolute;
-    top: 14em;
-    left: 2em;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 7em;
+    padding-left: 1em;
+    padding-bottom: 13em
 }
 
 #legend-menu {
     position: absolute;
-    top: 6em;
+    top: 3.5em;
     right: 2em;
-    padding-right: 3em; 
 }
 
 #map {
@@ -40,7 +41,7 @@ dk {
     margin-bottom: .5em;
 }
 
-#textual h5 {
+#textual h4 {
     text-align:center;
 }
 

@@ -56,7 +56,7 @@ function updateFilterList() {
     var elem = filterList.enter().insert("dd")
 
     if (globalFilters.length > 0) {
-        elem.insert('text').text('X\xa0\xa0\xa0\xa0')
+        elem.insert('text').text('x\xa0\xa0')
             .attr('class', 'deleteFilterMark')
             .on('click', function (a) {
                 if (a.name != 'Drag & drop on any component...') {

@@ -2,4 +2,7 @@
 .ipynb_checkpoints/
 data/slf/
 __pycache__/
+Gemfile.lock
+_site/
+
 

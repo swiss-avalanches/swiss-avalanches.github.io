@@ -4,6 +4,15 @@ layout: null
 
 @import url("pygment_highlights.css");
 
+/* --- Ours --- */
+
+.welcome-img {
+  display: block;
+  margin: auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
 /* --- General --- */
 
 body {

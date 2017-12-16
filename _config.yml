@@ -24,7 +24,8 @@ description: An avalanche data analysis!
 # List of links in the navigation bar
 navbar-links:
   Data story: "datastory"
-  Explore: "explore/"
+  Extraction: "extraction"
+  Explore: "explore"
   About Us: "aboutus"
 
 # Image to show in the navigation bar - image must be a square (width = height)
@@ -149,7 +150,8 @@ exclude:
   - LICENSE
   - README.md
   - Vagrantfile
-  - data
+  - data/slf
+  - data/weather
 
 # prose.io config
 prose:

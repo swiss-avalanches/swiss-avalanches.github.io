@@ -33,6 +33,9 @@ accidents_data.Date = accidents_data.Date.apply(date_format)
 accidents_data['Danger level'] = accidents_data['Danger level'].apply(danger_format)
 accidents_json = accidents_data.to_json(orient='index')
 
+with open('accidents.json', 'w') as f:
+    f.write(accidents_json)
+
 maps_dirs = [os.path.join(project_dir, dir_) for dir_ in ["json-maps", "json-snowmaps"]]
 maps_files = [f for dir_ in maps_dirs for f in glob.glob(os.path.join(dir_, "*.json"))]
 maps_files_with_date = [(datetime.strptime(os.path.basename(f)[:8], "%Y%m%d"), f) for f in maps_files]

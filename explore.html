@@ -1,0 +1,149 @@
+---
+layout: base
+title: Explore the data
+use-site-title: true
+
+css:
+  - "../css/normalize.css"
+  - "../css/explore.css"
+  - "../css/skeleton.css"
+  - "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+
+js:  
+  - "/js/d3.min.js"
+  - "https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+  - "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+  - "js/lodash.js"
+  - "/js/explore/constants.js"
+  - "/js/explore/utils.js"
+  - "/js/explore/polar.js"
+  - "/js/explore/elevation.js"
+  - "/js/explore/month.js"
+  - "/js/explore/map.js"
+  - "/js/explore/dangers.js"
+  - "/js/explore/activities.js"
+  - "/js/explore/textual.js"
+  - "/js/explore/years.js"
+  - "/js/explore/app.js"
+---
+<h1>Explore the data</h1>
+<div id="filter-selection-menu">
+  <div id="filters">
+    <h4>Filters</h4>
+  </div>
+  <div id="selection">
+    <h4>Selection</h4>
+    <dl></dl>
+  </div>
+</div>
+
+<div id="legend-menu">
+  <h4>Color key</h4>
+  <h5>Statistics</h5>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#c0392b" transform="translate(6,6)"/>
+    </svg>accidents
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#2c3e50" transform="translate(6,6)"/>
+    </svg>deaths
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#ff9900" transform="translate(6,6)"/>
+    </svg>caught
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#1abc9c" transform="translate(6,6)"/>
+    </svg>burried
+    <br/>
+
+  <h5>Danger level</h5>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#ccff66" transform="translate(6,6)"/>
+    </svg>level 1
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#ffff00" transform="translate(6,6)"/>
+    </svg>level 2
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#ff9900" transform="translate(6,6)"/>
+    </svg>level 3
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#ff0000" transform="translate(6,6)"/>
+    </svg>level 4
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#9102ff" transform="translate(6,6)"/>
+    </svg>level 5
+    <br/>
+  
+  <h5>Activity type</h5>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#2ecc71" transform="translate(6,6)"/>
+    </svg>Backcountry touring
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#9b59b6" transform="translate(6,6)"/>
+    </svg>Off-piste skiing
+    <br/>
+    <svg height="12" width="12" class="keyPoint">
+      <circle r=5 fill="#34495e" transform="translate(6,6)"/>
+    </svg>Transportation
+    
+    <h5>Snow level</h5>
+    <svg height="12" width="12" class="keyPoint">
+        <circle r=5 fill='#d5fcfc' transform="translate(6,6)"/>
+      </svg>5-20 cm
+      <br/>
+<svg height="12" width="12" class="keyPoint">
+        <circle r=5 fill='#a8d9f1' transform="translate(6,6)"/>
+      </svg>20-50 cm
+      <br/>
+<svg height="12" width="12" class="keyPoint">
+        <circle r=5 fill='#79a1e5' transform="translate(6,6)"/>
+      </svg>50-80 cm
+      <br/>
+<svg height="12" width="12" class="keyPoint">
+        <circle r=5 fill='#4459d7' transform="translate(6,6)"/>
+      </svg>80-120 cm
+      <br/>
+<svg height="12" width="12" class="keyPoint">
+        <circle r=5 fill='#2f24a2' transform="translate(6,6)"/>
+      </svg>120-200 cm
+      <br/>
+<svg height="12" width="12" class="keyPoint">
+        <circle r=5 fill='#5b20c4' transform="translate(6,6)"/>
+      </svg>200-300 cm
+      <br/>
+<svg height="12" width="12" class="keyPoint">
+        <circle r=5 fill='#591032' transform="translate(6,6)"/>
+      </svg>300-400 cm
+      <br/>
+<svg height="12" width="12" class="keyPoint">
+        <circle r=5 fill='#460811' transform="translate(6,6)"/>
+      </svg>> 400 cm
+      <br/>
+  
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div id="elevation" class="one-third column"></div>
+    <div id="polar" class="one-third column"></div>
+    <div id="month" class="one-third column"></div>
+  </div>
+
+  <div class="row" id="textual"></div>
+
+  <div class="row">
+    <div id="dangers" class="one-third column"></div>
+    <div id="activities" class="one-third column"></div>
+    <div id="years" class="one-third column"></div>
+  </div>
+
+
+  <div id="map"></div>
+</div>

@@ -69,7 +69,23 @@ h1 {
     line-height: 1.1;
     padding: 10px 13px;
 }
-/* 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-    border: 1px solid #ccc;
-} */
+
+#slide-date {
+    margin: 0;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: .9em;
+}
+
+.hidden-stuff {
+    visibility: hidden;
+    display: none;
+}
+
+#slider-and-info input {
+    margin-bottom: 5px;
+}
+
+#tabs {
+    margin-bottom: 3px;
+}

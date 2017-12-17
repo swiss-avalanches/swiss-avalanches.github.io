@@ -216,3 +216,18 @@ function prettyMapType(mapType) {
             return 'Unknown';
     }
 }
+
+function snowColor(legend) {
+    var colorMap = {
+      "5-20 cm": "#d5fcfc",
+      "20-50 cm": "#a8d9f1",
+      "50-80 cm": "#79a1e5",
+      "80-120 cm": "#4459d7",
+      "120-200 cm": "#2f24a2",
+      "200-300 cm": "#5b20c4",
+      "300-400 cm": "#591032",
+      "> 400 cm": "#460811",
+    }
+    var color = colorMap[legend];
+    return color ? color : 'white';
+}

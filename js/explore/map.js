@@ -12,11 +12,49 @@ function createMap(accidentsData, addFilter, removeFilter, selectPoint) {
   L.svg().addTo(map);
 
   propertiesMap.map = map;
+
+  $("#dateRange").on('input', updateMapFromSlider);
 }
 
+function updateMapFromSlider() {
+  var maps = propertiesMap.mapsByType[propertiesMap.tabSelected];
+  index = +$("#dateRange").val();
+  var currentDate = maps[index][0];
+  var currentMapFeatures = maps[index][1];
+  var dateFormated = "" + currentDate.slice(6, 8) + "." + currentDate.slice(4, 6) + "." + currentDate.slice(0, 4);
+  $('#slide-date').text("Date: " + dateFormated)
+
+  if (propertiesMap.geojsonLayer) {
+    propertiesMap.map.removeLayer(propertiesMap.geojsonLayer)
+  }
+
+  geojsonLayer = L.geoJSON(currentMapFeatures, { style: function(features) {
+    var color = 'white';
+    if (features.properties.danger_level) {
+      color = dangerColor(features.properties.danger_level);
+    } else if (features.properties.snow_level) {
+      color = snowColor(features.properties.snow_level);
+    }
+    return {
+      fillColor: color,
+      color: 'none',
+      fillOpacity: 0.7,
+    }
+  }});
+  geojsonLayer.addTo(propertiesMap.map);
+  propertiesMap.geojsonLayer = geojsonLayer;
+}
 
 function updateMap(data, addFilter, removeFilter, selectPoint) {
   map = propertiesMap.map;
+
+  var svg = d3.select("#map").select("svg");
+
+  if (propertiesMap.tabSelected != 'accidents') {
+    svg.selectAll(".data-point").remove()
+    updateMapFromSlider();
+    return;
+  } 
 
   data = data.filter(function (d) {
     return !isNaN(d.Latitude) && !isNaN(d.Longitude)
@@ -31,13 +69,15 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
     this.stream.point(point.x, point.y);
   }
 
-  var svg = d3.select("#map").select("svg");
 
   var transform = d3.geoTransform({
     point: projectPoint
   });
   var path = d3.geoPath().projection(transform);
 
+  if (propertiesMap.geojsonLayer) {
+    propertiesMap.map.removeLayer(propertiesMap.geojsonLayer)
+  }
 
   var featureElement = svg.selectAll(".data-point")
     .data(data, function (p) {
@@ -94,6 +134,7 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
   // move points to the right positions (continuously)
   map.on("moveend", update);
   map.on("zoomend", update);
+
 }
 
 
@@ -104,6 +145,7 @@ function updateTabMap(allMaps) {
     propertiesMap.tabSelected = 'accidents';
   } else {
     var mapsByType = _(allMaps).groupBy(function (d) { return d[0].split("_")[1]; }).value();
+    propertiesMap.mapsByType = mapsByType;
     var tabsValue = _.sortBy(_.keys(mapsByType));
 
     if (!tabsValue.includes(propertiesMap.tabSelected)) {
@@ -111,11 +153,17 @@ function updateTabMap(allMaps) {
     }
   }
 
+  if (propertiesMap.tabSelected != 'accidents') {
+    var maps = propertiesMap.mapsByType[propertiesMap.tabSelected];
+    $('#dateRange').attr('max', maps.length - 1);
+  }
+
   d3.select("#tabs").insert("li")
       .classed("active", propertiesMap.tabSelected == 'accidents')
       .on('click', function (d) {
         if (propertiesMap.tabSelected != 'accidents') {
           propertiesMap.tabSelected = 'accidents';
+          updateTabMap(allMaps);
           // TODO update map
         }
       })
@@ -131,6 +179,7 @@ function updateTabMap(allMaps) {
         .on('click', function (d) {
           if (propertiesMap.tabSelected != d) {
             propertiesMap.tabSelected = d;
+            updateTabMap(allMaps);  // TODO maybe problem old data
             // TODO update map
           }
         })
@@ -138,4 +187,7 @@ function updateTabMap(allMaps) {
         .attr('data-toggle', "tab")
         .text(function (d) {return prettyMapType(d); });
   }
+
+  d3.select('#slider-and-info').classed("hidden-stuff", propertiesMap.tabSelected  == 'accidents');
+  updateMap(data, addFilter, removeFilter, selectPoint);
 }

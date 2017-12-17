@@ -23,7 +23,6 @@ var mapsIndex = null;
 
 $.getJSON('/data/maps-index.json', function (data) {
     mapsIndex = data;
-    console.log(data);
 });
 
 function mapsBetweenDates(from, to) {
@@ -157,7 +156,6 @@ function selectPoint(id) {
         fromDate = formatDate(fromDate);
         toDate = formatDate(toDate);
 
-        console.log('downloading', fromDate, toDate)
         var mapsToDownload = mapsBetweenDates(fromDate, toDate);
         downloadAllMaps(mapsToDownload).then(function (allMaps){
             if (id == selectedPoint) {  // if still selected then update maps

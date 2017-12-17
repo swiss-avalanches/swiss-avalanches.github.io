@@ -19,6 +19,45 @@ $.getJSON('/data/accidents/accidents.json', function (data) {
     updateSelectionCard();
 });
 
+var mapsIndex = null;
+
+$.getJSON('/data/maps-index.json', function (data) {
+    mapsIndex = data;
+    console.log(data);
+});
+
+function mapsBetweenDates(from, to) {
+    // from, to format YYYYMMDD (both included)
+    if (!mapsIndex) {
+        return [];
+    }
+
+    return _(mapsIndex)
+        .dropWhile(function (d) {
+            return d.slice(0, 8) < from;
+        })
+        .takeWhile(function (d) {
+            return d.slice(0, 8) <= to;
+        })
+        .value();
+}
+
+function downloadAllMaps(maps) {
+    if (maps.length > 1000) {
+        throw "You try to download more than 1000 JSON maps, that's too much man!"
+    }
+    var promises = _(maps).map(function (m) {
+        return $.getJSON('/data/json-maps/' + m);
+    });
+    allPromise = Promise.all(promises);
+    allPromiseWithNames = allPromise.then(function (arr) {
+        return _(arr).map(function (x, i) {
+            return [maps[i], x];
+        }).value()
+    });
+    return allPromiseWithNames;
+}
+
 /*
  * FILTERS SET UP
  */
@@ -37,9 +76,13 @@ function addFilter(name, lambda, removeMe) {
 }
 
 function removeFilter(name) {
-    var removeAndKeep = _.partition(globalFilters, function (d) { return d.name === name})
+    var removeAndKeep = _.partition(globalFilters, function (d) {
+        return d.name === name
+    })
     globalFilters = removeAndKeep[1]
-    removeAndKeep[0].forEach(function (d) {d.remove()})
+    removeAndKeep[0].forEach(function (d) {
+        d.remove()
+    })
 
     updateComponents();
     updateFilterList();
@@ -65,11 +108,11 @@ function updateFilterList() {
             })
     }
 
-    
+
     elem.insert('text').text(function (a) {
-            return a.name;
-        });
-    
+        return a.name;
+    });
+
     filterList.exit().remove();
 }
 
@@ -90,8 +133,40 @@ var selectedPoint = null;
 function selectPoint(id) {
     if (selectedPoint != id) {
         selectedPoint = id;
+        var elem = _(accidentsData).find(function (d) {return d.id == id; })
+        var year = +elem.Date.slice(6, 10),
+            month = +elem.Date.slice(3, 5) - 1,
+            day = +elem.Date.slice(0, 2),
+            date = new Date(year, month, day);
+
+        var fromDate = new Date(date),
+            toDate = new Date(date);
+        
+        fromDate.setDate(fromDate.getDate() - 10);
+        toDate.setDate(toDate.getDate() + 3);
+        console.log('yo', fromDate, toDate)
+
+        function formatDate(d) {
+            var month = 1 + d.getMonth();
+            month = month < 10 ? "0" + month : month;
+            var day = + d.getDate();
+            day = day < 10 ? "0" + day : day;
+            return "" + d.getFullYear() + month + day;
+        }
+
+        fromDate = formatDate(fromDate);
+        toDate = formatDate(toDate);
+
+        console.log('downloading', fromDate, toDate)
+        var mapsToDownload = mapsBetweenDates(fromDate, toDate);
+        downloadAllMaps(mapsToDownload).then(function (allMaps){
+            if (id == selectedPoint) {  // if still selected then update maps
+                updateTabMap(allMaps);
+            }
+        })
     } else {
         selectedPoint = null;
+        updateTabMap(null);
     }
     updateComponents();
     updateSelectionCard();
@@ -158,7 +233,7 @@ function createComponents() {
     createMonth(data, addFilter, removeFilter, selectPoint);
     createMap(data, addFilter, removeFilter, selectPoint);
     createDangers(data, addFilter, removeFilter, selectPoint);
-    createActivities(data, addFilter, removeFilter, selectPoint); 
+    createActivities(data, addFilter, removeFilter, selectPoint);
     createTextual(data, addFilter, removeFilter, selectPoint);
     createYears(data, addFilter, removeFilter, selectPoint);
 }
@@ -171,7 +246,7 @@ function updateComponents() {
     updateMonth(data, addFilter, removeFilter, selectPoint);
     updateMap(data, addFilter, removeFilter, selectPoint);
     updateDangers(data, addFilter, removeFilter, selectPoint);
-    updateActivities(data, addFilter, removeFilter, selectPoint);   
+    updateActivities(data, addFilter, removeFilter, selectPoint);
     updateTextual(data, addFilter, removeFilter, selectPoint);
     updateYears(data, addFilter, removeFilter, selectPoint);
 }

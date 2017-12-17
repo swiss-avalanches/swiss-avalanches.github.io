@@ -93,3 +93,33 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
   map.on("moveend", update);
   map.on("zoomend", update);
 }
+
+var tabSelected = 'accidents';
+
+function updateTabMap(allMaps) {
+  d3.select("#tabs").selectAll("li").remove();
+  d3.select("#tabs").insert("li")
+      .classed("active", tabSelected == 'accidents')
+    .insert('a')
+      .attr('data-toggle', "tab")
+      .text("Accidents");
+
+  if (allMaps) {
+    var mapsByType = _(allMaps).groupBy(function (d) { return d[0].split("_")[1]; }).value();
+    var tabsValue = _.sortBy(_.keys(mapsByType));
+    var tabs = d3.select("#tabs").selectAll("li").data(tabsValue);
+  
+    tabs.enter().insert('li')
+      .insert('a')
+      .attr('data-toggle', "tab")
+      .text(function (d) {return prettyMapType(d); })
+      .on('click', function (d) {
+        tabSelected = d;
+      });
+
+    // <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    console.log(mapsByType)
+  } else {
+    console.log("update tab null");
+  }
+}

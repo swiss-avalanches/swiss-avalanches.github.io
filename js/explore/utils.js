@@ -197,3 +197,22 @@ function aspectRangeAngle(fromAngle, toAngle) {
 function accidentDatumId(datum) {
     return datum.Date + "-" + datum.Latitude + "-" + datum.Longitude;
 }
+
+function prettyMapType(mapType) {
+    switch (mapType) {
+        case 'hn1':
+            return 'Fresh snow 1 days';
+        case 'hn3':
+            return 'Fresh snow 3 days';
+        case 'hsr2000':
+            return 'Snow 2000m';
+        case 'hsr2500':
+            return 'Snow 2500m';
+        case 'hstop':
+            return 'Snow depth';
+        case 'nbk':
+            return 'Danger level';
+        case 'hsrel':
+            return 'Unknown';
+    }
+}

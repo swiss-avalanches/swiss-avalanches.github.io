@@ -79,6 +79,8 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
 
   d3.select('.leaflet-pane svg').attr('pointer-events', 'visible');
 
+  featureElement = svg.selectAll(".data-point")
+
   function update() {
     featureElement.attr("transform",
       function (d) {

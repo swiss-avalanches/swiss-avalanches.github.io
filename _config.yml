@@ -152,6 +152,8 @@ exclude:
   - Vagrantfile
   - data/slf
   - data/weather
+  - data/json-maps
+  - data/map-masks
   - node_modules
 
 # prose.io config

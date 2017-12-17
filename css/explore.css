@@ -62,3 +62,14 @@ h1 {
 .deleteFilterMark {
     cursor: pointer;
 }
+
+.nav > li > a {
+    color: grey;
+    font-size: .8em;
+    line-height: 1.1;
+    padding: 10px 13px;
+}
+/* 
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border: 1px solid #ccc;
+} */

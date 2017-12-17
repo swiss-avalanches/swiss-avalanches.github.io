@@ -1,4 +1,6 @@
-var propertiesMap = {};
+var propertiesMap = {
+  tabSelected: 'accidents',
+};
 
 function createMap(accidentsData, addFilter, removeFilter, selectPoint) {
   map = L.map('map').setView([46.875893, 8.289321], 7);
@@ -94,32 +96,46 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
   map.on("zoomend", update);
 }
 
-var tabSelected = 'accidents';
 
 function updateTabMap(allMaps) {
   d3.select("#tabs").selectAll("li").remove();
+
+  if (! allMaps) {
+    propertiesMap.tabSelected = 'accidents';
+  } else {
+    var mapsByType = _(allMaps).groupBy(function (d) { return d[0].split("_")[1]; }).value();
+    var tabsValue = _.sortBy(_.keys(mapsByType));
+
+    if (!tabsValue.includes(propertiesMap.tabSelected)) {
+      propertiesMap.tabSelected = 'accidents';
+    }
+  }
+
   d3.select("#tabs").insert("li")
-      .classed("active", tabSelected == 'accidents')
+      .classed("active", propertiesMap.tabSelected == 'accidents')
+      .on('click', function (d) {
+        if (propertiesMap.tabSelected != 'accidents') {
+          propertiesMap.tabSelected = 'accidents';
+          // TODO update map
+        }
+      })
     .insert('a')
       .attr('data-toggle', "tab")
       .text("Accidents");
 
   if (allMaps) {
-    var mapsByType = _(allMaps).groupBy(function (d) { return d[0].split("_")[1]; }).value();
-    var tabsValue = _.sortBy(_.keys(mapsByType));
     var tabs = d3.select("#tabs").selectAll("li").data(tabsValue);
   
     tabs.enter().insert('li')
+        .classed("active", function (d) { return propertiesMap.tabSelected == d; })
+        .on('click', function (d) {
+          if (propertiesMap.tabSelected != d) {
+            propertiesMap.tabSelected = d;
+            // TODO update map
+          }
+        })
       .insert('a')
-      .attr('data-toggle', "tab")
-      .text(function (d) {return prettyMapType(d); })
-      .on('click', function (d) {
-        tabSelected = d;
-      });
-
-    // <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-    console.log(mapsByType)
-  } else {
-    console.log("update tab null");
+        .attr('data-toggle', "tab")
+        .text(function (d) {return prettyMapType(d); });
   }
 }

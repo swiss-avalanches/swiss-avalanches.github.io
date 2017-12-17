@@ -236,6 +236,7 @@ function createComponents() {
     createActivities(data, addFilter, removeFilter, selectPoint);
     createTextual(data, addFilter, removeFilter, selectPoint);
     createYears(data, addFilter, removeFilter, selectPoint);
+    updateTabMap(null);
 }
 
 function updateComponents() {

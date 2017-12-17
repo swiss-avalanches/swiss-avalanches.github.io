@@ -4,13 +4,35 @@ title: About me
 subtitle: Why you'd want to go on a date with me
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+We are 3 students from [École Polytechnique Fédérale de Lausanne](https://www.epfl.ch) and this work is part of a group project during [Applied Data Analysis](https://dlab.epfl.ch/teaching/fall2017/cs401/) course taught by Prof. Bob West.
 
-- I rock a great mustache
-- I'm extremely loyal to my family
+- Brune Bastide
+- Jean-Baptiste Cordonnier
+- Arnaud Lesimple
 
-What else do you need?
 
-### my history
+### Tools we used (and love)
 
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](http://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+- [D3.js](https://d3js.org/)
+
+- [skeleton](http://getskeleton.com/)
+
+- [beautiful-jekyll](https://github.com/daattali/beautiful-jekyll)
+
+- [jQuery](https://jquery.com/)
+
+- [Lodash](https://lodash.com/)
+
+- [Leaflet.js](http://leafletjs.com/)
+
+- [intro.js](https://introjs.com/)
+
+  ​
+
+- [Python 3.6](https://www.python.org/)
+
+- [JupyterLab](https://github.com/jupyterlab/jupyterlab)
+
+- [Pillow](https://pillow.readthedocs.io/en/4.3.x/)
+
+- [OpenCV](https://pypi.python.org/pypi/opencv-python)

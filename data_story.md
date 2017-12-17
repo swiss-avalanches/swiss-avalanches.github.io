@@ -40,7 +40,7 @@ But first, it is important to get a representation of the impact of avalanches, 
 Let's visualize it on a map !
 
 
-![avalanche](img/images_data_story/map.png)
+![avalanche](img/images_data_story/map.PNG)
 
 ### Accidents evolution over time:
 

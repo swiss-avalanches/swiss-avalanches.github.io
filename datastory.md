@@ -5,9 +5,11 @@ subtitle: They say it's risky, should I go ?
 use-site-title: true
 ---
 
-In the news, who has not seen articles relating deadly avalanche accidents ?
+**31/01/2015: Deadly avalanche accident in the Piz Vilan mountain in Switzerland**
 
 ![avalanche](img/accident_31_01_2015.jpg)
+
+An avalanche swept away 8 people that were doing backcountry touring. Five of them did not survive. This avalanche started at an elevation of 2340 meters, on an east facing slope. The avalanche danger level was 3.
 
 Is this tragedy an isolated case ?
 What is the evolution of such accidents over time ?

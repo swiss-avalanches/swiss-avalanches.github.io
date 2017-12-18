@@ -47,7 +47,6 @@ function updateMapFromSlider() {
 
   var svg = d3.select("#map").select("svg");
   var selectedPointData = accidentsData.find(function (d) { return d.id == selectedPoint; });
-  console.log(selectedPointData);
 
   var thePoint = svg.append("circle")
     .attr("class", "data-point")
@@ -177,7 +176,7 @@ function updateTabMap(allMaps) {
   } else {
     var mapsByType = _(allMaps).groupBy(function (d) { return d[0].split("_")[1]; }).value();
     propertiesMap.mapsByType = mapsByType;
-    var tabsValue = _.sortBy(_.keys(mapsByType), prettyMapType);
+    var tabsValue = _(mapsByType).keys().sortBy(prettyMapType).filter(function (d) {return d != 'hsrel'; }).value();
 
     if (!tabsValue.includes(propertiesMap.tabSelected)) {
       propertiesMap.tabSelected = 'accidents';
@@ -202,9 +201,10 @@ function updateTabMap(allMaps) {
       .text("Accidents");
 
   if (allMaps) {
-    var tabs = d3.select("#tabs").selectAll("li").data(tabsValue);
+    var tabs = d3.select("#tabs").selectAll(".custom-tab").data(tabsValue, function(d) {return d;});
   
     tabs.enter().insert('li')
+        .classed('custom-tab', true)
         .classed("active", function (d) { return propertiesMap.tabSelected == d; })
         .on('click', function (d) {
           if (propertiesMap.tabSelected != d) {
@@ -215,7 +215,7 @@ function updateTabMap(allMaps) {
         })
       .insert('a')
         .attr('data-toggle', "tab")
-        .text(function (d) {return prettyMapType(d); });
+        .text(function (d,i) { return prettyMapType(d); });
   }
 
   d3.select('#slider-and-info').classed("hidden-stuff", propertiesMap.tabSelected  == 'accidents');

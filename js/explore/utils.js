@@ -211,6 +211,7 @@ function prettyMapType(mapType) {
         case 'hstop':
             return 'Snow depth';
         case 'nbk':
+        case 'gk':
             return 'Danger level';
         case 'hsrel':
             return 'Unknown';

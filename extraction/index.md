@@ -24,9 +24,9 @@ We got approximately 5GB of data that we store on a S3 bucket `s3://ada-avalanch
 
 The most challenging part of the data extraction was retreiving the necessary informations from images provded by the website [SLF archives](https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/archive.html). 
 
-![image](img/data_extraction/20100103_hstop_en_c.gif)
+![image](../img/data_extraction/20100103_hstop_en_c.gif)
 
-![image](img/data_extraction/200911301700_gk_en_c.gif)
+![image](../img/data_extraction/200911301700_gk_en_c.gif)
 
 We had to develop a handful of methods to extracts the snow/danger regions from the color maps. We applied these methods to danger maps and all kind of snow maps.
 
@@ -34,13 +34,13 @@ We had to develop a handful of methods to extracts the snow/danger regions from 
 - *color projection*: due to the noise in the image or minor differences in the color tones, we had to project each pixel's color to the closest color in the reference key (with euclidean distance).
 - *mask clipping*: each image having different size or how the country is centered, we had to create binary masks to remove the legend, the title and sometimes extra logos or noise.
 
-![image](img/data_extraction/mapmask.gif)
+![image](../img/data_extraction/mapmask.gif)
 
 - *smoothing*: to remove small imperfections or noisy color projections, we used a median filter in order to get smoother regions and ease the task of contour detection.
 
-![image](img/data_extraction/danger_contours.png)
+![image](../img/data_extraction/danger_contours.png)
 
-![image](img/data_extraction/snow_contours.png)
+![image](../img/data_extraction/snow_contours.png)
 
 
 
@@ -48,7 +48,7 @@ We had to develop a handful of methods to extracts the snow/danger regions from 
 - *pixel to geo location projection*: once we had contours of the regions in the image (by pixels) we had to transform those into geolocated regions. To do so, we learned a mapping from pixel to geolocations. We took 6 points  of references on the image and on Google maps (the points you can observe on both of the masks displayed above are references to project regions onto geoJSON maps). Note that 3 would have been enough to constraint the problem, but with least square solver we could average out our small mistakes at picking pixel location of the landmarks.
 - *GeoJSON creation and website:* to visualize the regions, we transformed them into GeoJSON, smoothed these polygons and displayed them in a really basic HTML interface to check the consistency.
 
-![image](img/data_extraction/snow_polygon.gif)
+![image](../img/data_extraction/snow_polygon.gif)
 
 By running the python scripts `../tools/map_extractor.py` and `../tools/map_extractor_adapted2snow.py` we could automatize the extraction of maps, which ran for more than 30 hours! The 
 
@@ -58,5 +58,5 @@ Around 8'000 maps were extracted and converted into JSON files which we further 
 
 ## 3. Avalanches accidents
 
-The avalanche accidents were downloaded from the [SLF avalanche accidents](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) website with precise coordinates for each accident. From this dataset, we obtained 350 accidents that happenened over the last 20 years in Switzerland. For each one of them, we have the date, the location, the danger level that was announced and the number of people that were caught, buried and killed.  We built a map showing accidents depending on the risk level to visualise the data points which you can find in `notebooks/accidents.ipynb`. You will find the result of that mapping under [**EXPLORE**](https://swiss-avalanches.github.io/explore/).
+The avalanche accidents were downloaded from the [SLF avalanche accidents](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) website with precise coordinates for each accident. From this dataset, we obtained 350 accidents that happenened over the last 20 years in Switzerland. For each one of them, we have the date, the location, the danger level that was announced and the number of people that were caught, buried and killed.  We built a map showing accidents depending on the risk level to visualise the data points which you can find in `notebooks/accidents.ipynb`. You will find the result of that mapping under [**EXPLORE**](../explore/).
 

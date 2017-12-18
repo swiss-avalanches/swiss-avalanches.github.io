@@ -3,20 +3,20 @@ layout: page
 title: About this project
 ---
 
-We are 3 students from [EPFL](https://www.epfl.ch) and this work is part of a group project during [Applied Data Analysis](https://dlab.epfl.ch/teaching/fall2017/cs401/) course taught by Professor Bob West.
+We are 3 students from [EPFL](https://www.epfl.ch) and this work is part of a group project for [Applied Data Analysis](https://dlab.epfl.ch/teaching/fall2017/cs401/) course taught by Professor Bob West.
 
 <div class="container-fluid"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
     <div class="row">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-          <img src="../img/us/johnny.jpg" alt="Arnaud" class="img-circle"/>
+          <img src="../img/us/johnny.jpg" alt="Arnaud" class="img-circle us-img"/>
           <div align="center">Brune Bastide</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-          <img src="../img/us/jb.jpg" alt="Jean-Baptiste" class="img-circle"/>
+          <img src="../img/us/jb.jpg" alt="Jean-Baptiste" class="img-circle us-img"/>
           <div align="center">Jean-Baptiste Cordonnier</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-          <img src="../img/us/johnny.jpg" alt="Arnaud" class="img-circle"/>
+          <img src="../img/us/johnny.jpg" alt="Arnaud" class="img-circle us-img"/>
           <div align="center">Arnaud Lesimple</div>
         </div>
     </div>

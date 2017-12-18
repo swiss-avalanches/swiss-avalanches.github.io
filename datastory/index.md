@@ -9,7 +9,7 @@ use-site-title: true
 
 #### Piz Vilan, GR, Switzerland: Avalanche kills 5 tourists
 
-![image](img/images_data_story/avalanche.png)
+![image](../img/images_data_story/avalanche.png)
 
 **Eight** people were swept backcountry touring in an avalanche in Switzerland. **Five** of them did not survive. The announced **danger level** was 3. The death toll on that day was the worst in five years. 
 
@@ -53,7 +53,7 @@ encore du blablabla
 
 Petite conclusion
 
-You will be able to play with the data under [**EXPLORE**](https://swiss-avalanches.github.io/explore/).
+You will be able to play with the data under [**EXPLORE**](../explore/).
 
 
 

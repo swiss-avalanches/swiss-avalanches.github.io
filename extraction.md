@@ -1,12 +1,6 @@
 # Data extraction
 
-#### 1 - [Data scraping](#1.-Data-scraping)
-
-#### 2 - [Map extraction](#2.-Map-extraction)
-
-#### 3 - [Text processing](#3.-Text-processing)
-
-#### 4 - [Avalanches accidents](#4.-Avalanches-accidents)
+In this section, you will figure put how we got to the results that are displayed in[ **EXPLORE**](https://swiss-avalanches.github.io/explore/)
 
 ## 1. Data scraping
 
@@ -19,10 +13,6 @@ Several functions were useful to select the folders we wished to extract: :
 - **color or black and white:** maps are available in color and in black and white. Colors are easier for computer vision algorithm, so we drop the black and white map.
 
 Now we can use the python script `../tools/download.py` to fetch the ~30'000 files in the directory structure. 
-
-
-
-# TODO rajouter files_to_download dans le directory data 
 
 ```
 python3 tools/download.py data/file_to_download. ./data/slf --prefix https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/ --nproc 4
@@ -64,9 +54,9 @@ By running the python scripts `../tools/map_extractor.py` and `../tools/map_extr
 
 `python3 tools/map_extractor.py data/slf/ data/map-masks/ json-maps/`
 
-Around 8'000 maps were extracted and converted into JSON files which we further used for analysis and visualisation (which you can find under **EXPLORE**). Each of the JSON files has several features, in both danger an dsnow related maps we assigned a date and a url so that the user can compare the results obtained with the raw data. Moreover, a JSON snow map will have the corresponding amount of snow of each polygon and a JSON danger map will have the danger levels of each polygon. These features helped us link the data.
+Around 8'000 maps were extracted and converted into JSON files which we further used for analysis and visualisation (which you can find under [**EXPLORE**](https://swiss-avalanches.github.io/explore/)). Each of the JSON files has several features, in both danger an dsnow related maps we assigned a date and a url so that the user can compare the results obtained with the raw data. Moreover, a JSON snow map will have the corresponding amount of snow of each polygon and a JSON danger map will have the danger levels of each polygon. These features helped us link the data.
 
 ## 3. Avalanches accidents
 
-The avalanche accidents were downloaded from the [SLF avalanche accidents](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) website with precise coordinates for each accident. From this dataset, we obtained 350 accidents that happenened over the last 20 years in Switzerland. For each one of them, we have the date, the location, the danger level that was announced and the number of people that were caught, buried and killed.  We built a map showing accidents depending on the risk level to visualise the data points which you can find in `notebooks/accidents.ipynb`. You will find the result of that mapping under **EXPLORE**.
+The avalanche accidents were downloaded from the [SLF avalanche accidents](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) website with precise coordinates for each accident. From this dataset, we obtained 350 accidents that happenened over the last 20 years in Switzerland. For each one of them, we have the date, the location, the danger level that was announced and the number of people that were caught, buried and killed.  We built a map showing accidents depending on the risk level to visualise the data points which you can find in `notebooks/accidents.ipynb`. You will find the result of that mapping under [**EXPLORE**](https://swiss-avalanches.github.io/explore/).
 

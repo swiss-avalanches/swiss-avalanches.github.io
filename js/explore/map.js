@@ -67,6 +67,9 @@ function updateMapFromSlider() {
   // move points to the right positions (continuously)
   map.on("moveend", update);
   map.on("zoomend", update);
+
+  svg.classed("point-svg", true);
+  $(".point-svg").parent().append($(".point-svg"))
 }
 
 function updateMap(data, addFilter, removeFilter, selectPoint) {
@@ -79,6 +82,8 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
     updateMapFromSlider();
     return;
   } 
+
+  $(".data-point").remove();
 
   data = data.filter(function (d) {
     return !isNaN(d.Latitude) && !isNaN(d.Longitude)
@@ -104,7 +109,8 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
   }
 
   svg.selectAll(".data-point").remove();
-  svg.classed("point-svg");
+
+  // $(".leaflet-overlay-pane div:first").insertAfter($(".leaflet-overlay-panediv:last"));
   
   var featureElement = svg.selectAll(".data-point")
     .data(data, function (p) {

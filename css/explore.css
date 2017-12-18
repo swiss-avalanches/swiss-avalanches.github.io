@@ -9,14 +9,20 @@ body {
     /* position: -webkit-sticky;
     position: sticky; */
     position: fixed;
-    top: 5em;
-    padding-left: 1em;
+    top: 7em;
+    margin-left: 1em;
     padding-bottom: 13em;
+}
+
+#demo-button {
+    position: fixed;
+    top: 4.5em;
+    margin-left: 1em;
 }
 
 #legend-menu {
     position: absolute;
-    top: 1em;
+    top: 3em;
     right: 2em;
 }
 

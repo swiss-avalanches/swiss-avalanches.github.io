@@ -177,7 +177,7 @@ function updateTabMap(allMaps) {
   } else {
     var mapsByType = _(allMaps).groupBy(function (d) { return d[0].split("_")[1]; }).value();
     propertiesMap.mapsByType = mapsByType;
-    var tabsValue = _.sortBy(_.keys(mapsByType));
+    var tabsValue = _.sortBy(_.keys(mapsByType), prettyMapType);
 
     if (!tabsValue.includes(propertiesMap.tabSelected)) {
       propertiesMap.tabSelected = 'accidents';
@@ -195,7 +195,6 @@ function updateTabMap(allMaps) {
         if (propertiesMap.tabSelected != 'accidents') {
           propertiesMap.tabSelected = 'accidents';
           updateTabMap(allMaps);
-          // TODO update map
         }
       })
     .insert('a')

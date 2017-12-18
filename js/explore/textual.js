@@ -31,4 +31,7 @@ function updateTextual(accidentsData, addFilter, removeFilter, selectPoint) {
       .append("div").attr("class", "one-third column").append("h4").attr("class", "textual-class")
     .merge(textuals)
       .text(textualDescription)
+      .filter(function (d) { return  d.name == 'survival'; })
+        .attr("data-step", "6")
+        .attr("data-intro", "Be safe and have fun!")
 }

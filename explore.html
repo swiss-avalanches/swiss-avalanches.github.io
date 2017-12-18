@@ -7,7 +7,6 @@ css:
   - "/css/explore.css"
   - "/css/skeleton.css"
   - "/css/leaflet.css"
-  - "/css/introjs-rtl.min.css"
   - "/css/introjs.min.css"
 
 js:
@@ -28,9 +27,14 @@ js:
   - "/js/explore/years.js"
   - "/js/explore/app.js"
 ---
+
+<div id="demo-button">
+  <button type="button" class="btn btn-default" onclick="startTutorial()">Tutorial</button>
+</div>
+
 <h1>Explore the data</h1>
-<div id="filter-selection-menu">
-  <div id="filters">
+<div id="filter-selection-menu" data-step="2" data-intro="Filters are listed here, you can remove them by clicking on x. You also get info for the selected avalanche accident.">
+  <div id="filters" >
     <h4>Filters</h4>
   </div>
   <div id="selection">
@@ -87,10 +91,11 @@ js:
     <br/>
     <br/>
   
-  <h5>Activity type</h5><svg height="16" width="16" class="selectKeyPoint" onclick="updateCategorySelected('activity')" id="activitySelect">
-    <circle r=5 fill='grey' transform="translate(8,8)"/>
-  </svg>
-  <br/>
+  <div data-step="3" data-intro="You can click on the circle to change the category color of the avalanche circles.">
+    <h5>Activity type</h5><svg height="16" width="16" class="selectKeyPoint" onclick="updateCategorySelected('activity')" id="activitySelect">
+      <circle r=5 fill='grey' transform="translate(8,8)"/>
+    </svg>
+  </div>
     <svg height="12" width="12" class="keyPoint">
       <circle r=5 fill="#2ecc71" transform="translate(6,6)"/>
     </svg>Backcountry touring
@@ -146,25 +151,27 @@ js:
 
   <div class="row">
     <div id="elevation" class="one-third column"></div>
-    <div id="polar" class="one-third column"></div>
+    <div id="polar" class="one-third column" data-step="1" data-intro="You can click on the dots, each represent a deadly avalanche. Drag and drop on ANY component to filter by a feature."></div>
     <div id="month" class="one-third column"></div>
   </div>
 
   <div class="row" id="textual"></div>
 
   <div class="row">
-    <div id="dangers" class="one-third column"></div>
+    <div id="dangers" class="one-third column" data-step="4" data-intro="Try to filter a danger level by clicking or drag and drop !"></div>
     <div id="activities" class="one-third column"></div>
     <div id="years" class="one-third column"></div>
   </div>
 
-  <ul class="nav nav-tabs" id="tabs"></ul>
-  <div id="slider-and-info" class="hidden-stuff">
-    <p id="slide-date">empty</p>
-    <input type="range" min="0" max="100" value="50" class="slider" id="dateRange" style="width: 100%">
-  </div>
-  <div id="map"></div>
-  <div id="original-url" class="hidden-stuff">
-    <a target="_blank">Go to the original map</a>
+  <div  data-step="5" data-intro='You can visualize some maps 10 days before and 3 days after the accidents. You can view the "original link" with the link below...'>
+    <ul class="nav nav-tabs" id="tabs"></ul>
+    <div id="slider-and-info" class="hidden-stuff">
+      <p id="slide-date">empty</p>
+      <input type="range" min="0" max="100" value="50" class="slider" id="dateRange" style="width: 100%">
+    </div>
+    <div id="map"></div>
+    <div id="original-url" class="hidden-stuff">
+      <a target="_blank">Go to the original map</a>
+    </div>
   </div>
 </div>

@@ -74,7 +74,7 @@ function object2array(obj) {
 }
 
 function Activity(activity) {
-    switch(activity){
+    switch (activity) {
         case 1:
         case "1":
             return "Backcountry touring";
@@ -95,7 +95,7 @@ function Activity(activity) {
         case "5":
             return "Buildings";
             break;
-        default: 
+        default:
             return "-";
             break;
     }
@@ -112,7 +112,7 @@ function activityColor(activity) {
             return "#9b59b6"; // off piste
         case 3:
         case Activity(3):
-            return "#34495e";  //transport
+            return "#34495e"; //transport
         case 4:
         case Activity(4):
             return "#34495e";
@@ -219,15 +219,24 @@ function prettyMapType(mapType) {
 
 function snowColor(legend) {
     var colorMap = {
-      "5-20 cm": "#d5fcfc",
-      "20-50 cm": "#a8d9f1",
-      "50-80 cm": "#79a1e5",
-      "80-120 cm": "#4459d7",
-      "120-200 cm": "#2f24a2",
-      "200-300 cm": "#5b20c4",
-      "300-400 cm": "#591032",
-      "> 400 cm": "#460811",
+        "5-20 cm": "#d5fcfc",
+        "20-50 cm": "#a8d9f1",
+        "50-80 cm": "#79a1e5",
+        "80-120 cm": "#4459d7",
+        "120-200 cm": "#2f24a2",
+        "200-300 cm": "#5b20c4",
+        "300-400 cm": "#591032",
+        "> 400 cm": "#460811",
     }
     var color = colorMap[legend];
     return color ? color : 'white';
+}
+
+function startTutorial() {
+    introJs()
+        .onbeforechange(function (d) {
+            if (d.dataset.step == '5') {
+                selectPoint('22.04.2005-46.00973376026494-7.2305284138')
+            }
+        }).start();
 }

@@ -223,5 +223,10 @@ function updateTabMap(allMaps) {
 
   d3.select('#slider-and-info').classed("hidden-stuff", propertiesMap.tabSelected  == 'accidents');
   d3.select('#original-url').classed("hidden-stuff", propertiesMap.tabSelected  == 'accidents');
+
+  if ($(".leaflet-overlay-pane svg").length >= 2) {
+    $(".leaflet-overlay-pane svg:last").remove();
+  }
+
   updateMap(data, addFilter, removeFilter, selectPoint);
 }

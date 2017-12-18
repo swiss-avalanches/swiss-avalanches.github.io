@@ -173,7 +173,8 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
     })
     .attr("text-anchor", "middle")
     .style("fill", "grey")
-    .style("font-size", ".7em");
+    .style("font-size", ".7em")
+    .classed("unselectable", true);
 
   var line = d3.radialLine()
     .radius(function (d) {
@@ -202,6 +203,7 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
     })
     .text(function (d) {return d;})
     .classed("cardinal-label", true)
+    .classed("unselectable", true)
 
 
   propertiesPolar.svg.append("g")

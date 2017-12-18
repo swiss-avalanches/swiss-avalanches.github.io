@@ -63,7 +63,7 @@ h1 {
     cursor: pointer;
 }
 
-.nav > li > a {
+#tabs > li > a {
     color: grey;
     font-size: .8em;
     line-height: 1.1;
@@ -79,7 +79,7 @@ h1 {
 
 .hidden-stuff {
     visibility: hidden;
-    display: none;
+    /* display: none; */
 }
 
 #slider-and-info input {
@@ -88,4 +88,12 @@ h1 {
 
 #tabs {
     margin-bottom: 3px;
+}
+
+#original-url {
+    font-size: .8em;
+}
+
+.cardinal-label {
+    font-size: .8em;
 }

@@ -189,7 +189,7 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
     .append("text")
     .attr("class", "cardinals")
     .attr("transform", function (d, i) {
-      var coors = line([[i * Math.PI / 2, propertiesPolar.minAltitude - 200]]).slice(1).slice(0, -1);
+      var coors = line([[i * Math.PI / 2, propertiesPolar.minAltitude - 270]]).slice(1).slice(0, -1);
       return "translate(" + coors + ")" + ((d == "S") ? "translate(0,12)" : "");
     })
     .attr("text-anchor", function (d) {
@@ -201,6 +201,7 @@ function createPolar(accidentsData, addFilter, removeFilter, selectPoint) {
       }
     })
     .text(function (d) {return d;})
+    .classed("cardinal-label", true)
 
 
   propertiesPolar.svg.append("g")

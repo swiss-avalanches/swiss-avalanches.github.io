@@ -23,6 +23,7 @@ function updateMapFromSlider() {
   var currentMapFeatures = maps[index][1];
   var dateFormated = "" + currentDate.slice(6, 8) + "." + currentDate.slice(4, 6) + "." + currentDate.slice(0, 4);
   $('#slide-date').text("Date: " + dateFormated)
+  $('#original-url a').attr("href", currentMapFeatures.features[0].properties.url);
 
   if (propertiesMap.geojsonLayer) {
     propertiesMap.map.removeLayer(propertiesMap.geojsonLayer)
@@ -43,6 +44,29 @@ function updateMapFromSlider() {
   }});
   geojsonLayer.addTo(propertiesMap.map);
   propertiesMap.geojsonLayer = geojsonLayer;
+
+  var svg = d3.select("#map").select("svg");
+  var selectedPointData = accidentsData.find(function (d) { return d.id == selectedPoint; });
+  console.log(selectedPointData);
+
+  var thePoint = svg.append("circle")
+    .attr("class", "data-point")
+    .attr("r", 8)
+    .attr("stroke", "white")
+    .attr("fill", "black")
+    .attr("opacity", 0.7)
+    .attr("stroke", "white")
+    .attr("transform", "translate(" + map.latLngToLayerPoint(selectedPointData.LatLng).x + "," + map.latLngToLayerPoint(selectedPointData.LatLng).y + ")");
+
+  
+  function update() {
+    thePoint.attr("transform", 
+      "translate(" + map.latLngToLayerPoint(selectedPointData.LatLng).x + "," + map.latLngToLayerPoint(selectedPointData.LatLng).y + ")");
+  }
+
+  // move points to the right positions (continuously)
+  map.on("moveend", update);
+  map.on("zoomend", update);
 }
 
 function updateMap(data, addFilter, removeFilter, selectPoint) {
@@ -51,7 +75,7 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
   var svg = d3.select("#map").select("svg");
 
   if (propertiesMap.tabSelected != 'accidents') {
-    svg.selectAll(".data-point").remove()
+    svg.selectAll(".data-point").remove();
     updateMapFromSlider();
     return;
   } 
@@ -79,6 +103,9 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
     propertiesMap.map.removeLayer(propertiesMap.geojsonLayer)
   }
 
+  svg.selectAll(".data-point").remove();
+  svg.classed("point-svg");
+  
   var featureElement = svg.selectAll(".data-point")
     .data(data, function (p) {
       return p.id;
@@ -189,5 +216,6 @@ function updateTabMap(allMaps) {
   }
 
   d3.select('#slider-and-info').classed("hidden-stuff", propertiesMap.tabSelected  == 'accidents');
+  d3.select('#original-url').classed("hidden-stuff", propertiesMap.tabSelected  == 'accidents');
   updateMap(data, addFilter, removeFilter, selectPoint);
 }

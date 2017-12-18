@@ -235,8 +235,8 @@ function snowColor(legend) {
 function startTutorial() {
     introJs()
         .onbeforechange(function (d) {
-            if (d.dataset.step == '5') {
-                selectPoint('22.04.2005-46.00973376026494-7.2305284138')
+            if (d.dataset.step === '5') {
+                selectPoint('22.04.2005-46.00973376026494-7.2305284138');
             }
         }).start();
 }

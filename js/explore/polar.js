@@ -235,10 +235,8 @@ function updatePolar(data, addFilter, removeFilter, selectPoint) {
       return "translate(" + coors + ")";
     })
     .attr("r", function(x) { return constants.killedRadius(x) * 0.7; })
-    .attr("fill", function (d) {
-      return dangerColor(d['Danger level']);
-    })
     .merge(points)
+    .attr("fill", function (d) {return d.color;})
     .attr("opacity", function (d) {
       return d.selected ? 1 : 0.7;
     })

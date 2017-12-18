@@ -97,3 +97,23 @@ h1 {
 .cardinal-label {
     font-size: .8em;
 }
+
+
+#legend-menu .selectKeyPoint circle {
+    fill: none;
+    stroke: grey;
+}
+
+#legend-menu .selected circle {
+    fill: grey;
+}
+
+
+#legend-menu h5 {
+    display: inline;
+}
+
+#legend-menu .selectKeyPoint {
+    margin-left: 7px;
+    padding-top: 1px;
+}

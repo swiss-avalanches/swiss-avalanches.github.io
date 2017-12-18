@@ -220,12 +220,42 @@ function updateSelectionCard() {
 }
 
 /*
+ * COLOR SELECTION
+ */
+
+var selectedColor = 'danger';
+
+function categoryColor(datum) {
+    switch (selectedColor) {
+        case 'danger':
+            return dangerColor(datum['Danger level'])
+        case 'activity':
+            return activityColor(datum['Activity'])
+    }
+}
+
+function updateCategorySelected(newCat) {
+    d3.selectAll('.selectKeyPoint').classed('selected', false)
+    d3.select('#' + newCat + 'Select').classed('selected', true)
+    selectedColor = newCat;
+    updateComponents();
+}
+
+function applyColor(data) {
+    data.forEach(function (d) {
+        d.color = categoryColor(d);
+    })
+    return data;
+}
+
+/*
  * COMPONENT INITIALISATION
  */
 
 function createComponents() {
     data = filterData(accidentsData);
     data = applyPointSelection(data);
+    data = applyColor(data);
     createPolar(data, addFilter, removeFilter, selectPoint);
     createElevation(data, addFilter, removeFilter, selectPoint);
     createMonth(data, addFilter, removeFilter, selectPoint);
@@ -240,6 +270,7 @@ function createComponents() {
 function updateComponents() {
     data = filterData(accidentsData);
     data = applyPointSelection(data);
+    data = applyColor(data);
     updatePolar(data, addFilter, removeFilter, selectPoint);
     updateElevation(data, addFilter, removeFilter, selectPoint);
     updateMonth(data, addFilter, removeFilter, selectPoint);

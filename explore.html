@@ -42,6 +42,7 @@ js:
 <div id="legend-menu">
   <h4>Color key</h4>
   <h5>Statistics</h5>
+  <br/>
     <svg height="12" width="12" class="keyPoint">
       <circle r=5 fill="#c0392b" transform="translate(6,6)"/>
     </svg>accidents
@@ -58,8 +59,12 @@ js:
       <circle r=5 fill="#1abc9c" transform="translate(6,6)"/>
     </svg>burried
     <br/>
+    <br/>
 
-  <h5>Danger level</h5>
+  <h5>Danger level</h5><svg height="16" width="16" class="selectKeyPoint selected" onclick="updateCategorySelected('danger')" id="dangerSelect">
+    <circle r=5 fill='grey' transform="translate(8,8)"/>
+  </svg>
+  <br/>
     <svg height="12" width="12" class="keyPoint">
       <circle r=5 fill="#ccff66" transform="translate(6,6)"/>
     </svg>level 1
@@ -80,8 +85,12 @@ js:
       <circle r=5 fill="#9102ff" transform="translate(6,6)"/>
     </svg>level 5
     <br/>
+    <br/>
   
-  <h5>Activity type</h5>
+  <h5>Activity type</h5><svg height="16" width="16" class="selectKeyPoint" onclick="updateCategorySelected('activity')" id="activitySelect">
+    <circle r=5 fill='grey' transform="translate(8,8)"/>
+  </svg>
+  <br/>
     <svg height="12" width="12" class="keyPoint">
       <circle r=5 fill="#2ecc71" transform="translate(6,6)"/>
     </svg>Backcountry touring
@@ -93,8 +102,11 @@ js:
     <svg height="12" width="12" class="keyPoint">
       <circle r=5 fill="#34495e" transform="translate(6,6)"/>
     </svg>Transportation
+    <br/>
+    <br/>
     
     <h5>Snow level</h5>
+    <br/>
     <svg height="12" width="12" class="keyPoint">
         <circle r=5 fill='#d5fcfc' transform="translate(6,6)"/>
       </svg>5-20 cm

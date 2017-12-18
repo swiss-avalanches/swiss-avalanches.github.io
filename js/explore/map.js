@@ -125,9 +125,7 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
     })
     .attr("r", constants.killedRadius)
     .attr("stroke", "white")
-    .attr("fill", function (d) {
-      return dangerColor(d['Danger level']);
-    })
+    .attr("fill", function (d) {return d.color;})
     .merge(featureElement)
     .attr("opacity", function (d) {
       return d.selected ? 1 : 0.7;

@@ -17,6 +17,10 @@ $.getJSON('/data/accidents/accidents.json', function (data) {
     updateComponents();
     updateFilterList();
     updateSelectionCard();
+
+    if (! readCookie('introDone')) {
+        startTutorial();
+    }
 });
 
 var mapsIndex = null;

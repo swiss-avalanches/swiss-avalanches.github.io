@@ -3,7 +3,7 @@ layout: page
 title: Data extraction
 ---
 
-An important part of this project was data extraction. The [Swiss Institude of Snow and Avalanches](https://www.slf.ch/) kept a very good record of all the published avalanche/weather bulletins. Most of it were shared by paper 15 years ago and we decided to digitalize it make our analysis/vizualisation possible. The following article goes through our extraction procedure. You can browse through the results in [EXPLORE](https://swiss-avalanches.github.io/explore/).
+An important part of this project was data extraction. The [Swiss Institude of Snow and Avalanches](https://www.slf.ch/) kept a very good record of all the published avalanche and weather reports. Most of it were shared on paper (`pdf` or `gif`) 15 years ago and we decided to extract the information out of it to make our analysis/vizualisation possible. The following article goes through our extraction procedure, you can browse through the results in [EXPLORE](https://swiss-avalanches.github.io/explore/).
 
 ## 1. Data scraping
 

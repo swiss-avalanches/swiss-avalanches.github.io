@@ -46,3 +46,12 @@ Tools for [Python 3.6](https://www.python.org/):
 - [JupyterLab](https://github.com/jupyterlab/jupyterlab)
 - [Pillow](https://pillow.readthedocs.io/en/4.3.x/)
 - [OpenCV](https://pypi.python.org/pypi/opencv-python)
+
+### GitHub
+
+You can find our [repository](https://github.com/swiss-avalanches/swiss-avalanches.github.io) on GitHub.
+
+
+
+
+

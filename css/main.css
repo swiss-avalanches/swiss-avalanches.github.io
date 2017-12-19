@@ -14,7 +14,12 @@ layout: null
 }
 
 .us-img {
-  margin-bottom: .8em;
+  margin-bottom: .5em;
+}
+
+.legend {
+  margin-bottom: .4em;
+  color: grey;
 }
 
 /* --- General --- */

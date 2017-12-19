@@ -8,7 +8,7 @@ We are 3 students from [EPFL](https://www.epfl.ch) and this work is part of a gr
 <div class="container-fluid"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
     <div class="row">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-          <img src="../img/us/johnny.jpg" alt="Arnaud" class="img-circle us-img"/>
+          <img src="../img/us/brune.jpg" alt="Brune" class="img-circle us-img"/>
           <div align="center">Brune Bastide</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -16,7 +16,7 @@ We are 3 students from [EPFL](https://www.epfl.ch) and this work is part of a gr
           <div align="center">Jean-Baptiste Cordonnier</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-          <img src="../img/us/johnny.jpg" alt="Arnaud" class="img-circle us-img"/>
+          <img src="../img/us/arnaud.jpg" alt="Arnaud" class="img-circle us-img"/>
           <div align="center">Arnaud Lesimple</div>
         </div>
     </div>

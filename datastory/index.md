@@ -46,7 +46,7 @@ We know from press release that the group was caught *backcountry touring*, but 
     </div>
 </div>
 
-We can observe that the most deadly levels are 2 and 3. An explanation of that phenomenon is that low levels of danger (1 <span id="dot-danger-1"></span>) is often synonym of a lower amount of snow and a high level (4 <span id="dot-danger-4"></span> or 5 <span id="dot-danger-5"></span>) repeals skiers to expose themselves to hazard. These are outlier situations that will be excluded from our further analysis.
+We can observe that the most deadly levels are 2 <span id="dot-danger-2"></span> and 3 <span id="dot-danger-3"></span>. An explanation of that phenomenon is that low levels of danger (1 <span id="dot-danger-1"></span>) is often synonym of a lower amount of snow and a high level (4 <span id="dot-danger-4"></span> or 5 <span id="dot-danger-5"></span>) repeals skiers to expose themselves to hazard. These are outlier situations that will be excluded from our further analysis.
 
 Backcountry tourers tend to be more experienced than off-pist skiers, is there an explanation to why most qualified alpinists are more easily caught and die under a level 2 of danger?
 

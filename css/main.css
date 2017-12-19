@@ -6,6 +6,10 @@ layout: null
 
 /* --- Ours --- */
 
+body {
+  text-align:justify;
+}
+
 .welcome-img {
   display: block;
   margin: auto;

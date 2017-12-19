@@ -28,9 +28,7 @@ We will try to answer these questions through an interactive visualisation of th
 
 We know from press release that the group was caught *backcountry touring*, but accidents can also happen *off-piste skiing*. Do both of these activities have the same exposal to danger?
 
-![image](../img/images_data_story/backcountry.gif)
-
-![image](../img/images_data_story/off-piste_skiing.gif)
+![image](../img/images_data_story/dessin_to_graph.jpg)
 
 We can observe that the most deadly levels are 2 and 3. An explanation to that phenomenon is that low levels of danger (1 TODO DOT) is often synonym of a lower amount snow and a high level (4 or 5 TODO DOT) repels skiers to expose themselves to hazard. These are outlier situations that will be excluded from our further analysis.
 

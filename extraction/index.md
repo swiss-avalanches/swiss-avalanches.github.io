@@ -11,7 +11,7 @@ Our dataset consists of information retrieved from [SLF archives](https://www.sl
 
 Several filters were used to select the folders we wished to extract: :
 
-- **language:** files are often duplicated for the 4 languages (de, fr, it, en). When it is the case we download only one set in the following order of preference: en, fr, de. German is the default (always present).
+- **language:** files are often duplicated for the 4 languages (de, fr, it, en). When it is the case we download only one set in the following order of preference: en, fr, de. German is the default language (always present).
 - **too specific:** some files are not interesting for now (too specific or too regional). We don't download the snow profiles and the regional snow report,
 - **color or black and white:** maps are available in color and in black and white. Colors are easier than textures for computer vision algorithms, so we drop the black and white maps.
 
@@ -73,7 +73,7 @@ We developped a handful of methods to extracts the snow and danger regions from 
 <div class="spacing" style="height: 15px;"></div>
 
 - **region detection**: using color detection we extracted the contour of each region.
-- **pixel to geo location projection**: once we had contours of the regions in the image (by pixels) we had to transform those into geolocated regions. To do so, we learned a mapping from pixel to geolocations. We took 6 points  of references on the image and on Google maps (blue dots above). Note that 3 would have been enough to constraint the problem, but with least square solver we could average out our small mistakes at picking pixel location of the landmarks.
+- **pixel to geo location projection**: once we had contours of the regions in the image (by pixels) we had to transform those into geolocated regions. To do so, we learned a mapping from pixel to geolocations. We took 6 points  of references on the image and on Google maps (blue dots above). Note that 3 would have been enough to constraint the problem, but with the least square solver we could average out our small mistakes at picking pixel location of the landmarks.
 - **GeoJSON creation and website**: to visualize the regions, we transformed them into GeoJSON, smoothed these polygons and displayed them as interactive map overlays.
 
 <div class="container-fluid"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->

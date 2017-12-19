@@ -11,7 +11,7 @@ Risk zero does not exist in alpinism. Statistical models have been developed to 
 
 You can go through
 
-1. a [data story](datastory) on risk assessment statitistics,
+1. a [data story](datastory) on risk assessment statistics,
 2. a summary of our work on [data extraction](extraction),
 3. our [interactive visualization tool](explore) of 15 years of avalanche cases.
 

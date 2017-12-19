@@ -29,15 +29,29 @@ One can notice from the previous facts that the group caught was backcountry tou
 
 *ici on met les deux plots, killed par danger level correspondant au off-piste skiing et backcountry touring*
 
+
+
+![image](img/images_data_story/level2.gif)
+
+![image](img/images_data_story/level3.gif)
+
 OU ALORS:
 
-One can notice from the previous facts that the group caught was skiing at a level 3 of danger. Moreover, the higher the danger level is, the higher are the odds of being swept by an avalanche. Which mountain activity is the most blabla
+One can notice from the previous facts that the group caught was skiing at a level 3 of danger. Moreover, the higher the danger level is, the higher are the odds of being swept by an avalanche. Which mountain activity is the most deadly?
 
 *ici on met les deux plots, killed par active correspondant a differents danger levels*
 
+![image](img/images_data_story/backcountry.gif)
+
+![image](img/images_data_story/off-piste_skiing.gif)
+
 OU LES DEUX?
 
-Tiens si on faisait une etude sur plusieurs années?
+The avalanche cases that make it to the front page of the news mostly report deaths, one might ask about the accidents that are not fatal.
+
+ 
+
+
 
 *qui introduirait le plot des survival rates*
 

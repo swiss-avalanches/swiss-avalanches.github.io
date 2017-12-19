@@ -173,3 +173,7 @@ $.getJSON('/data/accidents/accidents.json', function (data) {
 
 // add legend, durty because markdown SVG inline not compatible
 document.getElementById('legend-plot').innerHTML = '<svg height="12" width="12" class="keyPoint"><circle r=5 fill="#c0392b" transform="translate(6,6)"/></svg>accidents<br/><svg height="12" width="12" class="keyPoint"><circle r=5 fill="#2c3e50" transform="translate(6,6)"/></svg>deaths<br/><svg height="12" width="12" class="keyPoint"><circle r=5 fill="#ff9900" transform="translate(6,6)"/></svg>caught<br/><svg height="12" width="12" class="keyPoint"><circle r=5 fill="#1abc9c" transform="translate(6,6)"/></svg>burried'
+
+document.getElementById('dot-danger-1').innerHTML = '<svg height="12" width="12"><circle r=5 fill="#ccff66" transform="translate(6,6)"/></svg>'
+document.getElementById('dot-danger-4').innerHTML = '<svg height="12" width="12"><circle r=5 fill="#ff0000" transform="translate(6,6)"/></svg>'
+document.getElementById('dot-danger-5').innerHTML = '<svg height="12" width="12"><circle r=5 fill="#9102ff" transform="translate(6,6)"/></svg>'

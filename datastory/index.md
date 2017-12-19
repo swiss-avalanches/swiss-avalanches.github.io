@@ -66,4 +66,4 @@ The avalanche cases that make it to the front page of the news mostly report dea
 
 We can observe that two to three people on average are caught per avalanche accident. And more than one out of those does not survive. Once again, decision-making from the skiers has a large influence of their destiny. The consequences of an avalanche can be catastrophic for a simple day of ski: as we are right in the winter season, think of our project during you vacation and please be safe.
 
-You will be able to *play* with the data in [EXPLORE](../explore/) tab.
+You can *play* with the data in [EXPLORE](../explore/) tab.

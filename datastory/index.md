@@ -26,9 +26,7 @@ There was no immediate word on what triggered the avalanche.
 
 We will try to answer these questions through an interactive visualisation of the last 15 years of avalanche cases.
 
-We know from press release that the group was caught skiing at a level 3 of danger. The higher the danger level is, the higher are the odds for an avalanche to be triggered. TODO Which mountain activity is the most deadly? 
-
-
+We know from press release that the group was caught *backcountry touring*, but accidents can also happen *off-piste skiing*. Do both of these activities have the same expose to danger?
 
 ![image](../img/images_data_story/backcountry.gif)
 
@@ -36,13 +34,23 @@ We know from press release that the group was caught skiing at a level 3 of dang
 
 We can observe that the most deadly levels are 2 and 3. An explanation to that phenomenon is that low levels of danger (1 TODO DOT) is often synonym of not much snow and a high level (4 or 5) repels skiers to expose themselves to hazard. These are outlier situations that will be excluded from our further analysis.
 
-One can notice from the previous facts that the group caught was *backcountry touring*, but accidents can also happen *off-piste skiing*. 
+but why are most experienced alpinist are more easily caught and die in level 2 (easier?) avalanches ??
 
 
 
-![image](../img/images_data_story/level2.gif)
+State assumption: bvackcountry are more educated and off pist don't check danger level before going out
 
-![image](../img/images_data_story/level3.gif)
+We do stat study to see if significant diff in mean danger exposition between these 2 populations
+
+To make our study meaningful, do a matching on the two population with propensity score to avoir comparing a 5 experienced alpinist tackling the Youngfraz (4000m) in June, compared to 2 people going offpist at 1500m elevation
+
+
+
+see <nottebok for more info
+
+Moreover, we know was caught at a level 3 of danger. The higher the danger level is, the higher are the odds for an avalanche to be triggered. TODO Which mountain activity is the most deadly? 
+
+
 
 CEST FAUX NUL TODO We observe that in both danger levels 2 and 3, the number of deaths is higher whilst backcountry touring than off-piste skiing. Once again, decision-making from the skiers has a large influence of their destiny.
 

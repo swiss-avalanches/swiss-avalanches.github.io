@@ -2,7 +2,7 @@ var propertiesDangers = {
   dangers: ["5", "4", "3", "2", "1"],
 };
 
-var maximumBoth = 25;
+var maximumBoth = 122;
 
 function dangerColor(dangerLevel) {
     switch (dangerLevel) {
@@ -211,11 +211,11 @@ function updateDangers() {
   var y = propertiesDangers.y;
 
   var data = [
-    {'danger': 1, 'deaths': 2},
-    {'danger': 2, 'deaths': 15}, 
-    {'danger': 3, 'deaths': 12}, 
-    {'danger': 4, 'deaths': 11}, 
-    {'danger': 5, 'deaths': 8}, 
+    {'danger': 1, 'deaths': 3},
+    {'danger': 2, 'deaths': 84}, 
+    {'danger': 3, 'deaths': 122}, 
+    {'danger': 4, 'deaths': 4}, 
+    {'danger': 5, 'deaths': 0}, 
   ]
 
   var x = d3.scaleLinear()
@@ -470,11 +470,11 @@ function updateDangersLeft() {
   var y = propertiesDangers.y;
 
   var data = [
-    {'danger': 1, 'deaths': 10},
-    {'danger': 2, 'deaths': 15}, 
-    {'danger': 3, 'deaths': 20}, 
-    {'danger': 4, 'deaths': 25}, 
-    {'danger': 5, 'deaths': 10}, 
+    {'danger': 1, 'deaths': 2},
+    {'danger': 2, 'deaths': 18}, 
+    {'danger': 3, 'deaths': 89}, 
+    {'danger': 4, 'deaths': 5}, 
+    {'danger': 5, 'deaths': 0}, 
   ]
 
   var x = d3.scaleLinear()

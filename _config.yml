@@ -154,6 +154,8 @@ exclude:
   - data/weather
   - data/map-masks
   - node_modules
+  - tools
+  - notebooks
 
 # prose.io config
 prose:

@@ -34,19 +34,15 @@ We know from press release that the group was caught *backcountry touring*, but 
 
 We can observe that the most deadly levels are 2 and 3. An explanation to that phenomenon is that low levels of danger (1 TODO DOT) is often synonym of not much snow and a high level (4 or 5) repels skiers to expose themselves to hazard. These are outlier situations that will be excluded from our further analysis.
 
-but why are most experienced alpinist are more easily caught and die in level 2 (easier?) avalanches ??
+Backcountry tourers tend to be more experienced than off-pist skiers, is there an explanation to why most qualified alpinists are more easily caught and die under a level 2 of danger?
+
+An assumption we can make is that backcountry tourers are more educated than off-pist skiers that might not check the announced danger level before going out. We did a statistical study over those two populations to find out wether there is a significant difference in mean of danger exposition.
+
+To make our study meaningful, we did a matching on the two population with propensity score to avoid comparing a 5 experienced alpinist tackling the Youngfraz (4000m) in June, compared to 2 people going offpist at 1500m elevation. The goal of this experiment is to build a comparison between two consistent groups. A naive approach would be to consider off-pist skiing as being safer than backcountry touring, but if you take a look at the proportions, there are more registered accidents of backcountry touring as more people practice it. Moreover, backcountry tourers tend not to go out when the danger level gets high (3 or more) which explains the fact that it appears that lots of accidents at level.
 
 
 
-State assumption: bvackcountry are more educated and off pist don't check danger level before going out
-
-We do stat study to see if significant diff in mean danger exposition between these 2 populations
-
-To make our study meaningful, do a matching on the two population with propensity score to avoir comparing a 5 experienced alpinist tackling the Youngfraz (4000m) in June, compared to 2 people going offpist at 1500m elevation
-
-
-
-see <nottebok for more info
+See [notebook](https://nbviewer.jupyter.org/github/swiss-avalanches/swiss-avalanches.github.io/blob/master/notebooks/data_story.ipynb) for more information.
 
 Moreover, we know was caught at a level 3 of danger. The higher the danger level is, the higher are the odds for an avalanche to be triggered. TODO Which mountain activity is the most deadly? 
 

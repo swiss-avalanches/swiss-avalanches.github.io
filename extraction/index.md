@@ -3,16 +3,16 @@ layout: page
 title: Data extraction
 ---
 
-An important part of this project was data extraction. The [Swiss Institude of Snow and Avalanches](https://www.slf.ch/) kept a very good record of all the published avalanche and weather reports. Most of it were shared on paper (`pdf` or `gif`) 15 years ago and we decided to extract the information out of it to make our analysis/vizualisation possible. The following article goes through our extraction procedure, you can browse through the results in [EXPLORE](https://swiss-avalanches.github.io/explore/).
+An important part of this project was data extraction. The [Swiss Institute of Snow and Avalanches](https://www.slf.ch/) kept a very good record of all the published avalanche and weather reports. Most of it were shared on paper (`pdf` or `gif`) 15 years ago and we decided to extract the information out of it to make our analysis/vizualisation possible. The following article goes through our extraction procedure, you can browse through the results in [EXPLORE](https://swiss-avalanches.github.io/explore/).
 
 ## 1. Data scraping
 
 Our dataset consists of information retrieved from [SLF archives](https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/archive.html). We asked the managers to access their database but they couldn't help us. No problem, we scraped hard core for one night.
 
-Several filters were used to select the folders we wished to extract: :
+Several filters were used to select the folders we wished to extract:
 
 - **language:** files are often duplicated for the 4 languages (de, fr, it, en). When it is the case we download only one set in the following order of preference: en, fr, de. German is the default language (always present).
-- **too specific:** some files are not interesting for now (too specific or too regional). We don't download the snow profiles and the regional snow report,
+- **too specific:** some files are not interesting for now (too specific or too regional). We don't download the snow profiles and the regional snow report.
 - **color or black and white:** maps are available in color and in black and white. Colors are easier than textures for computer vision algorithms, so we drop the black and white maps.
 
 Now we can use the python script `../tools/download.py` to fetch the ~30'000 files in the directory structure.
@@ -21,11 +21,11 @@ Now we can use the python script `../tools/download.py` to fetch the ~30'000 fil
 python3 tools/download.py data/file_to_download. ./data/slf --prefix https://www.slf.ch/fileadmin/user_upload/import/lwdarchiv/public/ --nproc 4
 ```
 
-We got approximately 5GB of data that we store on a S3 bucket `s3://ada-avalanches`. Let us know if you want to have access. It has the same hierarchy as [SLF archives](https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/archive.html)
+We got approximately 5GB of data that we stored on a S3 bucket `s3://ada-avalanches`. Let us know if you want to have access. It has the same hierarchy as [SLF archives](https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/archive.html)
 
 ## 2. Map extraction
 
-The most challenging part of the data extraction was retreiving the necessary informations from images provided by the website [SLF archives](https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/archive.html). Here are some sample maps, we had more that 10'000 of them, so we had to automatize the process ;)
+The most challenging part of the data extraction was retrieving the necessary information from images provided by the website [SLF archives](https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/archive.html). Here are some sample maps, we had more than 10'000 of them, so we had to automatize the process ;)
 
 <div class="container-fluid"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
     <div class="row">
@@ -43,7 +43,7 @@ The most challenging part of the data extraction was retreiving the necessary in
 We developped a handful of methods to extracts the snow and danger regions from the color maps.
 
 - **grey removal**: looking at standard deviation of color channels for each pixel, we could threshold the greys and remove them from the original image,
-- **color projection**: due to the noise in the image or minor differences in the color tones, we had to project each pixel's color to the closest color in the reference key (with euclidean distance).
+- **color projection**: due to the noise in the image or minor differences in the color tones, we had to project each pixel's color to the closest color in the reference key (with Euclidean distance).
 - **mask clipping**: many images had different sizes or were centered differently. We created binary masks to remove the legend, the title and sometimes extra logos or noise.
 
 
@@ -93,4 +93,4 @@ More than 10'000 maps were extracted and converted into JSON files which we furt
 
 ## 3. Avalanches accidents
 
-The avalanche accidents were downloaded from the [SLF avalanche accidents](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) website with precise coordinates for each accident. From this dataset, we obtained 350 accidents that happenened over the last 20 years in Switzerland. For each one of them, we have the date, the location, the danger level that was announced and the number of people that were caught, buried and killed.  We built a map showing accidents depending on the risk level to visualise the data points which you can find in `notebooks/accidents.ipynb`. You will find the result of that mapping under [EXPLORE](../explore/).
+The avalanche accidents were downloaded from the [SLF avalanche accidents](https://www.slf.ch/en/avalanches/destructive-avalanches-and-avalanche-accidents/avalanche-accidents-of-the-past-20-years.html) website with precise coordinates for each accident. From this dataset, we obtained 350 accidents that happened over the last 20 years in Switzerland. For each one of them, we have the date, the location, the danger level that was announced and the number of people that were caught, buried and killed. We built a map showing accidents depending on the risk level to visualise the data points which you can find in `notebooks/accidents.ipynb`. You will find the result of that mapping under [EXPLORE](../explore/).

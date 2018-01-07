@@ -48,24 +48,16 @@ function updateMapFromSlider() {
   var svg = d3.select("#map").select("svg");
   var selectedPointData = accidentsData.find(function (d) { return d.id == selectedPoint; });
 
-  var thePoint = svg.append("circle")
-    .attr("class", "data-point")
-    .attr("r", 8)
-    .attr("stroke", "white")
-    .attr("fill", "black")
-    .attr("opacity", 0.7)
-    .attr("stroke", "white")
-    .attr("transform", "translate(" + map.latLngToLayerPoint(selectedPointData.LatLng).x + "," + map.latLngToLayerPoint(selectedPointData.LatLng).y + ")");
-
-  
-  function update() {
-    thePoint.attr("transform", 
-      "translate(" + map.latLngToLayerPoint(selectedPointData.LatLng).x + "," + map.latLngToLayerPoint(selectedPointData.LatLng).y + ")");
-  }
-
-  // move points to the right positions (continuously)
-  map.on("moveend", update);
-  map.on("zoomend", update);
+  var thePoint = svg.selectAll(".data-point")
+    .data([selectedPointData]).enter()
+    .append("circle")
+      .attr("class", "data-point")
+      .attr("r", 8)
+      .attr("stroke", "white")
+      .attr("fill", "black")
+      .attr("opacity", 0.7)
+      .attr("stroke", "white")
+      .attr("transform", function (d) { return "translate(" + map.latLngToLayerPoint(d.LatLng).x + "," + map.latLngToLayerPoint(d.LatLng).y + ")"; });
 
   svg.classed("point-svg", true);
   $(".point-svg").parent().append($(".point-svg"))

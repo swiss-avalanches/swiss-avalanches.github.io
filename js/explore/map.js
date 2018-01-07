@@ -48,15 +48,15 @@ function updateMapFromSlider() {
   var svg = d3.select("#map").select("svg");
   var selectedPointData = accidentsData.find(function (d) { return d.id == selectedPoint; });
 
-  var thePoint = svg.selectAll(".data-point")
-    .data([selectedPointData]).enter()
-    .append("circle")
+  var thePoint = svg.selectAll(".data-point").data([selectedPointData], function (d) {return d.id;});
+
+  thePoint.enter().append("circle")
       .attr("class", "data-point")
       .attr("r", 8)
       .attr("stroke", "white")
       .attr("fill", "black")
       .attr("opacity", 0.7)
-      .attr("stroke", "white")
+    .merge(thePoint)
       .attr("transform", function (d) { return "translate(" + map.latLngToLayerPoint(d.LatLng).x + "," + map.latLngToLayerPoint(d.LatLng).y + ")"; });
 
   svg.classed("point-svg", true);

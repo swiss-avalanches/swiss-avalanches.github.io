@@ -41,12 +41,10 @@
   all_files = {}
   all_names = []
   filtered_names = []
-  // console.log(danger_maps)
   for (var map of snow_maps) {
     all_files[map[0]] = map[1]
     all_names.push(map[0])
     filtered_names.push(map[0])
-    // console.log(map)
   }
 
   function update_slider() {
@@ -60,7 +58,6 @@
   update_slider()
 
   function color_style(feature) {
-    console.log(feature, feature['properties'], feature['properties']['danger_level'], feature['properties']['snow_level'])
     if (feature['properties'] && feature['properties']['danger_level']) {
         switch (feature['properties']['danger_level']) {
             case 1: return {color: "#ccff66"};

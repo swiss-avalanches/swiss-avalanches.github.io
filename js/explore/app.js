@@ -147,7 +147,6 @@ function selectPoint(id) {
         
         fromDate.setDate(fromDate.getDate() - 10);
         toDate.setDate(toDate.getDate() + 3);
-        console.log('yo', fromDate, toDate)
 
         function formatDate(d) {
             var month = 1 + d.getMonth();

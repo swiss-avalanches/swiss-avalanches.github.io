@@ -12,8 +12,7 @@ $.getJSON('/data/accidents/accidents.json', function (data) {
         accidentsData[i].id = accidentDatumId(accidentsData[i]);
     }
 
-    d3.select('#filters').append("dl")
-    createMap(data, addFilter, removeFilter, selectPoint);
+    d3.select('#filters').append("dl");
     createComponents();
     updateComponents();
     updateFilterList();
@@ -270,6 +269,7 @@ function createComponents() {
     data = filterData(accidentsData);
     data = applyPointSelection(data);
     data = applyColor(data);
+    createMap(data, addFilter, removeFilter, selectPoint);
     createPolar(data, addFilter, removeFilter, selectPoint);
     createElevation(data, addFilter, removeFilter, selectPoint);
     createMonth(data, addFilter, removeFilter, selectPoint);

@@ -3,6 +3,12 @@ var propertiesMap = {
 };
 
 function createMap(accidentsData, addFilter, removeFilter, selectPoint) {
+  if (propertiesMap.map) {
+    map = propertiesMap.map;
+    map.off();
+    map.remove();
+  }
+
   map = L.map('map').setView([46.875893, 8.289321], 7);
 
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {

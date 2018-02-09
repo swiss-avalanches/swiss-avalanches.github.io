@@ -1,30 +1,30 @@
 body {
     margin: auto;
-    margin-top: 80px;
-    width: 1442px;
+    width: 100%;
+    margin-top: 60px;
     /* position:relative;  */
 }
 
-#filter-selection-menu {
+/* #filter-selection-menu { */
     /* position: -webkit-sticky;
-    position: sticky; */
-    position: fixed;
+    position: sticky; */ 
+    /* position: fixed;
     top: 7em;
     margin-left: 1em;
     padding-bottom: 13em;
-}
+} */
 
-#demo-button {
+/* #demo-button {
     position: fixed;
     top: 4.5em;
     margin-left: 1em;
-}
+} */
 
-#legend-menu {
+/* #legend-menu {
     position: absolute;
     top: 3em;
     right: 2em;
-}
+} */
 
 #map {
     width: 100%;
@@ -40,7 +40,7 @@ dk {
 }
 
 .pass-through {
-    pointer-events:none;
+    pointer-events: none;
 }
 
 #textual {
@@ -49,11 +49,11 @@ dk {
 }
 
 #textual h4 {
-    text-align:center;
+    text-align: center;
 }
 
 h1 {
-    text-align:center;
+    text-align: center;
 }
 
 .keyPoint {
@@ -131,4 +131,108 @@ h1 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+body {
+    padding: .8em;
+    font-size: 16px;
+}
+
+dd {
+    font-size: 16px;
+}
+
+#demo-button {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/*** GRID ***/
+
+#demo-button {
+    grid-area: tutorial;
+}
+
+#title {
+    grid-area: header;
+}
+
+#filter-selection-menu {
+    grid-area: filters;
+}
+
+
+#legend-menu {
+    grid-area: legend;
+}
+
+.dashboard-container {
+    grid-area: components;
+}
+
+#elevation {
+    grid-area: elevation;
+}
+
+#polar {
+    grid-area: polar;
+}
+
+#month {
+    grid-area: month;
+}
+
+#textual {
+    grid-area: textual;
+}
+
+#dangers {
+    grid-area: dangers;
+}
+
+#activities {
+    grid-area: activities;
+}
+
+#years {
+    grid-area: years;
+}
+
+#map-widget {
+    grid-area: map;
+}
+
+.textual-class {
+    grid-area: textual;
+}
+
+/*** RESPONSIVE GRID ***/
+
+
+/* For devices larger than 550px */
+@media (min-width: 700px) {
+    .explore-container {
+        display: grid;
+        grid-gap: 1em;
+        padding-left: .5em;
+        padding-right: .5em;
+        grid-template-columns: 200px auto 200px;
+        grid-template-rows: auto 2em auto;
+        grid-template-areas: 
+            ".        header     ."
+            "tutorial components legend"
+            "filters  components legend";
+    }
+
+    .dashboard-container {
+        display: grid;
+        grid-gap: .2em;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 25% auto 25% auto;
+        grid-template-areas: 
+            "elevation polar      month"
+            "textual   textual    textual"
+            "dangers   activities years"
+            "map       map        map";
+    }
 }

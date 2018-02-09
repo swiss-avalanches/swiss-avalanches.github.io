@@ -13,6 +13,7 @@ $.getJSON('/data/accidents/accidents.json', function (data) {
     }
 
     d3.select('#filters').append("dl")
+    createMap(data, addFilter, removeFilter, selectPoint);
     createComponents();
     updateComponents();
     updateFilterList();
@@ -21,6 +22,16 @@ $.getJSON('/data/accidents/accidents.json', function (data) {
     if (! readCookie('introDone')) {
         startTutorial();
     }
+});
+
+$(window).resize(function () {
+    d3.selectAll('.dashboard-container svg').remove();
+    globalFilters = [];
+    selectedPoint = null;
+    createComponents();
+    updateComponents();
+    updateFilterList();
+    updateSelectionCard();
 });
 
 var mapsIndex = null;
@@ -262,7 +273,6 @@ function createComponents() {
     createPolar(data, addFilter, removeFilter, selectPoint);
     createElevation(data, addFilter, removeFilter, selectPoint);
     createMonth(data, addFilter, removeFilter, selectPoint);
-    createMap(data, addFilter, removeFilter, selectPoint);
     createDangers(data, addFilter, removeFilter, selectPoint);
     createActivities(data, addFilter, removeFilter, selectPoint);
     createTextual(data, addFilter, removeFilter, selectPoint);

@@ -43,11 +43,6 @@ dk {
     pointer-events: none;
 }
 
-#textual {
-    margin-top: 2em;
-    margin-bottom: .5em;
-}
-
 #textual h4 {
     text-align: center;
 }
@@ -202,7 +197,7 @@ dd {
     grid-area: map;
 }
 
-.textual-class {
+#textual {
     grid-area: textual;
 }
 
@@ -219,14 +214,14 @@ dd {
         grid-template-columns: 200px auto 200px;
         grid-template-rows: auto 2em auto;
         grid-template-areas: 
-            ".        header     ."
+            "header   header     header"
             "tutorial components legend"
             "filters  components legend";
     }
 
     .dashboard-container {
         display: grid;
-        grid-gap: .2em;
+        grid-gap: 1em .2em;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 25% auto 25% auto;
         grid-template-areas: 
@@ -235,4 +230,11 @@ dd {
             "dangers   activities years"
             "map       map        map";
     }
+
+    #textual { 
+        display: grid;
+        grid-gap: .2em;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
 }
